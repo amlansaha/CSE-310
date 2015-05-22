@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+<title>Identifiers - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Common-Patterns.html#Common-Patterns" title="Common Patterns">
+<link rel="prev" href="Numbers.html#Numbers" title="Numbers">
+<link rel="next" href="Quoted-Constructs.html#Quoted-Constructs" title="Quoted Constructs">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Identifiers"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Quoted-Constructs.html#Quoted-Constructs">Quoted Constructs</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Numbers.html#Numbers">Numbers</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Common-Patterns.html#Common-Patterns">Common Patterns</a>
+<hr>
+</div>
+
+<h4 class="subsection">A.4.2 Identifiers</h4>
+
+     <dl>
+<dt>C99 Identifier<dd><pre class="verbatim">     ucn        ((\\u([[:xdigit:]]{4}))|(\\U([[:xdigit:]]{8})))
+     nondigit    [_[:alpha:]]
+     c99_id     ([_[:alpha:]]|{ucn})([_[:alnum:]]|{ucn})*
+</pre>
+
+     <p>Technically, the above pattern does not encompass all possible C99 identifiers, since C99 allows for
+"implementation-defined" characters. In practice, C compilers follow the above pattern, with the
+addition of the &lsquo;<samp><span class="samp">$</span></samp>&rsquo; character.
+
+     <br><dt>UTF-8 Encoded Unicode Code Point<dd><pre class="verbatim">     [\x09\x0A\x0D\x20-\x7E]|[\xC2-\xDF][\x80-\xBF]|\xE0[\xA0-\xBF][\x80-\xBF]|[\xE1-\xEC\xEE\xEF]([\x80-\xBF]{2})|\xED[\x80-\x9F][\x80-\xBF]|\xF0[\x90-\xBF]([\x80-\xBF]{2})|[\xF1-\xF3]([\x80-\xBF]{3})|\xF4[\x80-\x8F]([\x80-\xBF]{2})
+</pre>
+
+</dl>
+
+   </body></html>
+

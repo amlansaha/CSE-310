@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<title>How do I skip huge chunks of input (tens of megabytes) while using flex? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="Does-flex-support-recursive-pattern-definitions_003f.html#Does-flex-support-recursive-pattern-definitions_003f" title="Does flex support recursive pattern definitions?">
+<link rel="next" href="Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e.html#Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e" title="Flex is not matching my patterns in the same order that I defined them.">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="How-do-I-skip-huge-chunks-of-input-(tens-of-megabytes)-while-using-flex%3f"></a>
+<a name="How-do-I-skip-huge-chunks-of-input-_0028tens-of-megabytes_0029-while-using-flex_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e.html#Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e">Flex is not matching my patterns in the same order that I defined them.</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Does-flex-support-recursive-pattern-definitions_003f.html#Does-flex-support-recursive-pattern-definitions_003f">Does flex support recursive pattern definitions?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">How do I skip huge chunks of input (tens of megabytes) while using flex?</h3>
+
+<p>Use <code>fseek()</code> (or <code>lseek()</code>) to position yyin, then call <code>yyrestart()</code>.
+
+   </body></html>
+

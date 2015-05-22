@@ -1,0 +1,176 @@
+<html lang="en">
+<head>
+<title>Makefiles and Flex - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Appendices.html#Appendices" title="Appendices">
+<link rel="prev" href="Appendices.html#Appendices" title="Appendices">
+<link rel="next" href="Bison-Bridge.html#Bison-Bridge" title="Bison Bridge">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Makefiles-and-Flex"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Bison-Bridge.html#Bison-Bridge">Bison Bridge</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Appendices.html#Appendices">Appendices</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Appendices.html#Appendices">Appendices</a>
+<hr>
+</div>
+
+<h3 class="appendixsec">A.1 Makefiles and Flex</h3>
+
+<p><a name="index-Makefile_002c-syntax-487"></a>
+In this appendix, we provide tips for writing Makefiles to build your scanners.
+
+   <p>In a traditional build environment, we say that the <samp><span class="file">.c</span></samp> files are the
+sources, and the <samp><span class="file">.o</span></samp> files are the intermediate files. When using
+<code>flex</code>, however, the <samp><span class="file">.l</span></samp> files are the sources, and the generated
+<samp><span class="file">.c</span></samp> files (along with the <samp><span class="file">.o</span></samp> files) are the intermediate files. 
+This requires you to carefully plan your Makefile.
+
+   <p>Modern <samp><span class="command">make</span></samp> programs understand that <samp><span class="file">foo.l</span></samp> is intended to
+generate <samp><span class="file">lex.yy.c</span></samp> or <samp><span class="file">foo.c</span></samp>, and will behave
+accordingly<a rel="footnote" href="#fn-1" name="fnd-1"><sup>1</sup></a><a rel="footnote" href="#fn-2" name="fnd-2"><sup>2</sup></a>.  The
+following Makefile does not explicitly instruct <samp><span class="command">make</span></samp> how to build
+<samp><span class="file">foo.c</span></samp> from <samp><span class="file">foo.l</span></samp>. Instead, it relies on the implicit rules of the
+<samp><span class="command">make</span></samp> program to build the intermediate file, <samp><span class="file">scan.c</span></samp>:
+
+   <p><a name="index-Makefile_002c-example-of-implicit-rules-488"></a>
+<pre class="example"><pre class="verbatim">         # Basic Makefile -- relies on implicit rules
+         # Creates "myprogram" from "scan.l" and "myprogram.c"
+         #
+         LEX=flex
+         myprogram: scan.o myprogram.o
+         scan.o: scan.l
+     
+</pre>
+</pre>
+   <p>For simple cases, the above may be sufficient. For other cases,
+you may have to explicitly instruct <samp><span class="command">make</span></samp> how to build your scanner. 
+The following is an example of a Makefile containing explicit rules:
+
+   <p><a name="index-Makefile_002c-explicit-example-489"></a>
+<pre class="example"><pre class="verbatim">         # Basic Makefile -- provides explicit rules
+         # Creates "myprogram" from "scan.l" and "myprogram.c"
+         #
+         LEX=flex
+         myprogram: scan.o myprogram.o
+                 $(CC) -o $@  $(LDFLAGS) $^
+     
+         myprogram.o: myprogram.c
+                 $(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $^
+     
+         scan.o: scan.c
+                 $(CC) $(CPPFLAGS) $(CFLAGS) -o $@ -c $^
+     
+         scan.c: scan.l
+                 $(LEX) $(LFLAGS) -o $@ $^
+     
+         clean:
+                 $(RM) *.o scan.c
+     
+</pre>
+</pre>
+   <p>Notice in the above example that <samp><span class="file">scan.c</span></samp> is in the <code>clean</code> target. 
+This is because we consider the file <samp><span class="file">scan.c</span></samp> to be an intermediate file.
+
+   <p>Finally, we provide a realistic example of a <code>flex</code> scanner used with a
+<code>bison</code> parser<a rel="footnote" href="#fn-3" name="fnd-3"><sup>3</sup></a>. 
+There is a tricky problem we have to deal with. Since a <code>flex</code> scanner
+will typically include a header file (e.g., <samp><span class="file">y.tab.h</span></samp>) generated by the
+parser, we need to be sure that the header file is generated BEFORE the scanner
+is compiled. We handle this case in the following example:
+
+<pre class="example"><pre class="verbatim">         # Makefile example -- scanner and parser.
+         # Creates "myprogram" from "scan.l", "parse.y", and "myprogram.c"
+         #
+         LEX     = flex
+         YACC    = bison -y
+         YFLAGS  = -d
+         objects = scan.o parse.o myprogram.o
+     
+         myprogram: $(objects)
+         scan.o: scan.l parse.c
+         parse.o: parse.y
+         myprogram.o: myprogram.c
+     
+</pre>
+</pre>
+   <p>In the above example, notice the line,
+
+<pre class="example"><pre class="verbatim">         scan.o: scan.l parse.c
+</pre>
+</pre>
+   <p>, which lists the file <samp><span class="file">parse.c</span></samp> (the generated parser) as a dependency of
+<samp><span class="file">scan.o</span></samp>. We want to ensure that the parser is created before the scanner
+is compiled, and the above line seems to do the trick. Feel free to experiment
+with your specific implementation of <samp><span class="command">make</span></samp>.
+
+   <p>For more details on writing Makefiles, see <a href="../make/index.html#Top">Top</a>.
+
+   <div class="footnote">
+<hr>
+<h4>Footnotes</h4><p class="footnote"><small>[<a name="fn-1" href="#fnd-1">1</a>]</small> GNU <samp><span class="command">make</span></samp> and GNU <samp><span class="command">automake</span></samp> are two such
+programs that provide implicit rules for flex-generated scanners.</p>
+
+   <p class="footnote"><small>[<a name="fn-2" href="#fnd-2">2</a>]</small> GNU <samp><span class="command">automake</span></samp>
+may generate code to execute flex in lex-compatible mode, or to stdout. If this is not what you want,
+then you should provide an explicit rule in your Makefile.am</p>
+
+   <p class="footnote"><small>[<a name="fn-3" href="#fnd-3">3</a>]</small> This example also applies to yacc parsers.</p>
+
+   <hr></div>
+
+   </body></html>
+

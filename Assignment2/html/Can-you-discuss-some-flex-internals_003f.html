@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+<title>Can you discuss some flex internals? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="deleteme01.html#deleteme01" title="deleteme01">
+<link rel="next" href="unput_0028_0029-messes-up-yy_005fat_005fbol.html#unput_0028_0029-messes-up-yy_005fat_005fbol" title="unput() messes up yy_at_bol">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Can-you-discuss-some-flex-internals%3f"></a>
+<a name="Can-you-discuss-some-flex-internals_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="unput_0028_0029-messes-up-yy_005fat_005fbol.html#unput_0028_0029-messes-up-yy_005fat_005fbol">unput() messes up yy_at_bol</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="deleteme01.html#deleteme01">deleteme01</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">Can you discuss some flex internals?</h3>
+
+<pre class="example"><pre class="verbatim">     To: Johan Linde &lt;jl@theophys.kth.se>
+     Subject: Re: translation of flex
+     In-reply-to: Your message of Sun, 10 Nov 1996 09:16:36 PST.
+     Date: Mon, 11 Nov 1996 10:33:50 PST
+     From: Vern Paxson &lt;vern>
+     
+     > I'm working for the Swedish team translating GNU program, and I'm currently
+     > working with flex. I have a few questions about some of the messages which
+     > I hope you can answer.
+     
+     All of the things you're wondering about, by the way, concerning flex
+     internals - probably the only person who understands what they mean in
+     English is me!  So I wouldn't worry too much about getting them right.
+     That said ...
+     
+     > #: main.c:545
+     > msgid "  %d protos created\n"
+     >
+     > Does proto mean prototype?
+     
+     Yes - prototypes of state compression tables.
+     
+     > #: main.c:539
+     > msgid "  %d/%d (peak %d) template nxt-chk entries created\n"
+     >
+     > Here I'm mainly puzzled by 'nxt-chk'. I guess it means 'next-check'. (?)
+     > However, 'template next-check entries' doesn't make much sense to me. To be
+     > able to find a good translation I need to know a little bit more about it.
+     
+     There is a scheme in the Aho/Sethi/Ullman compiler book for compressing
+     scanner tables.  It involves creating two pairs of tables.  The first has
+     "base" and "default" entries, the second has "next" and "check" entries.
+     The "base" entry is indexed by the current state and yields an index into
+     the next/check table.  The "default" entry gives what to do if the state
+     transition isn't found in next/check.  The "next" entry gives the next
+     state to enter, but only if the "check" entry verifies that this entry is
+     correct for the current state.  Flex creates templates of series of
+     next/check entries and then encodes differences from these templates as a
+     way to compress the tables.
+     
+     > #: main.c:533
+     > msgid "  %d/%d base-def entries created\n"
+     >
+     > The same problem here for 'base-def'.
+     
+     See above.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<title>A Note About yytext And Memory - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Memory-Management.html#Memory-Management" title="Memory Management">
+<link rel="prev" href="Overriding-The-Default-Memory-Management.html#Overriding-The-Default-Memory-Management" title="Overriding The Default Memory Management">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="A-Note-About-yytext-And-Memory"></a>
+<p>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Overriding-The-Default-Memory-Management.html#Overriding-The-Default-Memory-Management">Overriding The Default Memory Management</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Memory-Management.html#Memory-Management">Memory Management</a>
+<hr>
+</div>
+
+<h3 class="section">21.3 A Note About yytext And Memory</h3>
+
+<p><a name="index-yytext_002c-memory-considerations-461"></a>
+When flex finds a match, <code>yytext</code> points to the first character of the
+match in the input buffer. The string itself is part of the input buffer, and
+is <em>NOT</em> allocated separately. The value of yytext will be overwritten the next
+time yylex() is called. In short, the value of yytext is only valid from within
+the matched rule's action.
+
+   <p>Often, you want the value of yytext to persist for later processing, i.e., by a
+parser with non-zero lookahead. In order to preserve yytext, you will have to
+copy it with strdup() or a similar function. But this introduces some headache
+because your parser is now responsible for freeing the copy of yytext. If you
+use a yacc or bison parser, (commonly used with flex), you will discover that
+the error recovery mechanisms can cause memory to be leaked.
+
+   <p>To prevent memory leaks from strdup'd yytext, you will have to track the memory
+somehow. Our experience has shown that a garbage collection mechanism or a
+pooled memory mechanism will save you a lot of grief when writing parsers.
+
+   </body></html>
+

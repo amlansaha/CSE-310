@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+<title>unnamed-faq-90 - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="unnamed_002dfaq_002d88.html#unnamed_002dfaq_002d88" title="unnamed-faq-88">
+<link rel="next" href="unnamed_002dfaq_002d91.html#unnamed_002dfaq_002d91" title="unnamed-faq-91">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="unnamed-faq-90"></a>
+<a name="unnamed_002dfaq_002d90"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="unnamed_002dfaq_002d91.html#unnamed_002dfaq_002d91">unnamed-faq-91</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="unnamed_002dfaq_002d88.html#unnamed_002dfaq_002d88">unnamed-faq-88</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">unnamed-faq-90</h3>
+
+<pre class="example"><pre class="verbatim">     To: "Dmitriy Goldobin" &lt;gold@ems.chel.su>
+     Subject: Re: FLEX trouble
+     In-reply-to: Your message of Mon, 31 May 1999 18:44:49 PDT.
+     Date: Tue, 01 Jun 1999 00:15:07 PDT
+     From: Vern Paxson &lt;vern>
+     
+     >   I have a trouble with FLEX. Why rule "/*".*"*/" work properly,=20
+     > but rule "/*"(.|\n)*"*/" don't work ?
+     
+     The second of these will have to scan the entire input stream (because
+     "(.|\n)*" matches an arbitrary amount of any text) in order to see if
+     it ends with "*/", terminating the comment.  That potentially will overflow
+     the input buffer.
+     
+     >   More complex rule "/*"([^*]|(\*/[^/]))*"*/ give an error
+     > 'unrecognized rule'.
+     
+     You can't use the '/' operator inside parentheses.  It's not clear
+     what "(a/b)*" actually means.
+     
+     >   I now use workaround with state &lt;comment>, but single-rule is
+     > better, i think.
+     
+     Single-rule is nice but will always have the problem of either setting
+     restrictions on comments (like not allowing multi-line comments) and/or
+     running the risk of consuming the entire input stream, as noted above.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

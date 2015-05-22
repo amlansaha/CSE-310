@@ -1,0 +1,111 @@
+<html lang="en">
+<head>
+<title>Is flex GNU or not? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="Trailing-context-is-getting-confused-with-trailing-optional-patterns.html#Trailing-context-is-getting-confused-with-trailing-optional-patterns" title="Trailing context is getting confused with trailing optional patterns">
+<link rel="next" href="ERASEME53.html#ERASEME53" title="ERASEME53">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Is-flex-GNU-or-not%3f"></a>
+<a name="Is-flex-GNU-or-not_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="ERASEME53.html#ERASEME53">ERASEME53</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Trailing-context-is-getting-confused-with-trailing-optional-patterns.html#Trailing-context-is-getting-confused-with-trailing-optional-patterns">Trailing context is getting confused with trailing optional patterns</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">Is flex GNU or not?</h3>
+
+<pre class="example"><pre class="verbatim">     To: Cameron MacKinnon &lt;mackin@interlog.com>
+     Subject: Re: Flex documentation bug
+     In-reply-to: Your message of Mon, 02 Dec 1996 00:07:08 PST.
+     Date: Sun, 01 Dec 1996 22:29:39 PST
+     From: Vern Paxson &lt;vern>
+     
+     > I'm not sure how or where to submit bug reports (documentation or
+     > otherwise) for the GNU project stuff ...
+     
+     Well, strictly speaking flex isn't part of the GNU project.  They just
+     distribute it because no one's written a decent GPL'd lex replacement.
+     So you should send bugs directly to me.  Those sent to the GNU folks
+     sometimes find there way to me, but some may drop between the cracks.
+     
+     > In GNU Info, under the section 'Start Conditions', and also in the man
+     > page (mine's dated April '95) is a nice little snippet showing how to
+     > parse C quoted strings into a buffer, defined to be MAX_STR_CONST in
+     > size. Unfortunately, no overflow checking is ever done ...
+     
+     This is already mentioned in the manual:
+     
+     Finally, here's an example of how to  match  C-style  quoted
+     strings using exclusive start conditions, including expanded
+     escape sequences (but not including checking  for  a  string
+     that's too long):
+     
+     The reason for not doing the overflow checking is that it will needlessly
+     clutter up an example whose main purpose is just to demonstrate how to
+     use flex.
+     
+     The latest release is 2.5.4, by the way, available from ftp.ee.lbl.gov.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

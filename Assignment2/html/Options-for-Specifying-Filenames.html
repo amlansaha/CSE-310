@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+<title>Options for Specifying Filenames - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Scanner-Options.html#Scanner-Options" title="Scanner Options">
+<link rel="prev" href="Scanner-Options.html#Scanner-Options" title="Scanner Options">
+<link rel="next" href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior" title="Options Affecting Scanner Behavior">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Options-for-Specifying-Filenames"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior">Options Affecting Scanner Behavior</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Scanner-Options.html#Scanner-Options">Scanner Options</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Scanner-Options.html#Scanner-Options">Scanner Options</a>
+<hr>
+</div>
+
+<h3 class="section">16.1 Options for Specifying Filenames</h3>
+
+     <dl>
+<a name="option_002dheader"></a><a name="index-g_t_002d_002d_002dheader_002dfile-246"></a><a name="index-header_002dfile-247"></a><dt>&lsquo;<samp><span class="samp">--header-file=FILE, </span><code>%option header-file="FILE"</code></samp>&rsquo;<dd>instructs flex to write a C header to <samp><span class="file">FILE</span></samp>. This file contains
+function prototypes, extern variables, and types used by the scanner. 
+Only the external API is exported by the header file. Many macros that
+are usable from within scanner actions are not exported to the header
+file. This is due to namespace problems and the goal of a clean
+external API.
+
+     <p>While in the header, the macro <code>yyIN_HEADER</code> is defined, where &lsquo;<samp><span class="samp">yy</span></samp>&rsquo;
+is substituted with the appropriate prefix.
+
+     <p>The &lsquo;<samp><span class="samp">--header-file</span></samp>&rsquo; option is not compatible with the &lsquo;<samp><span class="samp">--c++</span></samp>&rsquo; option,
+since the C++ scanner provides its own header in <samp><span class="file">yyFlexLexer.h</span></samp>.
+
+     <p><a name="option_002doutfile"></a><a name="index-g_t_002do-248"></a><a name="index-g_t_002d_002d_002doutfile-249"></a><a name="index-outfile-250"></a><br><dt>&lsquo;<samp><span class="samp">-oFILE, --outfile=FILE, </span><code>%option outfile="FILE"</code></samp>&rsquo;<dd>directs flex to write the scanner to the file <samp><span class="file">FILE</span></samp> instead of
+<samp><span class="file">lex.yy.c</span></samp>.  If you combine &lsquo;<samp><span class="samp">--outfile</span></samp>&rsquo; with the &lsquo;<samp><span class="samp">--stdout</span></samp>&rsquo; option,
+then the scanner is written to <samp><span class="file">stdout</span></samp> but its <code>#line</code>
+directives (see the &lsquo;<samp><span class="samp">-l</span></samp>&rsquo; option above) refer to the file
+<samp><span class="file">FILE</span></samp>.
+
+     <p><a name="option_002dstdout"></a><a name="index-g_t_002dt-251"></a><a name="index-g_t_002d_002d_002dstdout-252"></a><a name="index-stdout-253"></a><br><dt>&lsquo;<samp><span class="samp">-t, --stdout, </span><code>%option stdout</code></samp>&rsquo;<dd>instructs <code>flex</code> to write the scanner it generates to standard
+output instead of <samp><span class="file">lex.yy.c</span></samp>.
+
+     <p><a name="index-g_t_002d_002d_002dskel-254"></a><br><dt>&lsquo;<samp><span class="samp">-SFILE, --skel=FILE</span></samp>&rsquo;<dd>overrides the default skeleton file from which
+<code>flex</code>
+constructs its scanners.  You'll never need this option unless you are doing
+<code>flex</code>
+maintenance or development.
+
+     <p><a name="index-g_t_002d_002d_002dtables_002dfile-255"></a><a name="index-tables_002dfile-256"></a><br><dt>&lsquo;<samp><span class="samp">--tables-file=FILE</span></samp>&rsquo;<dd>Write serialized scanner dfa tables to FILE. The generated scanner will not
+contain the tables, and requires them to be loaded at runtime. 
+See <a href="serialization.html#serialization">serialization</a>.
+
+     <p><a name="index-g_t_002d_002d_002dtables_002dverify-257"></a><a name="index-tables_002dverify-258"></a><br><dt>&lsquo;<samp><span class="samp">--tables-verify</span></samp>&rsquo;<dd>This option is for flex development. We document it here in case you stumble
+upon it by accident or in case you suspect some inconsistency in the serialized
+tables.  Flex will serialize the scanner dfa tables but will also generate the
+in-code tables as it normally does. At runtime, the scanner will verify that
+the serialized tables match the in-code tables, instead of loading them.
+
+</dl>
+
+   </body></html>
+

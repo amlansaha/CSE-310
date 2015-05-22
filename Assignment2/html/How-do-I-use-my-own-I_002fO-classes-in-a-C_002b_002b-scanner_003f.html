@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<title>How do I use my own I/O classes in a C++ scanner? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f.html#How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f" title="How do I track the byte offset for lseek()?">
+<link rel="next" href="How-do-I-skip-as-many-chars-as-possible_003f.html#How-do-I-skip-as-many-chars-as-possible_003f" title="How do I skip as many chars as possible?">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="How-do-I-use-my-own-I%2fO-classes-in-a-C++-scanner%3f"></a>
+<a name="How-do-I-use-my-own-I_002fO-classes-in-a-C_002b_002b-scanner_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="How-do-I-skip-as-many-chars-as-possible_003f.html#How-do-I-skip-as-many-chars-as-possible_003f">How do I skip as many chars as possible?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f.html#How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f">How do I track the byte offset for lseek()?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="section">How do I use my own I/O classes in a C++ scanner?</h3>
+
+<p>When the flex C++ scanning class rewrite finally happens, then this sort of thing should become much easier.
+
+   <p><a name="index-LexerOutput_002c-overriding-481"></a><a name="index-LexerInput_002c-overriding-482"></a><a name="index-overriding-LexerOutput-483"></a><a name="index-overriding-LexerInput-484"></a><a name="index-customizing-I_002fO-in-C_002b_002b-scanners-485"></a><a name="index-C_002b_002b-I_002fO_002c-customizing-486"></a>You can do this by passing the various functions (such as <code>LexerInput()</code>
+and <code>LexerOutput()</code>) NULL <code>iostream*</code>'s, and then
+dealing with your own I/O classes surreptitiously (i.e., stashing them in
+special member variables).  This works because the only assumption about
+the lexer regarding what's done with the iostream's is that they're
+ultimately passed to <code>LexerInput()</code> and <code>LexerOutput</code>, which then do whatever
+is necessary with them.
+
+<!-- faq edit stopped here -->
+   </body></html>
+

@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>Why do flex scanners call fileno if it is not ANSI compatible? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f.html#How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f" title="How do I expand backslash-escape sequences in C-style quoted strings?">
+<link rel="next" href="Does-flex-support-recursive-pattern-definitions_003f.html#Does-flex-support-recursive-pattern-definitions_003f" title="Does flex support recursive pattern definitions?">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Why-do-flex-scanners-call-fileno-if-it-is-not-ANSI-compatible%3f"></a>
+<a name="Why-do-flex-scanners-call-fileno-if-it-is-not-ANSI-compatible_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Does-flex-support-recursive-pattern-definitions_003f.html#Does-flex-support-recursive-pattern-definitions_003f">Does flex support recursive pattern definitions?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f.html#How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f">How do I expand backslash-escape sequences in C-style quoted strings?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">Why do flex scanners call fileno if it is not ANSI compatible?</h3>
+
+<p>Flex scanners call <code>fileno()</code> in order to get the file descriptor
+corresponding to <code>yyin</code>. The file descriptor may be passed to
+<code>isatty()</code> or <code>read()</code>, depending upon which <code>%options</code> you specified. 
+If your system does not have <code>fileno()</code> support, to get rid of the
+<code>read()</code> call, do not specify <code>%option read</code>. To get rid of the <code>isatty()</code>
+call, you must specify one of <code>%option always-interactive</code> or
+<code>%option never-interactive</code>.
+
+   </body></html>
+

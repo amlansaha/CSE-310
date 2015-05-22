@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+<title>unnamed-faq-95 - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="unnamed_002dfaq_002d94.html#unnamed_002dfaq_002d94" title="unnamed-faq-94">
+<link rel="next" href="unnamed_002dfaq_002d96.html#unnamed_002dfaq_002d96" title="unnamed-faq-96">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="unnamed-faq-95"></a>
+<a name="unnamed_002dfaq_002d95"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="unnamed_002dfaq_002d96.html#unnamed_002dfaq_002d96">unnamed-faq-96</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="unnamed_002dfaq_002d94.html#unnamed_002dfaq_002d94">unnamed-faq-94</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">unnamed-faq-95</h3>
+
+<pre class="example"><pre class="verbatim">     To: Tielman Koekemoer &lt;tielman@spi.co.za>
+     Subject: Re: Please help.
+     In-reply-to: Your message of Thu, 08 Jul 1999 13:20:37 PDT.
+     Date: Thu, 08 Jul 1999 08:20:39 PDT
+     From: Vern Paxson &lt;vern>
+     
+     > I was hoping you could help me with my problem.
+     >
+     > I tried compiling (gnu)flex on a Solaris 2.4 machine
+     > but when I ran make (after configure) I got an error.
+     >
+     > --------------------------------------------------------------
+     > gcc -c -I. -I. -g -O parse.c
+     > ./flex -t -p  ./scan.l >scan.c
+     > sh: ./flex: not found
+     > *** Error code 1
+     > make: Fatal error: Command failed for target `scan.c'
+     > -------------------------------------------------------------
+     >
+     > What's strange to me is that I'm only
+     > trying to install flex now. I then edited the Makefile to
+     > and changed where it says "FLEX = flex" to "FLEX = lex"
+     > ( lex: the native Solaris one ) but then it complains about
+     > the "-p" option. Is there any way I can compile flex without
+     > using flex or lex?
+     >
+     > Thanks so much for your time.
+     
+     You managed to step on the bootstrap sequence, which first copies
+     initscan.c to scan.c in order to build flex.  Try fetching a fresh
+     distribution from ftp.ee.lbl.gov.  (Or you can first try removing
+     ".bootstrap" and doing a make again.)
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+<title>Init and Destroy Functions - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Reentrant-Detail.html#Reentrant-Detail" title="Reentrant Detail">
+<link rel="prev" href="Global-Replacement.html#Global-Replacement" title="Global Replacement">
+<link rel="next" href="Accessor-Methods.html#Accessor-Methods" title="Accessor Methods">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Init-and-Destroy-Functions"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Accessor-Methods.html#Accessor-Methods">Accessor Methods</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Global-Replacement.html#Global-Replacement">Global Replacement</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Reentrant-Detail.html#Reentrant-Detail">Reentrant Detail</a>
+<hr>
+</div>
+
+<h4 class="subsection">19.4.4 Init and Destroy Functions</h4>
+
+<p><a name="index-memory_002c-considerations-for-reentrant-scanners-421"></a><a name="index-reentrant_002c-initialization-422"></a><a name="index-yylex_005finit-423"></a><a name="index-yylex_005fdestroy-424"></a>
+<code>yylex_init</code> and <code>yylex_destroy</code> must be called before and
+after <code>yylex</code>, respectively.
+
+<pre class="example"><pre class="verbatim">         int yylex_init ( yyscan_t * ptr_yy_globals ) ;
+         int yylex_init_extra ( YY_EXTRA_TYPE user_defined, yyscan_t * ptr_yy_globals ) ;
+         int yylex ( yyscan_t yyscanner ) ;
+         int yylex_destroy ( yyscan_t yyscanner ) ;
+</pre>
+</pre>
+   <p>The function <code>yylex_init</code> must be called before calling any other
+function. The argument to <code>yylex_init</code> is the address of an
+uninitialized pointer to be filled in by <code>yylex_init</code>, overwriting
+any previous contents. The function <code>yylex_init_extra</code> may be used
+instead, taking as its first argument a variable of type <code>YY_EXTRA_TYPE</code>. 
+See the section on yyextra, below, for more details.
+
+   <p>The value stored in <code>ptr_yy_globals</code> should
+thereafter be passed to <code>yylex</code> and <code>yylex_destroy</code>.  Flex
+does not save the argument passed to <code>yylex_init</code>, so it is safe to
+pass the address of a local pointer to <code>yylex_init</code> so long as it remains
+in scope for the duration of all calls to the scanner, up to and including
+the call to <code>yylex_destroy</code>.
+
+   <p>The function
+<code>yylex</code> should be familiar to you by now. The reentrant version
+takes one argument, which is the value returned (via an argument) by
+<code>yylex_init</code>.  Otherwise, it behaves the same as the non-reentrant
+version of <code>yylex</code>.
+
+   <p>Both <code>yylex_init</code> and <code>yylex_init_extra</code> returns 0 (zero) on success,
+or non-zero on failure, in which case errno is set to one of the following values:
+
+     <ul>
+<li>ENOMEM
+Memory allocation error. See <a href="memory_002dmanagement.html#memory_002dmanagement">memory-management</a>. 
+<li>EINVAL
+Invalid argument. 
+</ul>
+
+   <p>The function <code>yylex_destroy</code> should be
+called to free resources used by the scanner. After <code>yylex_destroy</code>
+is called, the contents of <code>yyscanner</code> should not be used.  Of
+course, there is no need to destroy a scanner if you plan to reuse it. 
+A <code>flex</code> scanner (both reentrant and non-reentrant) may be
+restarted by calling <code>yyrestart</code>.
+
+   <p>Below is an example of a program that creates a scanner, uses it, then destroys
+it when done:
+
+<pre class="example"><pre class="verbatim">         int main ()
+         {
+             yyscan_t scanner;
+             int tok;
+     
+             yylex_init(&amp;scanner);
+     
+             while ((tok=yylex()) > 0)
+                 printf("tok=%d  yytext=%s\n", tok, yyget_text(scanner));
+     
+             yylex_destroy(scanner);
+             return 0;
+         }
+</pre>
+</pre>
+   </body></html>
+

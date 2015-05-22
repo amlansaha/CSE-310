@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+<title>EOF - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="prev" href="Multiple-Input-Buffers.html#Multiple-Input-Buffers" title="Multiple Input Buffers">
+<link rel="next" href="Misc-Macros.html#Misc-Macros" title="Misc Macros">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="EOF"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Misc-Macros.html#Misc-Macros">Misc Macros</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Multiple-Input-Buffers.html#Multiple-Input-Buffers">Multiple Input Buffers</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr>
+</div>
+
+<h2 class="chapter">12 End-of-File Rules</h2>
+
+<p><a name="index-EOF_002c-explanation-215"></a>The special rule <code>&lt;&lt;EOF&gt;&gt;</code> indicates
+actions which are to be taken when an end-of-file is
+encountered and <code>yywrap()</code> returns non-zero (i.e., indicates
+no further files to process).  The action must finish
+by doing one of the following things:
+
+     <ul>
+<li><a name="index-YY_005fNEW_005fFILE--_0028now-obsolete_0029-216"></a>assigning <samp><span class="file">yyin</span></samp> to a new input file (in previous versions of
+<code>flex</code>, after doing the assignment you had to call the special
+action <code>YY_NEW_FILE</code>.  This is no longer necessary.)
+
+     <li>executing a <code>return</code> statement;
+
+     <li>executing the special <code>yyterminate()</code> action.
+
+     <li>or, switching to a new buffer using <code>yy_switch_to_buffer()</code> as
+shown in the example above. 
+</ul>
+
+   <p>&lt;&lt;EOF&gt;&gt; rules may not be used with other patterns; they may only be
+qualified with a list of start conditions.  If an unqualified &lt;&lt;EOF&gt;&gt;
+rule is given, it applies to <em>all</em> start conditions which do not
+already have &lt;&lt;EOF&gt;&gt; actions.  To specify an &lt;&lt;EOF&gt;&gt; rule for only the
+initial start condition, use:
+
+<pre class="example"><pre class="verbatim">         &lt;INITIAL>&lt;&lt;EOF>>
+</pre>
+</pre>
+   <p>These rules are useful for catching things like unclosed comments.  An
+example:
+
+   <p><a name="index-g_t_003c_003cEOF_003e_003e_002c-use-of-217"></a>
+<pre class="example"><pre class="verbatim">         %x quote
+         %%
+     
+         ...other rules for dealing with quotes...
+     
+         &lt;quote>&lt;&lt;EOF>>   {
+                  error( "unterminated quote" );
+                  yyterminate();
+                  }
+        &lt;&lt;EOF>>  {
+                  if ( *++filelist )
+                      yyin = fopen( *filelist, "r" );
+                  else
+                     yyterminate();
+                  }
+</pre>
+</pre>
+   </body></html>
+

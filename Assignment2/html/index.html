@@ -1,0 +1,510 @@
+<html lang="en">
+<head>
+<title>Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="#Top">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<h1 class="settitle">Lexical Analysis With Flex</h1>
+<div class="contents">
+<h2>Table of Contents</h2>
+<ul>
+<li><a name="toc_Top" href="index.html#Top">flex</a>
+<li><a name="toc_Copyright" href="Copyright.html#Copyright">1 Copyright</a>
+<li><a name="toc_Reporting-Bugs" href="Reporting-Bugs.html#Reporting-Bugs">2 Reporting Bugs</a>
+<li><a name="toc_Introduction" href="Introduction.html#Introduction">3 Introduction</a>
+<li><a name="toc_Simple-Examples" href="Simple-Examples.html#Simple-Examples">4 Some Simple Examples</a>
+<li><a name="toc_Format" href="Format.html#Format">5 Format of the Input File</a>
+<ul>
+<li><a href="Definitions-Section.html#Definitions-Section">5.1 Format of the Definitions Section</a>
+<li><a href="Rules-Section.html#Rules-Section">5.2 Format of the Rules Section</a>
+<li><a href="User-Code-Section.html#User-Code-Section">5.3 Format of the User Code Section</a>
+<li><a href="Comments-in-the-Input.html#Comments-in-the-Input">5.4 Comments in the Input</a>
+</li></ul>
+<li><a name="toc_Patterns" href="Patterns.html#Patterns">6 Patterns</a>
+<li><a name="toc_Matching" href="Matching.html#Matching">7 How the Input Is Matched</a>
+<li><a name="toc_Actions" href="Actions.html#Actions">8 Actions</a>
+<li><a name="toc_Generated-Scanner" href="Generated-Scanner.html#Generated-Scanner">9 The Generated Scanner</a>
+<li><a name="toc_Start-Conditions" href="Start-Conditions.html#Start-Conditions">10 Start Conditions</a>
+<li><a name="toc_Multiple-Input-Buffers" href="Multiple-Input-Buffers.html#Multiple-Input-Buffers">11 Multiple Input Buffers</a>
+<li><a name="toc_EOF" href="EOF.html#EOF">12 End-of-File Rules</a>
+<li><a name="toc_Misc-Macros" href="Misc-Macros.html#Misc-Macros">13 Miscellaneous Macros</a>
+<li><a name="toc_User-Values" href="User-Values.html#User-Values">14 Values Available To the User</a>
+<li><a name="toc_Yacc" href="Yacc.html#Yacc">15 Interfacing with Yacc</a>
+<li><a name="toc_Scanner-Options" href="Scanner-Options.html#Scanner-Options">16 Scanner Options</a>
+<ul>
+<li><a href="Options-for-Specifying-Filenames.html#Options-for-Specifying-Filenames">16.1 Options for Specifying Filenames</a>
+<li><a href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior">16.2 Options Affecting Scanner Behavior</a>
+<li><a href="Code_002dLevel-And-API-Options.html#Code_002dLevel-And-API-Options">16.3 Code-Level And API Options</a>
+<li><a href="Options-for-Scanner-Speed-and-Size.html#Options-for-Scanner-Speed-and-Size">16.4 Options for Scanner Speed and Size</a>
+<li><a href="Debugging-Options.html#Debugging-Options">16.5 Debugging Options</a>
+<li><a href="Miscellaneous-Options.html#Miscellaneous-Options">16.6 Miscellaneous Options</a>
+</li></ul>
+<li><a name="toc_Performance" href="Performance.html#Performance">17 Performance Considerations</a>
+<li><a name="toc_Cxx" href="Cxx.html#Cxx">18 Generating C++ Scanners</a>
+<li><a name="toc_Reentrant" href="Reentrant.html#Reentrant">19 Reentrant C Scanners</a>
+<ul>
+<li><a href="Reentrant-Uses.html#Reentrant-Uses">19.1 Uses for Reentrant Scanners</a>
+<li><a href="Reentrant-Overview.html#Reentrant-Overview">19.2 An Overview of the Reentrant API</a>
+<li><a href="Reentrant-Example.html#Reentrant-Example">19.3 Reentrant Example</a>
+<li><a href="Reentrant-Detail.html#Reentrant-Detail">19.4 The Reentrant API in Detail</a>
+<ul>
+<li><a href="Specify-Reentrant.html#Specify-Reentrant">19.4.1 Declaring a Scanner As Reentrant</a>
+<li><a href="Extra-Reentrant-Argument.html#Extra-Reentrant-Argument">19.4.2 The Extra Argument</a>
+<li><a href="Global-Replacement.html#Global-Replacement">19.4.3 Global Variables Replaced By Macros</a>
+<li><a href="Init-and-Destroy-Functions.html#Init-and-Destroy-Functions">19.4.4 Init and Destroy Functions</a>
+<li><a href="Accessor-Methods.html#Accessor-Methods">19.4.5 Accessing Variables with Reentrant Scanners</a>
+<li><a href="Extra-Data.html#Extra-Data">19.4.6 Extra Data</a>
+<li><a href="About-yyscan_005ft.html#About-yyscan_005ft">19.4.7 About yyscan_t</a>
+</li></ul>
+<li><a href="Reentrant-Functions.html#Reentrant-Functions">19.5 Functions and Macros Available in Reentrant C Scanners</a>
+</li></ul>
+<li><a name="toc_Lex-and-Posix" href="Lex-and-Posix.html#Lex-and-Posix">20 Incompatibilities with Lex and Posix</a>
+<li><a name="toc_Memory-Management" href="Memory-Management.html#Memory-Management">21 Memory Management</a>
+<ul>
+<li><a href="The-Default-Memory-Management.html#The-Default-Memory-Management">21.1 The Default Memory Management</a>
+<li><a href="Overriding-The-Default-Memory-Management.html#Overriding-The-Default-Memory-Management">21.2 Overriding The Default Memory Management</a>
+<li><a href="A-Note-About-yytext-And-Memory.html#A-Note-About-yytext-And-Memory">21.3 A Note About yytext And Memory</a>
+</li></ul>
+<li><a name="toc_Serialized-Tables" href="Serialized-Tables.html#Serialized-Tables">22 Serialized Tables</a>
+<ul>
+<li><a href="Creating-Serialized-Tables.html#Creating-Serialized-Tables">22.1 Creating Serialized Tables</a>
+<li><a href="Loading-and-Unloading-Serialized-Tables.html#Loading-and-Unloading-Serialized-Tables">22.2 Loading and Unloading Serialized Tables</a>
+<li><a href="Tables-File-Format.html#Tables-File-Format">22.3 Tables File Format</a>
+</li></ul>
+<li><a name="toc_Diagnostics" href="Diagnostics.html#Diagnostics">23 Diagnostics</a>
+<li><a name="toc_Limitations" href="Limitations.html#Limitations">24 Limitations</a>
+<li><a name="toc_Bibliography" href="Bibliography.html#Bibliography">25 Additional Reading</a>
+<li><a name="toc_FAQ" href="FAQ.html#FAQ">FAQ</a>
+<ul>
+<li><a href="When-was-flex-born_003f.html#When-was-flex-born_003f">When was flex born?</a>
+<li><a href="How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f.html#How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f">How do I expand backslash-escape sequences in C-style quoted strings?</a>
+<li><a href="Why-do-flex-scanners-call-fileno-if-it-is-not-ANSI-compatible_003f.html#Why-do-flex-scanners-call-fileno-if-it-is-not-ANSI-compatible_003f">Why do flex scanners call fileno if it is not ANSI compatible?</a>
+<li><a href="Does-flex-support-recursive-pattern-definitions_003f.html#Does-flex-support-recursive-pattern-definitions_003f">Does flex support recursive pattern definitions?</a>
+<li><a href="How-do-I-skip-huge-chunks-of-input-_0028tens-of-megabytes_0029-while-using-flex_003f.html#How-do-I-skip-huge-chunks-of-input-_0028tens-of-megabytes_0029-while-using-flex_003f">How do I skip huge chunks of input (tens of megabytes) while using flex?</a>
+<li><a href="Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e.html#Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e">Flex is not matching my patterns in the same order that I defined them.</a>
+<li><a href="My-actions-are-executing-out-of-order-or-sometimes-not-at-all_002e.html#My-actions-are-executing-out-of-order-or-sometimes-not-at-all_002e">My actions are executing out of order or sometimes not at all.</a>
+<li><a href="How-can-I-have-multiple-input-sources-feed-into-the-same-scanner-at-the-same-time_003f.html#How-can-I-have-multiple-input-sources-feed-into-the-same-scanner-at-the-same-time_003f">How can I have multiple input sources feed into the same scanner at the same time?</a>
+<li><a href="Can-I-build-nested-parsers-that-work-with-the-same-input-file_003f.html#Can-I-build-nested-parsers-that-work-with-the-same-input-file_003f">Can I build nested parsers that work with the same input file?</a>
+<li><a href="How-can-I-match-text-only-at-the-end-of-a-file_003f.html#How-can-I-match-text-only-at-the-end-of-a-file_003f">How can I match text only at the end of a file?</a>
+<li><a href="How-can-I-make-REJECT-cascade-across-start-condition-boundaries_003f.html#How-can-I-make-REJECT-cascade-across-start-condition-boundaries_003f">How can I make REJECT cascade across start condition boundaries?</a>
+<li><a href="Why-cant-I-use-fast-or-full-tables-with-interactive-mode_003f.html#Why-cant-I-use-fast-or-full-tables-with-interactive-mode_003f">Why can't I use fast or full tables with interactive mode?</a>
+<li><a href="How-much-faster-is-_002dF-or-_002df-than-_002dC_003f.html#How-much-faster-is-_002dF-or-_002df-than-_002dC_003f">How much faster is -F or -f than -C?</a>
+<li><a href="If-I-have-a-simple-grammar-cant-I-just-parse-it-with-flex_003f.html#If-I-have-a-simple-grammar-cant-I-just-parse-it-with-flex_003f">If I have a simple grammar can't I just parse it with flex?</a>
+<li><a href="Why-doesn_0027t-yyrestart_0028_0029-set-the-start-state-back-to-INITIAL_003f.html#Why-doesn_0027t-yyrestart_0028_0029-set-the-start-state-back-to-INITIAL_003f">Why doesn't yyrestart() set the start state back to INITIAL?</a>
+<li><a href="How-can-I-match-C_002dstyle-comments_003f.html#How-can-I-match-C_002dstyle-comments_003f">How can I match C-style comments?</a>
+<li><a href="The-period-isn_0027t-working-the-way-I-expected_002e.html#The-period-isn_0027t-working-the-way-I-expected_002e">The '.' isn't working the way I expected.</a>
+<li><a href="Can-I-get-the-flex-manual-in-another-format_003f.html#Can-I-get-the-flex-manual-in-another-format_003f">Can I get the flex manual in another format?</a>
+<li><a href="Does-there-exist-a-_0022faster_0022-NDFA_002d_003eDFA-algorithm_003f.html#Does-there-exist-a-_0022faster_0022-NDFA_002d_003eDFA-algorithm_003f">Does there exist a "faster" NDFA-&gt;DFA algorithm?</a>
+<li><a href="How-does-flex-compile-the-DFA-so-quickly_003f.html#How-does-flex-compile-the-DFA-so-quickly_003f">How does flex compile the DFA so quickly?</a>
+<li><a href="How-can-I-use-more-than-8192-rules_003f.html#How-can-I-use-more-than-8192-rules_003f">How can I use more than 8192 rules?</a>
+<li><a href="How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f.html#How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f">How do I abandon a file in the middle of a scan and switch to a new file?</a>
+<li><a href="How-do-I-execute-code-only-during-initialization-_0028only-before-the-first-scan_0029_003f.html#How-do-I-execute-code-only-during-initialization-_0028only-before-the-first-scan_0029_003f">How do I execute code only during initialization (only before the first scan)?</a>
+<li><a href="How-do-I-execute-code-at-termination_003f.html#How-do-I-execute-code-at-termination_003f">How do I execute code at termination?</a>
+<li><a href="Where-else-can-I-find-help_003f.html#Where-else-can-I-find-help_003f">Where else can I find help?</a>
+<li><a href="Can-I-include-comments-in-the-_0022rules_0022-section-of-the-file_003f.html#Can-I-include-comments-in-the-_0022rules_0022-section-of-the-file_003f">Can I include comments in the "rules" section of the file?</a>
+<li><a href="I-get-an-error-about-undefined-yywrap_0028_0029_002e.html#I-get-an-error-about-undefined-yywrap_0028_0029_002e">I get an error about undefined yywrap().</a>
+<li><a href="How-can-I-change-the-matching-pattern-at-run-time_003f.html#How-can-I-change-the-matching-pattern-at-run-time_003f">How can I change the matching pattern at run time?</a>
+<li><a href="How-can-I-expand-macros-in-the-input_003f.html#How-can-I-expand-macros-in-the-input_003f">How can I expand macros in the input?</a>
+<li><a href="How-can-I-build-a-two_002dpass-scanner_003f.html#How-can-I-build-a-two_002dpass-scanner_003f">How can I build a two-pass scanner?</a>
+<li><a href="How-do-I-match-any-string-not-matched-in-the-preceding-rules_003f.html#How-do-I-match-any-string-not-matched-in-the-preceding-rules_003f">How do I match any string not matched in the preceding rules?</a>
+<li><a href="I-am-trying-to-port-code-from-AT_0026T-lex-that-uses-yysptr-and-yysbuf_002e.html#I-am-trying-to-port-code-from-AT_0026T-lex-that-uses-yysptr-and-yysbuf_002e">I am trying to port code from AT&amp;T lex that uses yysptr and yysbuf.</a>
+<li><a href="Is-there-a-way-to-make-flex-treat-NULL-like-a-regular-character_003f.html#Is-there-a-way-to-make-flex-treat-NULL-like-a-regular-character_003f">Is there a way to make flex treat NULL like a regular character?</a>
+<li><a href="Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e.html#Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e">Whenever flex can not match the input it says "flex scanner jammed".</a>
+<li><a href="Why-doesn_0027t-flex-have-non_002dgreedy-operators-like-perl-does_003f.html#Why-doesn_0027t-flex-have-non_002dgreedy-operators-like-perl-does_003f">Why doesn't flex have non-greedy operators like perl does?</a>
+<li><a href="Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e.html#Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e">Memory leak - 16386 bytes allocated by malloc.</a>
+<li><a href="How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f.html#How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f">How do I track the byte offset for lseek()?</a>
+<li><a href="How-do-I-use-my-own-I_002fO-classes-in-a-C_002b_002b-scanner_003f.html#How-do-I-use-my-own-I_002fO-classes-in-a-C_002b_002b-scanner_003f">How do I use my own I/O classes in a C++ scanner?</a>
+<li><a href="How-do-I-skip-as-many-chars-as-possible_003f.html#How-do-I-skip-as-many-chars-as-possible_003f">How do I skip as many chars as possible?</a>
+<li><a href="deleteme00.html#deleteme00">deleteme00</a>
+<li><a href="Are-certain-equivalent-patterns-faster-than-others_003f.html#Are-certain-equivalent-patterns-faster-than-others_003f">Are certain equivalent patterns faster than others?</a>
+<li><a href="Is-backing-up-a-big-deal_003f.html#Is-backing-up-a-big-deal_003f">Is backing up a big deal?</a>
+<li><a href="Can-I-fake-multi_002dbyte-character-support_003f.html#Can-I-fake-multi_002dbyte-character-support_003f">Can I fake multi-byte character support?</a>
+<li><a href="deleteme01.html#deleteme01">deleteme01</a>
+<li><a href="Can-you-discuss-some-flex-internals_003f.html#Can-you-discuss-some-flex-internals_003f">Can you discuss some flex internals?</a>
+<li><a href="unput_0028_0029-messes-up-yy_005fat_005fbol.html#unput_0028_0029-messes-up-yy_005fat_005fbol">unput() messes up yy_at_bol</a>
+<li><a href="The-_007c-operator-is-not-doing-what-I-want.html#The-_007c-operator-is-not-doing-what-I-want">The | operator is not doing what I want</a>
+<li><a href="Why-can_0027t-flex-understand-this-variable-trailing-context-pattern_003f.html#Why-can_0027t-flex-understand-this-variable-trailing-context-pattern_003f">Why can't flex understand this variable trailing context pattern?</a>
+<li><a href="The-_005e-operator-isn_0027t-working.html#The-_005e-operator-isn_0027t-working">The ^ operator isn't working</a>
+<li><a href="Trailing-context-is-getting-confused-with-trailing-optional-patterns.html#Trailing-context-is-getting-confused-with-trailing-optional-patterns">Trailing context is getting confused with trailing optional patterns</a>
+<li><a href="Is-flex-GNU-or-not_003f.html#Is-flex-GNU-or-not_003f">Is flex GNU or not?</a>
+<li><a href="ERASEME53.html#ERASEME53">ERASEME53</a>
+<li><a href="I-need-to-scan-if_002dthen_002delse-blocks-and-while-loops.html#I-need-to-scan-if_002dthen_002delse-blocks-and-while-loops">I need to scan if-then-else blocks and while loops</a>
+<li><a href="ERASEME55.html#ERASEME55">ERASEME55</a>
+<li><a href="ERASEME56.html#ERASEME56">ERASEME56</a>
+<li><a href="ERASEME57.html#ERASEME57">ERASEME57</a>
+<li><a href="Is-there-a-repository-for-flex-scanners_003f.html#Is-there-a-repository-for-flex-scanners_003f">Is there a repository for flex scanners?</a>
+<li><a href="How-can-I-conditionally-compile-or-preprocess-my-flex-input-file_003f.html#How-can-I-conditionally-compile-or-preprocess-my-flex-input-file_003f">How can I conditionally compile or preprocess my flex input file?</a>
+<li><a href="Where-can-I-find-grammars-for-lex-and-yacc_003f.html#Where-can-I-find-grammars-for-lex-and-yacc_003f">Where can I find grammars for lex and yacc?</a>
+<li><a href="I-get-an-end_002dof_002dbuffer-message-for-each-character-scanned_002e.html#I-get-an-end_002dof_002dbuffer-message-for-each-character-scanned_002e">I get an end-of-buffer message for each character scanned.</a>
+<li><a href="unnamed_002dfaq_002d62.html#unnamed_002dfaq_002d62">unnamed-faq-62</a>
+<li><a href="unnamed_002dfaq_002d63.html#unnamed_002dfaq_002d63">unnamed-faq-63</a>
+<li><a href="unnamed_002dfaq_002d64.html#unnamed_002dfaq_002d64">unnamed-faq-64</a>
+<li><a href="unnamed_002dfaq_002d65.html#unnamed_002dfaq_002d65">unnamed-faq-65</a>
+<li><a href="unnamed_002dfaq_002d66.html#unnamed_002dfaq_002d66">unnamed-faq-66</a>
+<li><a href="unnamed_002dfaq_002d67.html#unnamed_002dfaq_002d67">unnamed-faq-67</a>
+<li><a href="unnamed_002dfaq_002d68.html#unnamed_002dfaq_002d68">unnamed-faq-68</a>
+<li><a href="unnamed_002dfaq_002d69.html#unnamed_002dfaq_002d69">unnamed-faq-69</a>
+<li><a href="unnamed_002dfaq_002d70.html#unnamed_002dfaq_002d70">unnamed-faq-70</a>
+<li><a href="unnamed_002dfaq_002d71.html#unnamed_002dfaq_002d71">unnamed-faq-71</a>
+<li><a href="unnamed_002dfaq_002d72.html#unnamed_002dfaq_002d72">unnamed-faq-72</a>
+<li><a href="unnamed_002dfaq_002d73.html#unnamed_002dfaq_002d73">unnamed-faq-73</a>
+<li><a href="unnamed_002dfaq_002d74.html#unnamed_002dfaq_002d74">unnamed-faq-74</a>
+<li><a href="unnamed_002dfaq_002d75.html#unnamed_002dfaq_002d75">unnamed-faq-75</a>
+<li><a href="unnamed_002dfaq_002d76.html#unnamed_002dfaq_002d76">unnamed-faq-76</a>
+<li><a href="unnamed_002dfaq_002d77.html#unnamed_002dfaq_002d77">unnamed-faq-77</a>
+<li><a href="unnamed_002dfaq_002d78.html#unnamed_002dfaq_002d78">unnamed-faq-78</a>
+<li><a href="unnamed_002dfaq_002d79.html#unnamed_002dfaq_002d79">unnamed-faq-79</a>
+<li><a href="unnamed_002dfaq_002d80.html#unnamed_002dfaq_002d80">unnamed-faq-80</a>
+<li><a href="unnamed_002dfaq_002d81.html#unnamed_002dfaq_002d81">unnamed-faq-81</a>
+<li><a href="unnamed_002dfaq_002d82.html#unnamed_002dfaq_002d82">unnamed-faq-82</a>
+<li><a href="unnamed_002dfaq_002d83.html#unnamed_002dfaq_002d83">unnamed-faq-83</a>
+<li><a href="unnamed_002dfaq_002d84.html#unnamed_002dfaq_002d84">unnamed-faq-84</a>
+<li><a href="unnamed_002dfaq_002d85.html#unnamed_002dfaq_002d85">unnamed-faq-85</a>
+<li><a href="unnamed_002dfaq_002d86.html#unnamed_002dfaq_002d86">unnamed-faq-86</a>
+<li><a href="unnamed_002dfaq_002d87.html#unnamed_002dfaq_002d87">unnamed-faq-87</a>
+<li><a href="unnamed_002dfaq_002d88.html#unnamed_002dfaq_002d88">unnamed-faq-88</a>
+<li><a href="unnamed_002dfaq_002d90.html#unnamed_002dfaq_002d90">unnamed-faq-90</a>
+<li><a href="unnamed_002dfaq_002d91.html#unnamed_002dfaq_002d91">unnamed-faq-91</a>
+<li><a href="unnamed_002dfaq_002d92.html#unnamed_002dfaq_002d92">unnamed-faq-92</a>
+<li><a href="unnamed_002dfaq_002d93.html#unnamed_002dfaq_002d93">unnamed-faq-93</a>
+<li><a href="unnamed_002dfaq_002d94.html#unnamed_002dfaq_002d94">unnamed-faq-94</a>
+<li><a href="unnamed_002dfaq_002d95.html#unnamed_002dfaq_002d95">unnamed-faq-95</a>
+<li><a href="unnamed_002dfaq_002d96.html#unnamed_002dfaq_002d96">unnamed-faq-96</a>
+<li><a href="unnamed_002dfaq_002d97.html#unnamed_002dfaq_002d97">unnamed-faq-97</a>
+<li><a href="unnamed_002dfaq_002d98.html#unnamed_002dfaq_002d98">unnamed-faq-98</a>
+<li><a href="unnamed_002dfaq_002d99.html#unnamed_002dfaq_002d99">unnamed-faq-99</a>
+<li><a href="unnamed_002dfaq_002d100.html#unnamed_002dfaq_002d100">unnamed-faq-100</a>
+<li><a href="unnamed_002dfaq_002d101.html#unnamed_002dfaq_002d101">unnamed-faq-101</a>
+<li><a href="What-is-the-difference-between-YYLEX_005fPARAM-and-YY_005fDECL_003f.html#What-is-the-difference-between-YYLEX_005fPARAM-and-YY_005fDECL_003f">What is the difference between YYLEX_PARAM and YY_DECL?</a>
+<li><a href="Why-do-I-get-_0022conflicting-types-for-yylex_0022-error_003f.html#Why-do-I-get-_0022conflicting-types-for-yylex_0022-error_003f">Why do I get "conflicting types for yylex" error?</a>
+<li><a href="How-do-I-access-the-values-set-in-a-Flex-action-from-within-a-Bison-action_003f.html#How-do-I-access-the-values-set-in-a-Flex-action-from-within-a-Bison-action_003f">How do I access the values set in a Flex action from within a Bison action?</a>
+</li></ul>
+<li><a name="toc_Appendices" href="Appendices.html#Appendices">Appendix A Appendices</a>
+<ul>
+<li><a href="Makefiles-and-Flex.html#Makefiles-and-Flex">A.1 Makefiles and Flex</a>
+<li><a href="Bison-Bridge.html#Bison-Bridge">A.2 C Scanners with Bison Parsers</a>
+<li><a href="M4-Dependency.html#M4-Dependency">A.3 M4 Dependency</a>
+<li><a href="Common-Patterns.html#Common-Patterns">A.4 Common Patterns</a>
+<ul>
+<li><a href="Numbers.html#Numbers">A.4.1 Numbers</a>
+<li><a href="Identifiers.html#Identifiers">A.4.2 Identifiers</a>
+<li><a href="Quoted-Constructs.html#Quoted-Constructs">A.4.3 Quoted Constructs</a>
+<li><a href="Addresses.html#Addresses">A.4.4 Addresses</a>
+</li></ul>
+</li></ul>
+<li><a name="toc_Indices" href="Indices.html#Indices">Indices</a>
+<ul>
+<li><a href="Concept-Index.html#Concept-Index">Concept Index</a>
+<li><a href="Index-of-Functions-and-Macros.html#Index-of-Functions-and-Macros">Index of Functions and Macros</a>
+<li><a href="Index-of-Variables.html#Index-of-Variables">Index of Variables</a>
+<li><a href="Index-of-Data-Types.html#Index-of-Data-Types">Index of Data Types</a>
+<li><a href="Index-of-Hooks.html#Index-of-Hooks">Index of Hooks</a>
+<li><a href="Index-of-Scanner-Options.html#Index-of-Scanner-Options">Index of Scanner Options</a>
+</li></ul>
+</li></ul>
+</div>
+
+
+
+<div class="node">
+<a name="Top"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Copyright.html#Copyright">Copyright</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="../index.html#dir">(dir)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="../index.html#dir">(dir)</a>
+<hr>
+</div>
+
+<h2 class="unnumbered">flex</h2>
+
+<p>This manual describes <code>flex</code>, a tool for generating programs that
+perform pattern-matching on text.  The manual includes both tutorial and
+reference sections.
+
+   <p>This edition of <cite>The flex Manual</cite> documents <code>flex</code> version
+2.5.35. It was last updated on 10 September 2007.
+
+   <p>This manual was written by Vern Paxson, Will Estes and John Millaway.
+
+<ul class="menu">
+<li><a accesskey="1" href="Copyright.html#Copyright">Copyright</a>
+<li><a accesskey="2" href="Reporting-Bugs.html#Reporting-Bugs">Reporting Bugs</a>
+<li><a accesskey="3" href="Introduction.html#Introduction">Introduction</a>
+<li><a accesskey="4" href="Simple-Examples.html#Simple-Examples">Simple Examples</a>
+<li><a accesskey="5" href="Format.html#Format">Format</a>
+<li><a accesskey="6" href="Patterns.html#Patterns">Patterns</a>
+<li><a accesskey="7" href="Matching.html#Matching">Matching</a>
+<li><a accesskey="8" href="Actions.html#Actions">Actions</a>
+<li><a accesskey="9" href="Generated-Scanner.html#Generated-Scanner">Generated Scanner</a>
+<li><a href="Start-Conditions.html#Start-Conditions">Start Conditions</a>
+<li><a href="Multiple-Input-Buffers.html#Multiple-Input-Buffers">Multiple Input Buffers</a>
+<li><a href="EOF.html#EOF">EOF</a>
+<li><a href="Misc-Macros.html#Misc-Macros">Misc Macros</a>
+<li><a href="User-Values.html#User-Values">User Values</a>
+<li><a href="Yacc.html#Yacc">Yacc</a>
+<li><a href="Scanner-Options.html#Scanner-Options">Scanner Options</a>
+<li><a href="Performance.html#Performance">Performance</a>
+<li><a href="Cxx.html#Cxx">Cxx</a>
+<li><a href="Reentrant.html#Reentrant">Reentrant</a>
+<li><a href="Lex-and-Posix.html#Lex-and-Posix">Lex and Posix</a>
+<li><a href="Memory-Management.html#Memory-Management">Memory Management</a>
+<li><a href="Serialized-Tables.html#Serialized-Tables">Serialized Tables</a>
+<li><a href="Diagnostics.html#Diagnostics">Diagnostics</a>
+<li><a href="Limitations.html#Limitations">Limitations</a>
+<li><a href="Bibliography.html#Bibliography">Bibliography</a>
+<li><a href="FAQ.html#FAQ">FAQ</a>
+<li><a href="Appendices.html#Appendices">Appendices</a>
+<li><a href="Indices.html#Indices">Indices</a>
+
+</li></ul>
+<p>--- The Detailed Node Listing ---
+
+<p>Format of the Input File
+
+</p>
+<ul class="menu">
+<li><a href="Definitions-Section.html#Definitions-Section">Definitions Section</a>
+<li><a href="Rules-Section.html#Rules-Section">Rules Section</a>
+<li><a href="User-Code-Section.html#User-Code-Section">User Code Section</a>
+<li><a href="Comments-in-the-Input.html#Comments-in-the-Input">Comments in the Input</a>
+
+</li></ul>
+<p>Scanner Options
+
+</p>
+<ul class="menu">
+<li><a href="Options-for-Specifying-Filenames.html#Options-for-Specifying-Filenames">Options for Specifying Filenames</a>
+<li><a href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior">Options Affecting Scanner Behavior</a>
+<li><a href="Code_002dLevel-And-API-Options.html#Code_002dLevel-And-API-Options">Code-Level And API Options</a>
+<li><a href="Options-for-Scanner-Speed-and-Size.html#Options-for-Scanner-Speed-and-Size">Options for Scanner Speed and Size</a>
+<li><a href="Debugging-Options.html#Debugging-Options">Debugging Options</a>
+<li><a href="Miscellaneous-Options.html#Miscellaneous-Options">Miscellaneous Options</a>
+
+</li></ul>
+<p>Reentrant C Scanners
+
+</p>
+<ul class="menu">
+<li><a href="Reentrant-Uses.html#Reentrant-Uses">Reentrant Uses</a>
+<li><a href="Reentrant-Overview.html#Reentrant-Overview">Reentrant Overview</a>
+<li><a href="Reentrant-Example.html#Reentrant-Example">Reentrant Example</a>
+<li><a href="Reentrant-Detail.html#Reentrant-Detail">Reentrant Detail</a>
+<li><a href="Reentrant-Functions.html#Reentrant-Functions">Reentrant Functions</a>
+
+</li></ul>
+<p>The Reentrant API in Detail
+
+</p>
+<ul class="menu">
+<li><a href="Specify-Reentrant.html#Specify-Reentrant">Specify Reentrant</a>
+<li><a href="Extra-Reentrant-Argument.html#Extra-Reentrant-Argument">Extra Reentrant Argument</a>
+<li><a href="Global-Replacement.html#Global-Replacement">Global Replacement</a>
+<li><a href="Init-and-Destroy-Functions.html#Init-and-Destroy-Functions">Init and Destroy Functions</a>
+<li><a href="Accessor-Methods.html#Accessor-Methods">Accessor Methods</a>
+<li><a href="Extra-Data.html#Extra-Data">Extra Data</a>
+<li><a href="About-yyscan_005ft.html#About-yyscan_005ft">About yyscan_t</a>
+
+</li></ul>
+<p>Memory Management
+
+</p>
+<ul class="menu">
+<li><a href="The-Default-Memory-Management.html#The-Default-Memory-Management">The Default Memory Management</a>
+<li><a href="Overriding-The-Default-Memory-Management.html#Overriding-The-Default-Memory-Management">Overriding The Default Memory Management</a>
+<li><a href="A-Note-About-yytext-And-Memory.html#A-Note-About-yytext-And-Memory">A Note About yytext And Memory</a>
+
+</li></ul>
+<p>Serialized Tables
+
+</p>
+<ul class="menu">
+<li><a href="Creating-Serialized-Tables.html#Creating-Serialized-Tables">Creating Serialized Tables</a>
+<li><a href="Loading-and-Unloading-Serialized-Tables.html#Loading-and-Unloading-Serialized-Tables">Loading and Unloading Serialized Tables</a>
+<li><a href="Tables-File-Format.html#Tables-File-Format">Tables File Format</a>
+
+</li></ul>
+<p>FAQ
+
+</p>
+<ul class="menu">
+<li><a href="When-was-flex-born_003f.html#When-was-flex-born_003f">When was flex born?</a>
+<li><a href="How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f.html#How-do-I-expand-backslash_002descape-sequences-in-C_002dstyle-quoted-strings_003f">How do I expand backslash-escape sequences in C-style quoted strings?</a>
+<li><a href="Why-do-flex-scanners-call-fileno-if-it-is-not-ANSI-compatible_003f.html#Why-do-flex-scanners-call-fileno-if-it-is-not-ANSI-compatible_003f">Why do flex scanners call fileno if it is not ANSI compatible?</a>
+<li><a href="Does-flex-support-recursive-pattern-definitions_003f.html#Does-flex-support-recursive-pattern-definitions_003f">Does flex support recursive pattern definitions?</a>
+<li><a href="How-do-I-skip-huge-chunks-of-input-_0028tens-of-megabytes_0029-while-using-flex_003f.html#How-do-I-skip-huge-chunks-of-input-_0028tens-of-megabytes_0029-while-using-flex_003f">How do I skip huge chunks of input (tens of megabytes) while using flex?</a>
+<li><a href="Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e.html#Flex-is-not-matching-my-patterns-in-the-same-order-that-I-defined-them_002e">Flex is not matching my patterns in the same order that I defined them.</a>
+<li><a href="My-actions-are-executing-out-of-order-or-sometimes-not-at-all_002e.html#My-actions-are-executing-out-of-order-or-sometimes-not-at-all_002e">My actions are executing out of order or sometimes not at all.</a>
+<li><a href="How-can-I-have-multiple-input-sources-feed-into-the-same-scanner-at-the-same-time_003f.html#How-can-I-have-multiple-input-sources-feed-into-the-same-scanner-at-the-same-time_003f">How can I have multiple input sources feed into the same scanner at the same time?</a>
+<li><a href="Can-I-build-nested-parsers-that-work-with-the-same-input-file_003f.html#Can-I-build-nested-parsers-that-work-with-the-same-input-file_003f">Can I build nested parsers that work with the same input file?</a>
+<li><a href="How-can-I-match-text-only-at-the-end-of-a-file_003f.html#How-can-I-match-text-only-at-the-end-of-a-file_003f">How can I match text only at the end of a file?</a>
+<li><a href="How-can-I-make-REJECT-cascade-across-start-condition-boundaries_003f.html#How-can-I-make-REJECT-cascade-across-start-condition-boundaries_003f">How can I make REJECT cascade across start condition boundaries?</a>
+<li><a href="Why-cant-I-use-fast-or-full-tables-with-interactive-mode_003f.html#Why-cant-I-use-fast-or-full-tables-with-interactive-mode_003f">Why cant I use fast or full tables with interactive mode?</a>
+<li><a href="How-much-faster-is-_002dF-or-_002df-than-_002dC_003f.html#How-much-faster-is-_002dF-or-_002df-than-_002dC_003f">How much faster is -F or -f than -C?</a>
+<li><a href="If-I-have-a-simple-grammar-cant-I-just-parse-it-with-flex_003f.html#If-I-have-a-simple-grammar-cant-I-just-parse-it-with-flex_003f">If I have a simple grammar cant I just parse it with flex?</a>
+<li><a href="Why-doesn_0027t-yyrestart_0028_0029-set-the-start-state-back-to-INITIAL_003f.html#Why-doesn_0027t-yyrestart_0028_0029-set-the-start-state-back-to-INITIAL_003f">Why doesn't yyrestart() set the start state back to INITIAL?</a>
+<li><a href="How-can-I-match-C_002dstyle-comments_003f.html#How-can-I-match-C_002dstyle-comments_003f">How can I match C-style comments?</a>
+<li><a href="The-period-isn_0027t-working-the-way-I-expected_002e.html#The-period-isn_0027t-working-the-way-I-expected_002e">The period isn't working the way I expected.</a>
+<li><a href="Can-I-get-the-flex-manual-in-another-format_003f.html#Can-I-get-the-flex-manual-in-another-format_003f">Can I get the flex manual in another format?</a>
+<li><a href="Does-there-exist-a-_0022faster_0022-NDFA_002d_003eDFA-algorithm_003f.html#Does-there-exist-a-_0022faster_0022-NDFA_002d_003eDFA-algorithm_003f">Does there exist a "faster" NDFA-&gt;DFA algorithm?</a>
+<li><a href="How-does-flex-compile-the-DFA-so-quickly_003f.html#How-does-flex-compile-the-DFA-so-quickly_003f">How does flex compile the DFA so quickly?</a>
+<li><a href="How-can-I-use-more-than-8192-rules_003f.html#How-can-I-use-more-than-8192-rules_003f">How can I use more than 8192 rules?</a>
+<li><a href="How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f.html#How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f">How do I abandon a file in the middle of a scan and switch to a new file?</a>
+<li><a href="How-do-I-execute-code-only-during-initialization-_0028only-before-the-first-scan_0029_003f.html#How-do-I-execute-code-only-during-initialization-_0028only-before-the-first-scan_0029_003f">How do I execute code only during initialization (only before the first scan)?</a>
+<li><a href="How-do-I-execute-code-at-termination_003f.html#How-do-I-execute-code-at-termination_003f">How do I execute code at termination?</a>
+<li><a href="Where-else-can-I-find-help_003f.html#Where-else-can-I-find-help_003f">Where else can I find help?</a>
+<li><a href="Can-I-include-comments-in-the-_0022rules_0022-section-of-the-file_003f.html#Can-I-include-comments-in-the-_0022rules_0022-section-of-the-file_003f">Can I include comments in the "rules" section of the file?</a>
+<li><a href="I-get-an-error-about-undefined-yywrap_0028_0029_002e.html#I-get-an-error-about-undefined-yywrap_0028_0029_002e">I get an error about undefined yywrap().</a>
+<li><a href="How-can-I-change-the-matching-pattern-at-run-time_003f.html#How-can-I-change-the-matching-pattern-at-run-time_003f">How can I change the matching pattern at run time?</a>
+<li><a href="How-can-I-expand-macros-in-the-input_003f.html#How-can-I-expand-macros-in-the-input_003f">How can I expand macros in the input?</a>
+<li><a href="How-can-I-build-a-two_002dpass-scanner_003f.html#How-can-I-build-a-two_002dpass-scanner_003f">How can I build a two-pass scanner?</a>
+<li><a href="How-do-I-match-any-string-not-matched-in-the-preceding-rules_003f.html#How-do-I-match-any-string-not-matched-in-the-preceding-rules_003f">How do I match any string not matched in the preceding rules?</a>
+<li><a href="I-am-trying-to-port-code-from-AT_0026T-lex-that-uses-yysptr-and-yysbuf_002e.html#I-am-trying-to-port-code-from-AT_0026T-lex-that-uses-yysptr-and-yysbuf_002e">I am trying to port code from AT&amp;T lex that uses yysptr and yysbuf.</a>
+<li><a href="Is-there-a-way-to-make-flex-treat-NULL-like-a-regular-character_003f.html#Is-there-a-way-to-make-flex-treat-NULL-like-a-regular-character_003f">Is there a way to make flex treat NULL like a regular character?</a>
+<li><a href="Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e.html#Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e">Whenever flex can not match the input it says "flex scanner jammed".</a>
+<li><a href="Why-doesn_0027t-flex-have-non_002dgreedy-operators-like-perl-does_003f.html#Why-doesn_0027t-flex-have-non_002dgreedy-operators-like-perl-does_003f">Why doesn't flex have non-greedy operators like perl does?</a>
+<li><a href="Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e.html#Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e">Memory leak - 16386 bytes allocated by malloc.</a>
+<li><a href="How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f.html#How-do-I-track-the-byte-offset-for-lseek_0028_0029_003f">How do I track the byte offset for lseek()?</a>
+<li><a href="How-do-I-use-my-own-I_002fO-classes-in-a-C_002b_002b-scanner_003f.html#How-do-I-use-my-own-I_002fO-classes-in-a-C_002b_002b-scanner_003f">How do I use my own I/O classes in a C++ scanner?</a>
+<li><a href="How-do-I-skip-as-many-chars-as-possible_003f.html#How-do-I-skip-as-many-chars-as-possible_003f">How do I skip as many chars as possible?</a>
+<li><a href="deleteme00.html#deleteme00">deleteme00</a>
+<li><a href="Are-certain-equivalent-patterns-faster-than-others_003f.html#Are-certain-equivalent-patterns-faster-than-others_003f">Are certain equivalent patterns faster than others?</a>
+<li><a href="Is-backing-up-a-big-deal_003f.html#Is-backing-up-a-big-deal_003f">Is backing up a big deal?</a>
+<li><a href="Can-I-fake-multi_002dbyte-character-support_003f.html#Can-I-fake-multi_002dbyte-character-support_003f">Can I fake multi-byte character support?</a>
+<li><a href="deleteme01.html#deleteme01">deleteme01</a>
+<li><a href="Can-you-discuss-some-flex-internals_003f.html#Can-you-discuss-some-flex-internals_003f">Can you discuss some flex internals?</a>
+<li><a href="unput_0028_0029-messes-up-yy_005fat_005fbol.html#unput_0028_0029-messes-up-yy_005fat_005fbol">unput() messes up yy_at_bol</a>
+<li><a href="The-_007c-operator-is-not-doing-what-I-want.html#The-_007c-operator-is-not-doing-what-I-want">The | operator is not doing what I want</a>
+<li><a href="Why-can_0027t-flex-understand-this-variable-trailing-context-pattern_003f.html#Why-can_0027t-flex-understand-this-variable-trailing-context-pattern_003f">Why can't flex understand this variable trailing context pattern?</a>
+<li><a href="The-_005e-operator-isn_0027t-working.html#The-_005e-operator-isn_0027t-working">The ^ operator isn't working</a>
+<li><a href="Trailing-context-is-getting-confused-with-trailing-optional-patterns.html#Trailing-context-is-getting-confused-with-trailing-optional-patterns">Trailing context is getting confused with trailing optional patterns</a>
+<li><a href="Is-flex-GNU-or-not_003f.html#Is-flex-GNU-or-not_003f">Is flex GNU or not?</a>
+<li><a href="ERASEME53.html#ERASEME53">ERASEME53</a>
+<li><a href="I-need-to-scan-if_002dthen_002delse-blocks-and-while-loops.html#I-need-to-scan-if_002dthen_002delse-blocks-and-while-loops">I need to scan if-then-else blocks and while loops</a>
+<li><a href="ERASEME55.html#ERASEME55">ERASEME55</a>
+<li><a href="ERASEME56.html#ERASEME56">ERASEME56</a>
+<li><a href="ERASEME57.html#ERASEME57">ERASEME57</a>
+<li><a href="Is-there-a-repository-for-flex-scanners_003f.html#Is-there-a-repository-for-flex-scanners_003f">Is there a repository for flex scanners?</a>
+<li><a href="How-can-I-conditionally-compile-or-preprocess-my-flex-input-file_003f.html#How-can-I-conditionally-compile-or-preprocess-my-flex-input-file_003f">How can I conditionally compile or preprocess my flex input file?</a>
+<li><a href="Where-can-I-find-grammars-for-lex-and-yacc_003f.html#Where-can-I-find-grammars-for-lex-and-yacc_003f">Where can I find grammars for lex and yacc?</a>
+<li><a href="I-get-an-end_002dof_002dbuffer-message-for-each-character-scanned_002e.html#I-get-an-end_002dof_002dbuffer-message-for-each-character-scanned_002e">I get an end-of-buffer message for each character scanned.</a>
+<li><a href="unnamed_002dfaq_002d62.html#unnamed_002dfaq_002d62">unnamed-faq-62</a>
+<li><a href="unnamed_002dfaq_002d63.html#unnamed_002dfaq_002d63">unnamed-faq-63</a>
+<li><a href="unnamed_002dfaq_002d64.html#unnamed_002dfaq_002d64">unnamed-faq-64</a>
+<li><a href="unnamed_002dfaq_002d65.html#unnamed_002dfaq_002d65">unnamed-faq-65</a>
+<li><a href="unnamed_002dfaq_002d66.html#unnamed_002dfaq_002d66">unnamed-faq-66</a>
+<li><a href="unnamed_002dfaq_002d67.html#unnamed_002dfaq_002d67">unnamed-faq-67</a>
+<li><a href="unnamed_002dfaq_002d68.html#unnamed_002dfaq_002d68">unnamed-faq-68</a>
+<li><a href="unnamed_002dfaq_002d69.html#unnamed_002dfaq_002d69">unnamed-faq-69</a>
+<li><a href="unnamed_002dfaq_002d70.html#unnamed_002dfaq_002d70">unnamed-faq-70</a>
+<li><a href="unnamed_002dfaq_002d71.html#unnamed_002dfaq_002d71">unnamed-faq-71</a>
+<li><a href="unnamed_002dfaq_002d72.html#unnamed_002dfaq_002d72">unnamed-faq-72</a>
+<li><a href="unnamed_002dfaq_002d73.html#unnamed_002dfaq_002d73">unnamed-faq-73</a>
+<li><a href="unnamed_002dfaq_002d74.html#unnamed_002dfaq_002d74">unnamed-faq-74</a>
+<li><a href="unnamed_002dfaq_002d75.html#unnamed_002dfaq_002d75">unnamed-faq-75</a>
+<li><a href="unnamed_002dfaq_002d76.html#unnamed_002dfaq_002d76">unnamed-faq-76</a>
+<li><a href="unnamed_002dfaq_002d77.html#unnamed_002dfaq_002d77">unnamed-faq-77</a>
+<li><a href="unnamed_002dfaq_002d78.html#unnamed_002dfaq_002d78">unnamed-faq-78</a>
+<li><a href="unnamed_002dfaq_002d79.html#unnamed_002dfaq_002d79">unnamed-faq-79</a>
+<li><a href="unnamed_002dfaq_002d80.html#unnamed_002dfaq_002d80">unnamed-faq-80</a>
+<li><a href="unnamed_002dfaq_002d81.html#unnamed_002dfaq_002d81">unnamed-faq-81</a>
+<li><a href="unnamed_002dfaq_002d82.html#unnamed_002dfaq_002d82">unnamed-faq-82</a>
+<li><a href="unnamed_002dfaq_002d83.html#unnamed_002dfaq_002d83">unnamed-faq-83</a>
+<li><a href="unnamed_002dfaq_002d84.html#unnamed_002dfaq_002d84">unnamed-faq-84</a>
+<li><a href="unnamed_002dfaq_002d85.html#unnamed_002dfaq_002d85">unnamed-faq-85</a>
+<li><a href="unnamed_002dfaq_002d86.html#unnamed_002dfaq_002d86">unnamed-faq-86</a>
+<li><a href="unnamed_002dfaq_002d87.html#unnamed_002dfaq_002d87">unnamed-faq-87</a>
+<li><a href="unnamed_002dfaq_002d88.html#unnamed_002dfaq_002d88">unnamed-faq-88</a>
+<li><a href="unnamed_002dfaq_002d90.html#unnamed_002dfaq_002d90">unnamed-faq-90</a>
+<li><a href="unnamed_002dfaq_002d91.html#unnamed_002dfaq_002d91">unnamed-faq-91</a>
+<li><a href="unnamed_002dfaq_002d92.html#unnamed_002dfaq_002d92">unnamed-faq-92</a>
+<li><a href="unnamed_002dfaq_002d93.html#unnamed_002dfaq_002d93">unnamed-faq-93</a>
+<li><a href="unnamed_002dfaq_002d94.html#unnamed_002dfaq_002d94">unnamed-faq-94</a>
+<li><a href="unnamed_002dfaq_002d95.html#unnamed_002dfaq_002d95">unnamed-faq-95</a>
+<li><a href="unnamed_002dfaq_002d96.html#unnamed_002dfaq_002d96">unnamed-faq-96</a>
+<li><a href="unnamed_002dfaq_002d97.html#unnamed_002dfaq_002d97">unnamed-faq-97</a>
+<li><a href="unnamed_002dfaq_002d98.html#unnamed_002dfaq_002d98">unnamed-faq-98</a>
+<li><a href="unnamed_002dfaq_002d99.html#unnamed_002dfaq_002d99">unnamed-faq-99</a>
+<li><a href="unnamed_002dfaq_002d100.html#unnamed_002dfaq_002d100">unnamed-faq-100</a>
+<li><a href="unnamed_002dfaq_002d101.html#unnamed_002dfaq_002d101">unnamed-faq-101</a>
+<li><a href="What-is-the-difference-between-YYLEX_005fPARAM-and-YY_005fDECL_003f.html#What-is-the-difference-between-YYLEX_005fPARAM-and-YY_005fDECL_003f">What is the difference between YYLEX_PARAM and YY_DECL?</a>
+<li><a href="Why-do-I-get-_0022conflicting-types-for-yylex_0022-error_003f.html#Why-do-I-get-_0022conflicting-types-for-yylex_0022-error_003f">Why do I get "conflicting types for yylex" error?</a>
+<li><a href="How-do-I-access-the-values-set-in-a-Flex-action-from-within-a-Bison-action_003f.html#How-do-I-access-the-values-set-in-a-Flex-action-from-within-a-Bison-action_003f">How do I access the values set in a Flex action from within a Bison action?</a>
+
+</li></ul>
+<p>Appendices
+
+</p>
+<ul class="menu">
+<li><a href="Makefiles-and-Flex.html#Makefiles-and-Flex">Makefiles and Flex</a>
+<li><a href="Bison-Bridge.html#Bison-Bridge">Bison Bridge</a>
+<li><a href="M4-Dependency.html#M4-Dependency">M4 Dependency</a>
+<li><a href="Common-Patterns.html#Common-Patterns">Common Patterns</a>
+
+</li></ul>
+<p>Indices
+
+</p>
+<ul class="menu">
+<li><a href="Concept-Index.html#Concept-Index">Concept Index</a>
+<li><a href="Index-of-Functions-and-Macros.html#Index-of-Functions-and-Macros">Index of Functions and Macros</a>
+<li><a href="Index-of-Variables.html#Index-of-Variables">Index of Variables</a>
+<li><a href="Index-of-Data-Types.html#Index-of-Data-Types">Index of Data Types</a>
+<li><a href="Index-of-Hooks.html#Index-of-Hooks">Index of Hooks</a>
+<li><a href="Index-of-Scanner-Options.html#Index-of-Scanner-Options">Index of Scanner Options</a>
+
+   </ul>
+
+   </body></html>
+

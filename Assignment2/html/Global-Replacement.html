@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+<title>Global Replacement - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Reentrant-Detail.html#Reentrant-Detail" title="Reentrant Detail">
+<link rel="prev" href="Extra-Reentrant-Argument.html#Extra-Reentrant-Argument" title="Extra Reentrant Argument">
+<link rel="next" href="Init-and-Destroy-Functions.html#Init-and-Destroy-Functions" title="Init and Destroy Functions">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Global-Replacement"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Init-and-Destroy-Functions.html#Init-and-Destroy-Functions">Init and Destroy Functions</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Extra-Reentrant-Argument.html#Extra-Reentrant-Argument">Extra Reentrant Argument</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Reentrant-Detail.html#Reentrant-Detail">Reentrant Detail</a>
+<hr>
+</div>
+
+<h4 class="subsection">19.4.3 Global Variables Replaced By Macros</h4>
+
+<p><a name="index-reentrant_002c-accessing-flex-variables-420"></a>All global variables in traditional flex have been replaced by macro equivalents.
+
+   <p>Note that in the above example, <code>yyout</code> and <code>yytext</code> are
+not plain variables. These are macros that will expand to their equivalent lvalue. 
+All of the familiar <code>flex</code> globals have been replaced by their macro
+equivalents. In particular, <code>yytext</code>, <code>yyleng</code>, <code>yylineno</code>,
+<code>yyin</code>, <code>yyout</code>, <code>yyextra</code>, <code>yylval</code>, and <code>yylloc</code>
+are macros. You may safely use these macros in actions as if they were plain
+variables. We only tell you this so you don't expect to link to these variables
+externally. Currently, each macro expands to a member of an internal struct, e.g.,
+
+<pre class="example"><pre class="verbatim">     #define yytext (((struct yyguts_t*)yyscanner)->yytext_r)
+</pre>
+</pre>
+   <p>One important thing to remember about
+<code>yytext</code>
+and friends is that
+<code>yytext</code>
+is not a global variable in a reentrant
+scanner, you can not access it directly from outside an action or from
+other functions. You must use an accessor method, e.g.,
+<code>yyget_text</code>,
+to accomplish this. (See below).
+
+   </body></html>
+

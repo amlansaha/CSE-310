@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+<title>Extra Data - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Reentrant-Detail.html#Reentrant-Detail" title="Reentrant Detail">
+<link rel="prev" href="Accessor-Methods.html#Accessor-Methods" title="Accessor Methods">
+<link rel="next" href="About-yyscan_005ft.html#About-yyscan_005ft" title="About yyscan_t">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Extra-Data"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="About-yyscan_005ft.html#About-yyscan_005ft">About yyscan_t</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Accessor-Methods.html#Accessor-Methods">Accessor Methods</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Reentrant-Detail.html#Reentrant-Detail">Reentrant Detail</a>
+<hr>
+</div>
+
+<h4 class="subsection">19.4.6 Extra Data</h4>
+
+<p><a name="index-reentrant_002c-extra-data-427"></a><a name="index-yyextra-428"></a>User-specific data can be stored in <code>yyextra</code>.
+
+   <p>In a reentrant scanner, it is unwise to use global variables to
+communicate with or maintain state between different pieces of your program. 
+However, you may need access to external data or invoke external functions
+from within the scanner actions. 
+Likewise, you may need to pass information to your scanner
+(e.g., open file descriptors, or database connections). 
+In a non-reentrant scanner, the only way to do this would be through the
+use of global variables. 
+<code>Flex</code> allows you to store arbitrary, &ldquo;extra&rdquo; data in a scanner. 
+This data is accessible through the accessor methods
+<code>yyget_extra</code> and <code>yyset_extra</code>
+from outside the scanner, and through the shortcut macro
+<code>yyextra</code>
+from within the scanner itself. They are defined as follows:
+
+   <p><a name="index-YY_005fEXTRA_005fTYPE-_0028reentrant-only_0029-429"></a><a name="index-yyget_005fextra-430"></a><a name="index-yyset_005fextra-431"></a>
+<pre class="example"><pre class="verbatim">         #define YY_EXTRA_TYPE  void*
+         YY_EXTRA_TYPE  yyget_extra ( yyscan_t scanner );
+         void           yyset_extra ( YY_EXTRA_TYPE arbitrary_data , yyscan_t scanner);
+</pre>
+</pre>
+   <p>In addition, an extra form of <code>yylex_init</code> is provided,
+<code>yylex_init_extra</code>. This function is provided so that the yyextra value can
+be accessed from within the very first yyalloc, used to allocate
+the scanner itself.
+
+   <p>By default, <code>YY_EXTRA_TYPE</code> is defined as type <code>void *</code>.  You
+may redefine this type using <code>%option extra-type="your_type"</code> in
+the scanner:
+
+   <p><a name="index-YY_005fEXTRA_005fTYPE_002c-defining-your-own-type-432"></a>
+<pre class="example"><pre class="verbatim">         /* An example of overriding YY_EXTRA_TYPE. */
+         %{
+         #include &lt;sys/stat.h>
+         #include &lt;unistd.h>
+         %}
+         %option reentrant
+         %option extra-type="struct stat *"
+         %%
+     
+         __filesize__     printf( "%ld", yyextra->st_size  );
+         __lastmod__      printf( "%ld", yyextra->st_mtime );
+         %%
+         void scan_file( char* filename )
+         {
+             yyscan_t scanner;
+             struct stat buf;
+             FILE *in;
+     
+             in = fopen( filename, "r" );
+             stat( filename, &amp;buf );
+     
+             yylex_init_extra( buf, &amp;scanner );
+             yyset_in( in, scanner );
+             yylex( scanner );
+             yylex_destroy( scanner );
+     
+             fclose( in );
+        }
+</pre>
+</pre>
+   </body></html>
+

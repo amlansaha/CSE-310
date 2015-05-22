@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<title>unnamed-faq-79 - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="unnamed_002dfaq_002d78.html#unnamed_002dfaq_002d78" title="unnamed-faq-78">
+<link rel="next" href="unnamed_002dfaq_002d80.html#unnamed_002dfaq_002d80" title="unnamed-faq-80">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="unnamed-faq-79"></a>
+<a name="unnamed_002dfaq_002d79"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="unnamed_002dfaq_002d80.html#unnamed_002dfaq_002d80">unnamed-faq-80</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="unnamed_002dfaq_002d78.html#unnamed_002dfaq_002d78">unnamed-faq-78</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">unnamed-faq-79</h3>
+
+<pre class="example"><pre class="verbatim">     To: Adoram Rogel &lt;adoram@hybridge.com>
+     Subject: Re: More than 32K states change hangs
+     In-reply-to: Your message of Tue, 04 Aug 1998 16:55:39 PDT.
+     Date: Tue, 04 Aug 1998 22:28:45 PDT
+     From: Vern Paxson &lt;vern>
+     
+     > Vern Paxson,
+     >
+     > I followed your advice, posted on Usenet bu you, and emailed to me
+     > personally by you, on how to overcome the 32K states limit. I'm running
+     > on Linux machines.
+     > I took the full source of version 2.5.4 and did the following changes in
+     > flexdef.h:
+     > #define JAMSTATE -327660
+     > #define MAXIMUM_MNS 319990
+     > #define BAD_SUBSCRIPT -327670
+     > #define MAX_SHORT 327000
+     >
+     > and compiled.
+     > All looked fine, including check and bigcheck, so I installed.
+     
+     Hmmm, you shouldn't increase MAX_SHORT, though looking through my email
+     archives I see that I did indeed recommend doing so.  Try setting it back
+     to 32700; that should suffice that you no longer need -Ca.  If it still
+     hangs, then the interesting question is - where?
+     
+     > Compiling the same hanged program with a out-of-the-box (RedHat 4.2
+     > distribution of Linux)
+     > flex 2.5.4 binary works.
+     
+     Since Linux comes with source code, you should diff it against what
+     you have to see what problems they missed.
+     
+     > Should I always compile with the -Ca option now ? even short and simple
+     > filters ?
+     
+     No, definitely not.  It's meant to be for those situations where you
+     absolutely must squeeze every last cycle out of your scanner.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

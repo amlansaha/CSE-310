@@ -1,0 +1,210 @@
+<html lang="en">
+<head>
+<title>Code-Level And API Options - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="Scanner-Options.html#Scanner-Options" title="Scanner Options">
+<link rel="prev" href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior" title="Options Affecting Scanner Behavior">
+<link rel="next" href="Options-for-Scanner-Speed-and-Size.html#Options-for-Scanner-Speed-and-Size" title="Options for Scanner Speed and Size">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Code-Level-And-API-Options"></a>
+<a name="Code_002dLevel-And-API-Options"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Options-for-Scanner-Speed-and-Size.html#Options-for-Scanner-Speed-and-Size">Options for Scanner Speed and Size</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior">Options Affecting Scanner Behavior</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="Scanner-Options.html#Scanner-Options">Scanner Options</a>
+<hr>
+</div>
+
+<h3 class="section">16.3 Code-Level And API Options</h3>
+
+     <dl>
+<a name="option_002dansi_002ddefinitions"></a><a name="index-g_t_002d_002d_002doption_002dansi_002ddefinitions-293"></a><a name="index-ansi_002ddefinitions-294"></a><dt>&lsquo;<samp><span class="samp">--ansi-definitions, </span><code>%option ansi-definitions</code></samp>&rsquo;<dd>instruct flex to generate ANSI C99 definitions for functions. 
+This option is enabled by default. 
+If <code>%option noansi-definitions</code> is specified, then the obsolete style
+is generated.
+
+     <p><a name="option_002dansi_002dprototypes"></a><a name="index-g_t_002d_002d_002doption_002dansi_002dprototypes-295"></a><a name="index-ansi_002dprototypes-296"></a><br><dt>&lsquo;<samp><span class="samp">--ansi-prototypes, </span><code>%option ansi-prototypes</code></samp>&rsquo;<dd>instructs flex to generate ANSI C99 prototypes for functions. 
+This option is enabled by default. 
+If <code>noansi-prototypes</code> is specified, then
+prototypes will have empty parameter lists.
+
+     <p><a name="option_002dbison_002dbridge"></a><a name="index-g_t_002d_002d_002dbison_002dbridge-297"></a><a name="index-bison_002dbridge-298"></a><br><dt>&lsquo;<samp><span class="samp">--bison-bridge, </span><code>%option bison-bridge</code></samp>&rsquo;<dd>instructs flex to generate a C scanner that is
+meant to be called by a
+<code>GNU bison</code>
+parser. The scanner has minor API changes for
+<code>bison</code>
+compatibility. In particular, the declaration of
+<code>yylex</code>
+is modified to take an additional parameter,
+<code>yylval</code>. 
+See <a href="Bison-Bridge.html#Bison-Bridge">Bison Bridge</a>.
+
+     <p><a name="option_002dbison_002dlocations"></a><a name="index-g_t_002d_002d_002dbison_002dlocations-299"></a><a name="index-bison_002dlocations-300"></a><br><dt>&lsquo;<samp><span class="samp">--bison-locations, </span><code>%option bison-locations</code></samp>&rsquo;<dd>instruct flex that
+<code>GNU bison</code> <code>%locations</code> are being used. 
+This means <code>yylex</code> will be passed
+an additional parameter, <code>yylloc</code>. This option
+implies <code>%option bison-bridge</code>. 
+See <a href="Bison-Bridge.html#Bison-Bridge">Bison Bridge</a>.
+
+     <p><a name="option_002dnoline"></a><a name="index-g_t_002dL-301"></a><a name="index-g_t_002d_002d_002dnoline-302"></a><a name="index-noline-303"></a><br><dt>&lsquo;<samp><span class="samp">-L, --noline, </span><code>%option noline</code></samp>&rsquo;<dd>instructs
+<code>flex</code>
+not to generate
+<code>#line</code>
+directives.  Without this option,
+<code>flex</code>
+peppers the generated scanner
+with <code>#line</code> directives so error messages in the actions will be correctly
+located with respect to either the original
+<code>flex</code>
+input file (if the errors are due to code in the input file), or
+<samp><span class="file">lex.yy.c</span></samp>
+(if the errors are
+<code>flex</code>'s
+fault &ndash; you should report these sorts of errors to the email address
+given in <a href="Reporting-Bugs.html#Reporting-Bugs">Reporting Bugs</a>).
+
+     <p><a name="option_002dreentrant"></a><a name="index-g_t_002dR-304"></a><a name="index-g_t_002d_002d_002dreentrant-305"></a><a name="index-reentrant-306"></a><br><dt>&lsquo;<samp><span class="samp">-R, --reentrant, </span><code>%option reentrant</code></samp>&rsquo;<dd>instructs flex to generate a reentrant C scanner.  The generated scanner
+may safely be used in a multi-threaded environment. The API for a
+reentrant scanner is different than for a non-reentrant scanner
+see <a href="Reentrant.html#Reentrant">Reentrant</a>).  Because of the API difference between
+reentrant and non-reentrant <code>flex</code> scanners, non-reentrant flex
+code must be modified before it is suitable for use with this option. 
+This option is not compatible with the &lsquo;<samp><span class="samp">--c++</span></samp>&rsquo; option.
+
+     <p>The option &lsquo;<samp><span class="samp">--reentrant</span></samp>&rsquo; does not affect the performance of
+the scanner.
+
+     <p><a name="option_002dc_002b_002b"></a><a name="index-g_t_002d_002b-307"></a><a name="index-g_t_002d_002d_002dc_002b_002b-308"></a><a name="index-c_002b_002b-309"></a><br><dt>&lsquo;<samp><span class="samp">-+, --c++, </span><code>%option c++</code></samp>&rsquo;<dd>specifies that you want flex to generate a C++
+scanner class.  See <a href="Cxx.html#Cxx">Cxx</a>, for
+details.
+
+     <p><a name="option_002darray"></a><a name="index-g_t_002d_002d_002darray-310"></a><a name="index-array-311"></a><br><dt>&lsquo;<samp><span class="samp">--array, </span><code>%option array</code></samp>&rsquo;<dd>specifies that you want yytext to be an array instead of a char*
+
+     <p><a name="option_002dpointer"></a><a name="index-g_t_002d_002d_002dpointer-312"></a><a name="index-pointer-313"></a><br><dt>&lsquo;<samp><span class="samp">--pointer, </span><code>%option pointer</code></samp>&rsquo;<dd>specify that  <code>yytext</code> should be a <code>char *</code>, not an array. 
+This default is <code>char *</code>.
+
+     <p><a name="option_002dprefix"></a><a name="index-g_t_002dP-314"></a><a name="index-g_t_002d_002d_002dprefix-315"></a><a name="index-prefix-316"></a><br><dt>&lsquo;<samp><span class="samp">-PPREFIX, --prefix=PREFIX, </span><code>%option prefix="PREFIX"</code></samp>&rsquo;<dd>changes the default &lsquo;<samp><span class="samp">yy</span></samp>&rsquo; prefix used by <code>flex</code> for all
+globally-visible variable and function names to instead be
+&lsquo;<samp><span class="samp">PREFIX</span></samp>&rsquo;.  For example, &lsquo;<samp><span class="samp">--prefix=foo</span></samp>&rsquo; changes the name of
+<code>yytext</code> to <code>footext</code>.  It also changes the name of the default
+output file from <samp><span class="file">lex.yy.c</span></samp> to <samp><span class="file">lex.foo.c</span></samp>.  Here is a partial
+list of the names affected:
+
+     <pre class="example">     <pre class="verbatim">              yy_create_buffer
+              yy_delete_buffer
+              yy_flex_debug
+              yy_init_buffer
+              yy_flush_buffer
+              yy_load_buffer_state
+              yy_switch_to_buffer
+              yyin
+              yyleng
+              yylex
+              yylineno
+              yyout
+              yyrestart
+              yytext
+              yywrap
+              yyalloc
+              yyrealloc
+              yyfree
+     </pre>
+</pre>
+     <p>(If you are using a C++ scanner, then only <code>yywrap</code> and
+<code>yyFlexLexer</code> are affected.)  Within your scanner itself, you can
+still refer to the global variables and functions using either version
+of their name; but externally, they have the modified name.
+
+     <p>This option lets you easily link together multiple
+<code>flex</code>
+programs into the same executable.  Note, though, that using this
+option also renames
+<code>yywrap()</code>,
+so you now
+<em>must</em>
+either
+provide your own (appropriately-named) version of the routine for your
+scanner, or use
+<code>%option noyywrap</code>,
+as linking with
+&lsquo;<samp><span class="samp">-lfl</span></samp>&rsquo;
+no longer provides one for you by default.
+
+     <p><a name="option_002dmain"></a><a name="index-g_t_002d_002d_002dmain-317"></a><a name="index-main-318"></a><br><dt>&lsquo;<samp><span class="samp">--main, </span><code>%option main</code></samp>&rsquo;<dd> directs flex to provide a default <code>main()</code> program for the
+scanner, which simply calls <code>yylex()</code>.  This option implies
+<code>noyywrap</code> (see below).
+
+     <p><a name="option_002dnounistd"></a><a name="index-g_t_002d_002d_002dnounistd-319"></a><a name="index-nounistd-320"></a><br><dt>&lsquo;<samp><span class="samp">--nounistd, </span><code>%option nounistd</code></samp>&rsquo;<dd>suppresses inclusion of the non-ANSI header file <samp><span class="file">unistd.h</span></samp>. This option
+is meant to target environments in which <samp><span class="file">unistd.h</span></samp> does not exist. Be aware
+that certain options may cause flex to generate code that relies on functions
+normally found in <samp><span class="file">unistd.h</span></samp>, (e.g. <code>isatty()</code>, <code>read()</code>.) 
+If you wish to use these functions, you will have to inform your compiler where
+to find them. 
+See <a href="option_002dalways_002dinteractive.html#option_002dalways_002dinteractive">option-always-interactive</a>. See <a href="option_002dread.html#option_002dread">option-read</a>.
+
+     <p><a name="option_002dyyclass"></a><a name="index-g_t_002d_002d_002dyyclass-321"></a><a name="index-yyclass-322"></a><br><dt>&lsquo;<samp><span class="samp">--yyclass=NAME, </span><code>%option yyclass="NAME"</code></samp>&rsquo;<dd>only applies when generating a C++ scanner (the &lsquo;<samp><span class="samp">--c++</span></samp>&rsquo; option).  It
+informs <code>flex</code> that you have derived <code>NAME</code> as a subclass of
+<code>yyFlexLexer</code>, so <code>flex</code> will place your actions in the member
+function <code>foo::yylex()</code> instead of <code>yyFlexLexer::yylex()</code>.  It
+also generates a <code>yyFlexLexer::yylex()</code> member function that emits
+a run-time error (by invoking <code>yyFlexLexer::LexerError())</code> if
+called.  See <a href="Cxx.html#Cxx">Cxx</a>.
+
+</dl>
+
+   </body></html>
+

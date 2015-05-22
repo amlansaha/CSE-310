@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+<title>How can I use more than 8192 rules? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="How-does-flex-compile-the-DFA-so-quickly_003f.html#How-does-flex-compile-the-DFA-so-quickly_003f" title="How does flex compile the DFA so quickly?">
+<link rel="next" href="How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f.html#How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f" title="How do I abandon a file in the middle of a scan and switch to a new file?">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="How-can-I-use-more-than-8192-rules%3f"></a>
+<a name="How-can-I-use-more-than-8192-rules_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f.html#How-do-I-abandon-a-file-in-the-middle-of-a-scan-and-switch-to-a-new-file_003f">How do I abandon a file in the middle of a scan and switch to a new file?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="How-does-flex-compile-the-DFA-so-quickly_003f.html#How-does-flex-compile-the-DFA-so-quickly_003f">How does flex compile the DFA so quickly?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">How can I use more than 8192 rules?</h3>
+
+<p><code>Flex</code> is compiled with an upper limit of 8192 rules per scanner. 
+If you need more than 8192 rules in your scanner, you'll have to recompile <code>flex</code>
+with the following changes in <samp><span class="file">flexdef.h</span></samp>:
+
+<pre class="example"><pre class="verbatim">     &lt;    #define YY_TRAILING_MASK 0x2000
+     &lt;    #define YY_TRAILING_HEAD_MASK 0x4000
+     --
+     >    #define YY_TRAILING_MASK 0x20000000
+     >    #define YY_TRAILING_HEAD_MASK 0x40000000
+</pre>
+</pre>
+   <p>This should work okay as long as your C compiler uses 32 bit integers. 
+But you might want to think about whether using such a huge number of rules
+is the best way to solve your problem.
+
+   <p>The following may also be relevant:
+
+   <p>With luck, you should be able to increase the definitions in flexdef.h for:
+
+<pre class="example"><pre class="verbatim">     #define JAMSTATE -32766 /* marks a reference to the state that always jams */
+     #define MAXIMUM_MNS 31999
+     #define BAD_SUBSCRIPT -32767
+</pre>
+</pre>
+   <p>recompile everything, and it'll all work.  Flex only has these 16-bit-like
+values built into it because a long time ago it was developed on a machine
+with 16-bit ints.  I've given this advice to others in the past but haven't
+heard back from them whether it worked okay or not...
+
+   </body></html>
+

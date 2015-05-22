@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+<title>Scanner Options - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="prev" href="Yacc.html#Yacc" title="Yacc">
+<link rel="next" href="Performance.html#Performance" title="Performance">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Scanner-Options"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Performance.html#Performance">Performance</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Yacc.html#Yacc">Yacc</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr>
+</div>
+
+<h2 class="chapter">16 Scanner Options</h2>
+
+<p><a name="index-command_002dline-options-243"></a><a name="index-options_002c-command_002dline-244"></a><a name="index-arguments_002c-command_002dline-245"></a>
+The various <code>flex</code> options are categorized by function in the following
+menu. If you want to lookup a particular option by name, See <a href="Index-of-Scanner-Options.html#Index-of-Scanner-Options">Index of Scanner Options</a>.
+
+<ul class="menu">
+<li><a accesskey="1" href="Options-for-Specifying-Filenames.html#Options-for-Specifying-Filenames">Options for Specifying Filenames</a>
+<li><a accesskey="2" href="Options-Affecting-Scanner-Behavior.html#Options-Affecting-Scanner-Behavior">Options Affecting Scanner Behavior</a>
+<li><a accesskey="3" href="Code_002dLevel-And-API-Options.html#Code_002dLevel-And-API-Options">Code-Level And API Options</a>
+<li><a accesskey="4" href="Options-for-Scanner-Speed-and-Size.html#Options-for-Scanner-Speed-and-Size">Options for Scanner Speed and Size</a>
+<li><a accesskey="5" href="Debugging-Options.html#Debugging-Options">Debugging Options</a>
+<li><a accesskey="6" href="Miscellaneous-Options.html#Miscellaneous-Options">Miscellaneous Options</a>
+</ul>
+
+   <p>Even though there are many scanner options, a typical scanner might only
+specify the following options:
+
+<pre class="example"><pre class="verbatim">     %option   8bit reentrant bison-bridge
+     %option   warn nodefault
+     %option   yylineno
+     %option   outfile="scanner.c" header-file="scanner.h"
+</pre>
+</pre>
+   <p>The first line specifies the general type of scanner we want. The second line
+specifies that we are being careful. The third line asks flex to track line
+numbers. The last line tells flex what to name the files. (The options can be
+specified in any order. We just divided them.)
+
+   <p><code>flex</code> also provides a mechanism for controlling options within the
+scanner specification itself, rather than from the flex command-line. 
+This is done by including <code>%option</code> directives in the first section
+of the scanner specification.  You can specify multiple options with a
+single <code>%option</code> directive, and multiple directives in the first
+section of your flex input file.
+
+   <p>Most options are given simply as names, optionally preceded by the
+word &lsquo;<samp><span class="samp">no</span></samp>&rsquo; (with no intervening whitespace) to negate their meaning. 
+The names are the same as their long-option equivalents (but without the
+leading &lsquo;<samp><span class="samp">--</span></samp>&rsquo; ).
+
+   <p><code>flex</code> scans your rule actions to determine whether you use the
+<code>REJECT</code> or <code>yymore()</code> features.  The <code>REJECT</code> and
+<code>yymore</code> options are available to override its decision as to
+whether you use the options, either by setting them (e.g., <code>%option
+reject)</code> to indicate the feature is indeed used, or unsetting them to
+indicate it actually is not used (e.g., <code>%option noyymore)</code>.
+
+   <p>A number of options are available for lint purists who want to suppress
+the appearance of unneeded routines in the generated scanner.  Each of
+the following, if unset (e.g., <code>%option nounput</code>), results in the
+corresponding routine not appearing in the generated scanner:
+
+<pre class="example"><pre class="verbatim">         input, unput
+         yy_push_state, yy_pop_state, yy_top_state
+         yy_scan_buffer, yy_scan_bytes, yy_scan_string
+     
+         yyget_extra, yyset_extra, yyget_leng, yyget_text,
+         yyget_lineno, yyset_lineno, yyget_in, yyset_in,
+         yyget_out, yyset_out, yyget_lval, yyset_lval,
+         yyget_lloc, yyset_lloc, yyget_debug, yyset_debug
+</pre>
+</pre>
+   <p>(though <code>yy_push_state()</code> and friends won't appear anyway unless
+you use <code>%option stack)</code>.
+
+   </body></html>
+

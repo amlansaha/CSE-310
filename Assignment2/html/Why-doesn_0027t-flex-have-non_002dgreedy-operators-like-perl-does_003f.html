@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+<title>Why doesn't flex have non-greedy operators like perl does? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e.html#Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e" title="Whenever flex can not match the input it says &quot;flex scanner jammed&quot;.">
+<link rel="next" href="Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e.html#Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e" title="Memory leak - 16386 bytes allocated by malloc.">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Why-doesn't-flex-have-non-greedy-operators-like-perl-does%3f"></a>
+<a name="Why-doesn_0027t-flex-have-non_002dgreedy-operators-like-perl-does_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e.html#Memory-leak-_002d-16386-bytes-allocated-by-malloc_002e">Memory leak - 16386 bytes allocated by malloc.</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e.html#Whenever-flex-can-not-match-the-input-it-says-_0022flex-scanner-jammed_0022_002e">Whenever flex can not match the input it says &quot;flex scanner jammed&quot;.</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">Why doesn't flex have non-greedy operators like perl does?</h3>
+
+<p>A DFA can do a non-greedy match by stopping
+the first time it enters an accepting state, instead of consuming input until
+it determines that no further matching is possible (a &ldquo;jam&rdquo; state).  This
+is actually easier to implement than longest leftmost match (which flex does).
+
+   <p>But it's also much less useful than longest leftmost match.  In general,
+when you find yourself wishing for non-greedy matching, that's usually a
+sign that you're trying to make the scanner do some parsing.  That's
+generally the wrong approach, since it lacks the power to do a decent job. 
+Better is to either introduce a separate parser, or to split the scanner
+into multiple scanners using (exclusive) start conditions.
+
+   <p>You might have
+a separate start state once you've seen the &lsquo;<samp><span class="samp">BEGIN</span></samp>&rsquo;. In that state, you
+might then have a regex that will match &lsquo;<samp><span class="samp">END</span></samp>&rsquo; (to kick you out of the
+state), and perhaps &lsquo;<samp><span class="samp">(.|\n)</span></samp>&rsquo; to get a single character within the chunk ...
+
+   <p>This approach also has much better error-reporting properties.
+
+   </body></html>
+

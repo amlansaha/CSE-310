@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+<title>unput() messes up yy_at_bol - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="Can-you-discuss-some-flex-internals_003f.html#Can-you-discuss-some-flex-internals_003f" title="Can you discuss some flex internals?">
+<link rel="next" href="The-_007c-operator-is-not-doing-what-I-want.html#The-_007c-operator-is-not-doing-what-I-want" title="The | operator is not doing what I want">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="unput()-messes-up-yy_at_bol"></a>
+<a name="unput_0028_0029-messes-up-yy_005fat_005fbol"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="The-_007c-operator-is-not-doing-what-I-want.html#The-_007c-operator-is-not-doing-what-I-want">The | operator is not doing what I want</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Can-you-discuss-some-flex-internals_003f.html#Can-you-discuss-some-flex-internals_003f">Can you discuss some flex internals?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">unput() messes up yy_at_bol</h3>
+
+<pre class="example"><pre class="verbatim">     To: Xinying Li &lt;xli@npac.syr.edu>
+     Subject: Re: FLEX ?
+     In-reply-to: Your message of Wed, 13 Nov 1996 17:28:38 PST.
+     Date: Wed, 13 Nov 1996 19:51:54 PST
+     From: Vern Paxson &lt;vern>
+     
+     > "unput()" them to input flow, question occurs. If I do this after I scan
+     > a carriage, the variable "YY_CURRENT_BUFFER->yy_at_bol" is changed. That
+     > means the carriage flag has gone.
+     
+     You can control this by calling yy_set_bol().  It's described in the manual.
+     
+     >      And if in pre-reading it goes to the end of file, is anything done
+     > to control the end of curren buffer and end of file?
+     
+     No, there's no way to put back an end-of-file.
+     
+     >      By the way I am using flex 2.5.2 and using the "-l".
+     
+     The latest release is 2.5.4, by the way.  It fixes some bugs in 2.5.2 and
+     2.5.3.  You can get it from ftp.ee.lbl.gov.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+<title>Reentrant - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="prev" href="Cxx.html#Cxx" title="Cxx">
+<link rel="next" href="Lex-and-Posix.html#Lex-and-Posix" title="Lex and Posix">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Reentrant"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Lex-and-Posix.html#Lex-and-Posix">Lex and Posix</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Cxx.html#Cxx">Cxx</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr>
+</div>
+
+<h2 class="chapter">19 Reentrant C Scanners</h2>
+
+<p><a name="index-reentrant_002c-explanation-413"></a><code>flex</code> has the ability to generate a reentrant C scanner. This is
+accomplished by specifying <code>%option reentrant</code> (&lsquo;<samp><span class="samp">-R</span></samp>&rsquo;) The generated
+scanner is both portable, and safe to use in one or more separate threads of
+control.  The most common use for reentrant scanners is from within
+multi-threaded applications.  Any thread may create and execute a reentrant
+<code>flex</code> scanner without the need for synchronization with other threads.
+
+<ul class="menu">
+<li><a accesskey="1" href="Reentrant-Uses.html#Reentrant-Uses">Reentrant Uses</a>
+<li><a accesskey="2" href="Reentrant-Overview.html#Reentrant-Overview">Reentrant Overview</a>
+<li><a accesskey="3" href="Reentrant-Example.html#Reentrant-Example">Reentrant Example</a>
+<li><a accesskey="4" href="Reentrant-Detail.html#Reentrant-Detail">Reentrant Detail</a>
+<li><a accesskey="5" href="Reentrant-Functions.html#Reentrant-Functions">Reentrant Functions</a>
+</ul>
+
+   </body></html>
+

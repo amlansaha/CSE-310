@@ -1,0 +1,148 @@
+<html lang="en">
+<head>
+<title>Are certain equivalent patterns faster than others? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="deleteme00.html#deleteme00" title="deleteme00">
+<link rel="next" href="Is-backing-up-a-big-deal_003f.html#Is-backing-up-a-big-deal_003f" title="Is backing up a big deal?">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Are-certain-equivalent-patterns-faster-than-others%3f"></a>
+<a name="Are-certain-equivalent-patterns-faster-than-others_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Is-backing-up-a-big-deal_003f.html#Is-backing-up-a-big-deal_003f">Is backing up a big deal?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="deleteme00.html#deleteme00">deleteme00</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">Are certain equivalent patterns faster than others?</h3>
+
+<pre class="example"><pre class="verbatim">     To: Adoram Rogel &lt;adoram@orna.hybridge.com>
+     Subject: Re: Flex 2.5.2 performance questions
+     In-reply-to: Your message of Wed, 18 Sep 96 11:12:17 EDT.
+     Date: Wed, 18 Sep 96 10:51:02 PDT
+     From: Vern Paxson &lt;vern>
+     
+     [Note, the most recent flex release is 2.5.4, which you can get from
+     ftp.ee.lbl.gov.  It has bug fixes over 2.5.2 and 2.5.3.]
+     
+     > 1. Using the pattern
+     >    ([Ff](oot)?)?[Nn](ote)?(\.)?
+     >    instead of
+     >    (((F|f)oot(N|n)ote)|((N|n)ote)|((N|n)\.)|((F|f)(N|n)(\.)))
+     >    (in a very complicated flex program) caused the program to slow from
+     >    300K+/min to 100K/min (no other changes were done).
+     
+     These two are not equivalent.  For example, the first can match "footnote."
+     but the second can only match "footnote".  This is almost certainly the
+     cause in the discrepancy - the slower scanner run is matching more tokens,
+     and/or having to do more backing up.
+     
+     > 2. Which of these two are better: [Ff]oot or (F|f)oot ?
+     
+     From a performance point of view, they're equivalent (modulo presumably
+     minor effects such as memory cache hit rates; and the presence of trailing
+     context, see below).  From a space point of view, the first is slightly
+     preferable.
+     
+     > 3. I have a pattern that look like this:
+     >    pats {p1}|{p2}|{p3}|...|{p50}     (50 patterns ORd)
+     >
+     >    running yet another complicated program that includes the following rule:
+     >    &lt;snext>{and}/{no4}{bb}{pats}
+     >
+     >    gets me to "too complicated - over 32,000 states"...
+     
+     I can't tell from this example whether the trailing context is variable-length
+     or fixed-length (it could be the latter if {and} is fixed-length).  If it's
+     variable length, which flex -p will tell you, then this reflects a basic
+     performance problem, and if you can eliminate it by restructuring your
+     scanner, you will see significant improvement.
+     
+     >    so I divided {pats} to {pats1}, {pats2},..., {pats5} each consists of about
+     >    10 patterns and changed the rule to be 5 rules.
+     >    This did compile, but what is the rule of thumb here ?
+     
+     The rule is to avoid trailing context other than fixed-length, in which for
+     a/b, either the 'a' pattern or the 'b' pattern have a fixed length.  Use
+     of the '|' operator automatically makes the pattern variable length, so in
+     this case '[Ff]oot' is preferred to '(F|f)oot'.
+     
+     > 4. I changed a rule that looked like this:
+     >    &lt;snext8>{and}{bb}/{ROMAN}[^A-Za-z] { BEGIN...
+     >
+     >    to the next 2 rules:
+     >    &lt;snext8>{and}{bb}/{ROMAN}[A-Za-z] { ECHO;}
+     >    &lt;snext8>{and}{bb}/{ROMAN}         { BEGIN...
+     >
+     >    Again, I understand the using [^...] will cause a great performance loss
+     
+     Actually, it doesn't cause any sort of performance loss.  It's a surprising
+     fact about regular expressions that they always match in linear time
+     regardless of how complex they are.
+     
+     >    but are there any specific rules about it ?
+     
+     See the "Performance Considerations" section of the man page, and also
+     the example in MISC/fastwc/.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+

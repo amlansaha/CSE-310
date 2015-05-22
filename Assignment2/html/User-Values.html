@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+<title>User Values - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="prev" href="Misc-Macros.html#Misc-Macros" title="Misc Macros">
+<link rel="next" href="Yacc.html#Yacc" title="Yacc">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="User-Values"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="Yacc.html#Yacc">Yacc</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Misc-Macros.html#Misc-Macros">Misc Macros</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr>
+</div>
+
+<h2 class="chapter">14 Values Available To the User</h2>
+
+<p>This chapter summarizes the various values available to the user in the
+rule actions.
+
+     
+<a name="index-yytext-229"></a>
+<dl><dt><code>char *yytext</code><dd>holds the text of the current token.  It may be modified but not
+lengthened (you cannot append characters to the end).
+
+     <p><a name="index-yytext_002c-default-array-size-230"></a><a name="index-array_002c-default-size-for-yytext-231"></a><a name="index-YYLMAX-232"></a>If the special directive <code>%array</code> appears in the first section of
+the scanner description, then <code>yytext</code> is instead declared
+<code>char yytext[YYLMAX]</code>, where <code>YYLMAX</code> is a macro definition
+that you can redefine in the first section if you don't like the default
+value (generally 8KB).  Using <code>%array</code> results in somewhat slower
+scanners, but the value of <code>yytext</code> becomes immune to calls to
+<code>unput()</code>, which potentially destroy its value when <code>yytext</code> is
+a character pointer.  The opposite of <code>%array</code> is <code>%pointer</code>,
+which is the default.
+
+     <p><a name="index-C_002b_002b-and-_0025array-233"></a>You cannot use <code>%array</code> when generating C++ scanner classes (the
+&lsquo;<samp><span class="samp">-+</span></samp>&rsquo; flag).
+
+     <p><a name="index-yyleng-234"></a><br><dt><code>int yyleng</code><dd>holds the length of the current token.
+
+     <p><a name="index-yyin-235"></a><br><dt><code>FILE *yyin</code><dd>is the file which by default <code>flex</code> reads from.  It may be
+redefined but doing so only makes sense before scanning begins or after
+an EOF has been encountered.  Changing it in the midst of scanning will
+have unexpected results since <code>flex</code> buffers its input; use
+<code>yyrestart()</code> instead.  Once scanning terminates because an
+end-of-file has been seen, you can assign <samp><span class="file">yyin</span></samp> at the new input
+file and then call the scanner again to continue scanning.
+
+     <p><a name="index-yyrestart-236"></a><br><dt><code>void yyrestart( FILE *new_file )</code><dd>may be called to point <samp><span class="file">yyin</span></samp> at the new input file.  The
+switch-over to the new file is immediate (any previously buffered-up
+input is lost).  Note that calling <code>yyrestart()</code> with <samp><span class="file">yyin</span></samp>
+as an argument thus throws away the current input buffer and continues
+scanning the same input file.
+
+     <p><a name="index-yyout-237"></a><br><dt><code>FILE *yyout</code><dd>is the file to which <code>ECHO</code> actions are done.  It can be reassigned
+by the user.
+
+     <p><a name="index-YY_005fCURRENT_005fBUFFER-238"></a><br><dt><code>YY_CURRENT_BUFFER</code><dd>returns a <code>YY_BUFFER_STATE</code> handle to the current buffer.
+
+     <p><a name="index-YY_005fSTART-239"></a><br><dt><code>YY_START</code><dd>returns an integer value corresponding to the current start condition. 
+You can subsequently use this value with <code>BEGIN</code> to return to that
+start condition. 
+</dl>
+
+   </body></html>
+

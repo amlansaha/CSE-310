@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+<title>Can I fake multi-byte character support? - Lexical Analysis With Flex</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Lexical Analysis With Flex">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="start" href="index.html#Top">
+<link rel="up" href="FAQ.html#FAQ" title="FAQ">
+<link rel="prev" href="Is-backing-up-a-big-deal_003f.html#Is-backing-up-a-big-deal_003f" title="Is backing up a big deal?">
+<link rel="next" href="deleteme01.html#deleteme01" title="deleteme01">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<!--
+The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2007 The Flex
+Project.
+
+Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+This code is derived from software contributed to Berkeley by
+Vern Paxson.
+
+The United States Government has rights in this work pursuant
+to contract no. DE-AC03-76SF00098 between the United States
+Department of Energy and the University of California.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.-->
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<div class="node">
+<a name="Can-I-fake-multi-byte-character-support%3f"></a>
+<a name="Can-I-fake-multi_002dbyte-character-support_003f"></a>
+<p>
+Next:&nbsp;<a rel="next" accesskey="n" href="deleteme01.html#deleteme01">deleteme01</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="Is-backing-up-a-big-deal_003f.html#Is-backing-up-a-big-deal_003f">Is backing up a big deal?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="FAQ.html#FAQ">FAQ</a>
+<hr>
+</div>
+
+<h3 class="unnumberedsec">Can I fake multi-byte character support?</h3>
+
+<pre class="example"><pre class="verbatim">     To: Heeman_Lee@hp.com
+     Subject: Re: flex - multi-byte support?
+     In-reply-to: Your message of Thu, 03 Oct 1996 17:24:04 PDT.
+     Date: Fri, 04 Oct 1996 11:42:18 PDT
+     From: Vern Paxson &lt;vern>
+     
+     >      I assume as long as my *.l file defines the
+     >      range of expected character code values (in octal format), flex will
+     >      scan the file and read multi-byte characters correctly. But I have no
+     >      confidence in this assumption.
+     
+     Your lack of confidence is justified - this won't work.
+     
+     Flex has in it a widespread assumption that the input is processed
+     one byte at a time.  Fixing this is on the to-do list, but is involved,
+     so it won't happen any time soon.  In the interim, the best I can suggest
+     (unless you want to try fixing it yourself) is to write your rules in
+     terms of pairs of bytes, using definitions in the first section:
+     
+     	X	\xfe\xc2
+     	...
+     	%%
+     	foo{X}bar	found_foo_fe_c2_bar();
+     
+     etc.  Definitely a pain - sorry about that.
+     
+     By the way, the email address you used for me is ancient, indicating you
+     have a very old version of flex.  You can get the most recent, 2.5.4, from
+     ftp.ee.lbl.gov.
+     
+     		Vern
+</pre>
+</pre>
+<!-- TODO: Evaluate this faq. -->
+   </body></html>
+
