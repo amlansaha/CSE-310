@@ -1,4 +1,6 @@
-#! /usr/bin/env sh
+bison -d -y parsea.y
+g++ -w -c -o parsea.o y.tab.c
 flex lexa.l
-g++ lex.yy.c -lfl
-./a.out in1.txt token.txt log_file.txt
+g++ -fpermissive -w -c -o test.o lex.yy.c
+#g++ -o demoCompiler test.o parse.o -lfl -ly
+#./demoCompiler f.txt

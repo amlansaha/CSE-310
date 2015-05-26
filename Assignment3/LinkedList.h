@@ -35,6 +35,10 @@ public:
 	void setVal(X val) {
 		this->val = val;
 	}
+	
+	X* getValPointer()	{
+		return &val;
+	}
 };
 
 template <class X>

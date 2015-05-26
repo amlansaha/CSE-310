@@ -16,30 +16,64 @@ using namespace std;
 class SymbolInfo
 {
 	string symbol, type;
+	double value;
+	string code;
+    string labelTrue;
+    string labelFalse;
+    
 public:
-	SymbolInfo(string s="", string t="")	{
+	SymbolInfo(string s="", string t="", double v=0)	{
 		symbol = s;
 		type = t;
+		value = v;
 	}
 
 	const string& getSymbol() const {
 		return symbol;
 	}
 
-	void setSymbol(const string& symbol) {
-		this->symbol = symbol;
-	}
-
 	const string& getType() const {
 		return type;
+	}
+	
+	const string& getCode() const	{
+		return code;
+	}
+	
+	const double getValue() const	{
+		return value;
+	}
+	
+	const string& getLabelTrue() const	{
+		return labelTrue;
+	}
+	
+	const string& getLabelFalse() const	{
+		return labelFalse;
+	}
+	
+	void setSymbol(const string& symbol)	{
+		this->symbol = symbol;
 	}
 
 	void setType(const string& type) {
 		this->type = type;
 	}
 
+	void setCode(const string& code) {
+		this->code = code;
+	}
+	
+	void setLabelTrue(const double labelTrue) {
+		this->labelTrue = labelTrue;
+	}
+	
+	void setLabelFalse(const string& labelFalse) {
+		this->labelFalse = labelFalse;
+	}
+	
 	void print(FILE *fout=stdout)	{
-		fprintf (fout, "< %s, %s >", type.c_str(), symbol.c_str());
+		fprintf (fout, "< %s, %s, %lf >", type.c_str(), symbol.c_str(), value );
 //		cout << "< " << type << ", " <<symbol <<")";
 	}
 };
@@ -68,6 +102,13 @@ public:
 		int hashKey = hashFunction(token);
 		if (table[hashKey].searchByToken(token) == NULL )	return false;
 		return true;
+	}
+	
+	SymbolInfo* uplook (string token)	{//if token already exists in the table, it'll return pointer of the node, otherwise NULL.
+		int hashKey = hashFunction(token);
+		Node<SymbolInfo> * tempNode = table[hashKey].searchByToken(token);
+		if ( tempNode == NULL )	return NULL;
+		else	return tempNode->getValPointer();
 	}
 	
 	bool insert(SymbolInfo si)	{

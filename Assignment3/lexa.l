@@ -1,17 +1,37 @@
 %{
 #include "SymbolTable.h"
+#include "y.tab.h"
 
 using namespace std;
 
+void yyerror(char*);
+extern YYSTYPE yylval;
+
 int lineCount = 1;
-SymbolTable st;
+extern SymbolTable st;
 
 FILE *fin, *logp, *tokf;
 %}
 
 NEWLINE \r?\n
 WS [ \t\v\f\r]+
-KEYWORD "program"|"then"|"real"|"if"|"do"|"var"|"not"|"while"|"of"|"end"|"function"|"array"|"begin"|"procedure"|"write"|"else"|"integer"
+PROGRAM "PROGRAM"
+THEN "THEN"
+REAL "REAL"
+IF "IF"
+DO "DO"
+VAR "VAR"
+NOT "NOT"
+WHILE "WHILE"
+OF "OF"
+END "END"
+FUNCTION "FUNCTION"
+ARRAY "ARRAY"
+BEGIN "BEGIN"
+PROCEDURE "PROCEDURE"
+WRITE "WRITE"
+ELSE "ELSE"
+INTEGER "INTEGER"
 LETTER [a-zA-Z]
 DIGIT [0-9]
 UNDERSCORE _
@@ -37,8 +57,10 @@ RELOP ([<>]?=?)|<>
 ADDOP \+|\-|or
 MULOP \*|\/|div|mod|and
 ASSIGNOP :=
-BRACKET [\[\]]
-PAREN [()]
+BRACKET1 [\[]
+BRACKET2 [\]]
+PAREN1 [(]
+PAREN2 [)]
 DOTDOT \.\.
 COMMA ,
 SEMICOLON ;
@@ -54,129 +76,193 @@ UNRECO [@~]+
 {NEWLINE}   {
                 lineCount += 1;
 //                cout << "OLSDJFOLSJIDF\n";
+//{KEYWORD}	{
+//				fprintf ( logp, "Line %d: Keyword \"%s\" is found.\n", lineCount, yytext);
+//				fprintf ( tokf, "< %s >", yytext);
+//			}
             }
             
-{KEYWORD}	{
-				fprintf ( logp, "Line %d: Keyword \"%s\" is found.\n", lineCount, yytext);
-				fprintf ( tokf, "< %s >", yytext);
-			}
+{PROGRAM}	{
+			return PROGRAM;
+		}
+
+{THEN}	{
+			return THEN;
+		}
+
+{REAL}	{
+			return REAL;
+		}
+
+{IF}	{
+			return IF;
+		}
+
+{DO}	{
+			return DO;
+		}
+
+{VAR}	{
+			return VAR;
+		}
+
+{NOT}	{
+			return NOT;
+		}
+
+{WHILE}	{
+			return WHILE;
+		}
+
+{OF}	{
+			return OF;
+		}
+
+{END}	{
+			return END;
+		}
+
+{FUNCTION}	{
+			return FUNCTION;
+		}
+
+{ARRAY}	{
+			return ARRAY;
+		}
+
+{BEGIN}	{
+			return BEGIN;
+		}
+
+{PROCEDURE}	{
+			return PROCEDURE;
+		}
+
+{WRITE}	{
+			return WRITE;
+		}
+
+{ELSE}	{
+			return ELSE;
+		}
+
+{INTEGER}	{
+			return INTEGER;
+		}
+
+{LETTER}	{
+			st.insert("LETTER",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return LETTER;
+		}
+
+{DIGIT}	{
+			st.insert("DIGIT",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return DIGIT;
+		}
+
+{UNDERSCORE}	{
+			st.insert("UNDERSCORE",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return UNDERSCORE;
+		}
+
+{NUM}	{
+			st.insert("NUM",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return NUM;
+		}
+
+{RELOP}	{
+			st.insert("RELOP",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return RELOP;
+		}
+
+{ADDOP}	{
+			st.insert("ADDOP",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return ADDOP;
+		}
+
+{MULOP}	{
+			st.insert("MULOP",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return MULOP;
+		}
+
+{ASSIGNOP}	{
+			st.insert("ASSIGNOP",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return ASSIGNOP;
+		}
+
+{BRACKET1}	{
+			st.insert("BRACKET1",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return BRACKET1;
+		}
+
+{BRACKET2}	{
+			st.insert("BRACKET2",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return BRACKET2;
+		}
+
+{PAREN1}	{
+			st.insert("PAREN1",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return PAREN1;
+		}
+
+{PAREN2}	{
+			st.insert("PAREN2",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return PAREN2;
+		}
+
+{DOTDOT}	{
+			st.insert("DOTDOT",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return DOTDOT;
+		}
+
+{COMMA}	{
+			st.insert("COMMA",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return COMMA;
+		}
+
+{SEMICOLON}	{
+			st.insert("SEMICOLON",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return SEMICOLON;
+		}
+
+{COLON}	{
+			st.insert("COLON",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return COLON;
+		}
+
+{DOT}	{
+			st.insert("DOT",yytext);
+			yylval=(YYSTYPE)st.uplook(yytext);
+			return DOT;
+		}
 {ID}        {
 //                cout<<"IDENTIFIER"<<endl;
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("ID", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< ID, %s >", yytext);
-            }
-{NUM}       {
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("NUM", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< NUM, %s >", yytext);
-            }
-{RELOP}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("RELOP", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< RELOP, %s >", yytext);
-            }
-{ADDOP}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("ADDOP", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< ADDOP, %s >", yytext);
-            }
-{MULOP}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("MULOP", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< MULOP, %s >", yytext);
-            }
-{ASSIGNOP}	{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("ASSIGNOP", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< ASSIGNOP, %s >", yytext);
-            }
-{BRACKET}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("BRACKET", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< BRACKET, %s >", yytext);
-            }
-{PAREN}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("PAREN", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< PAREN, %s >", yytext);
-            }
-{DOTDOT}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("DOTDOT", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< DOTDOT, %s >", yytext);
-            }
-{COMMA}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("COMMA", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< COMMA, %s >", yytext);
-            }
-{SEMICOLON}	{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("SEMICOLON", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< SEMICOLON, %s >", yytext);
-            }
-{COLON}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("COLON", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< COLON, %s >", yytext);
-            }
-{DOT}		{
-				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-                bool flag = st.insert("DOT", yytext);
-                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
-                fprintf (logp, "\nSymbol Table: \n-------------\n");
-                st.dump(logp);
-                fprintf(logp, "\n");
-                fprintf(tokf, "< DOT, %s >", yytext);
+				st.insert("ID",yytext);
+				yylval=(YYSTYPE)st.uplook(yytext);
+				return ID;
+//				fprintf(logp, "Line %d: \"%s\" is found.\n", lineCount, yytext);
+//                bool flag = st.insert("ID", yytext);
+//                if (!flag)	fprintf(logp, "\"%s\" already exists.\n", yytext);
+//                fprintf (logp, "\nSymbol Table: \n-------------\n");
+//                st.dump(logp);
+//                fprintf(logp, "\n");
+//                fprintf(tokf, "< ID, %s >", yytext);
             }
 {VALID_STRING}	{
 				int nl = 0, i = 0;
