@@ -56,13 +56,13 @@ program:    PROGRAM ID PAREN1 identifier_list PAREN2 SEMICOLON declarations subp
 identifier_list:    ID
             {
             	fprintf ( parseLog, "identifier_list → ID\n");
-            	cout << $1->symbol << "\n";
+           		$$ = $1;
             }
             |
             identifier_list COMMA ID
             {
 	            fprintf ( parseLog, "identifier_list → identifier_list COMMA ID\n");
-	            cout << $1->symbol << " " << $3->symbol << "\n";
+//	            cout << $1->symbol << " " << $3->symbol << "\n";
             }
             ;
             /*declarations → declarations VAR identifier_list COLON type
@@ -76,12 +76,13 @@ declarations:
             declarations VAR identifier_list COLON type SEMICOLON
             {
             	fprintf ( parseLog, "declarations → declarations VAR identifier_list COLON type SEMICOLON\n");
-            	cout << $2->symbol << endl;
+//            	cout << $2->symbol << endl;
             }
             ;
 type:       standard_type
             {
             	fprintf ( parseLog, "type → standard_type\n");
+           		$$ = $1;
             }
             |
             ARRAY BRACKET1 NUM DOTDOT NUM BRACKET2 OF standard_type
@@ -92,11 +93,13 @@ type:       standard_type
 standard_type:  INTEGER
             {
             	fprintf ( parseLog, "standard_type → INTEGER\n");
+           		$$ = $1;
             }
             |
             REAL
             {
             	fprintf ( parseLog, "standard_type → REAL\n");
+           		$$ = $1;
             }
             ;
 subprogram_declarations:	           
@@ -157,31 +160,38 @@ optional_statements:
             statement_list
             {
             	fprintf ( parseLog, "optional_statements → statement_list\n" );
+           		$$ = $1;
             }
             ;
 statement_list: statement
             {
             	fprintf ( parseLog, "statement_list → statement\n");
+           		$$ = $1;
             }
             |
             statement_list SEMICOLON statement
             {
             	fprintf ( parseLog, "statement_list → statement_list SEMICOLON statement\n");
+            	$$->code = $1->code+";";
+            	$$->code = $3->code;
             }
             ;
 statement:  variable ASSIGNOP expression
             {
             	fprintf ( parseLog, "statement → variable ASSIGNOP expression\n");
+            	
             }
             |
             procedure_statement
             {
             	fprintf ( parseLog, "statement → procedure_statement\n");
+           		$$ = $1;
             }
             |
             compound_statement
             {
             	fprintf ( parseLog, "statement → compound_statement\n");
+           		$$ = $1;
             }
             |
             IF expression THEN statement %prec IFX
@@ -207,6 +217,7 @@ statement:  variable ASSIGNOP expression
 variable:   ID
             {
 	            fprintf ( parseLog, "variable → ID\n");
+           		$$ = $1;
             }
             |
             ID BRACKET1 expression BRACKET2
@@ -217,6 +228,7 @@ variable:   ID
 procedure_statement:    ID
             {
            		fprintf ( parseLog, "procedure_statement → ID\n" );
+           		$$ = $1;
             }
             |
             ID PAREN1 expression_list PAREN2
@@ -227,6 +239,7 @@ procedure_statement:    ID
 expression_list:	expression
             {
             	fprintf ( parseLog, "expression_list → expression\n");
+            	$$ = $1;
             }
             |
             expression_list COMMA expression
@@ -237,6 +250,7 @@ expression_list:	expression
 expression: simple_expression
             {
             	fprintf ( parseLog, "expression → simple_expression\n");
+            	$$ = $1;
             }
             |
             simple_expression RELOP simple_expression
@@ -247,7 +261,7 @@ expression: simple_expression
 simple_expression:  term
             {
             	fprintf ( parseLog, "simple_expression → term\n");
-            	cout << $1->symbol<<endl;
+            	$$ = $1;
             }
             |
             simple_expression ADDOP term
@@ -257,12 +271,14 @@ simple_expression:  term
             |
             ADDOP term
             {
+            	if ( $1->symbol != "+" && $1->symbol != "-" )	yyerror(" only '+' or '-' sign can be used here.");
             	fprintf ( parseLog, "simple_expression → sign term\n");
             }
             ;
 term:       factor
             {
             	fprintf ( parseLog, "term → factor\n");
+            	$$ = $1;
             }
             |
             term MULOP factor
@@ -273,6 +289,7 @@ term:       factor
 factor:     ID
             {
             	fprintf ( parseLog, "factor → ID\n");
+            	$$ = $1;
             }
             |
             ID PAREN1 expression_list PAREN2
@@ -283,6 +300,7 @@ factor:     ID
             NUM
             {
             	fprintf ( parseLog, "factor → NUM\n");
+            	$$ = $1;
             }
             |
             PAREN1 expression PAREN2

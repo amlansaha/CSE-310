@@ -123,7 +123,12 @@ public:
 	
 	bool insert(string type, string symbol)
 	{
-		return insert(SymbolInfo(symbol,type));
+		double v = 0;
+		if ( type == "NUM" )	{
+			v = atoi(symbol.c_str());
+//			cout << symbol << " " << v << endl;
+		}
+		return insert(SymbolInfo(symbol,type,v));
 	}
 	
 	void remove(string token)	{

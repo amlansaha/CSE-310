@@ -543,11 +543,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    45,    45,    56,    62,    72,    76,    82,    87,    92,
-      97,   103,   107,   112,   117,   122,   128,   132,   137,   142,
-     147,   153,   157,   162,   167,   172,   177,   182,   187,   192,
-     197,   202,   207,   212,   217,   222,   227,   232,   237,   242,
-     247,   253,   258,   263,   268,   273,   278,   283,   288,   293
+       0,    45,    45,    56,    62,    72,    76,    82,    88,    93,
+      99,   106,   110,   115,   120,   125,   131,   135,   140,   145,
+     150,   156,   160,   166,   172,   177,   182,   187,   192,   197,
+     202,   207,   212,   218,   223,   229,   234,   240,   245,   251,
+     256,   262,   267,   272,   278,   283,   289,   294,   300,   305
 };
 #endif
 
@@ -1408,7 +1408,7 @@ yyreduce:
 #line 57 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "identifier_list → ID\n");
-            	cout << (yyvsp[0])->symbol << "\n";
+           		(yyval) = (yyvsp[0]);
             }
 #line 1414 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1417,7 +1417,7 @@ yyreduce:
 #line 63 "parsea.y" /* yacc.c:1646  */
     {
 	            fprintf ( parseLog, "identifier_list → identifier_list COMMA ID\n");
-	            cout << (yyvsp[-2])->symbol << " " << (yyvsp[0])->symbol << "\n";
+//	            cout << $1->symbol << " " << $3->symbol << "\n";
             }
 #line 1423 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1434,7 +1434,7 @@ yyreduce:
 #line 77 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "declarations → declarations VAR identifier_list COLON type SEMICOLON\n");
-            	cout << (yyvsp[-4])->symbol << endl;
+//            	cout << $2->symbol << endl;
             }
 #line 1440 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1443,349 +1443,361 @@ yyreduce:
 #line 83 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "type → standard_type\n");
+           		(yyval) = (yyvsp[0]);
             }
-#line 1448 "y.tab.c" /* yacc.c:1646  */
+#line 1449 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 88 "parsea.y" /* yacc.c:1646  */
+#line 89 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "type → ARRAY '[' NUM DOTDOT NUM ']' OF standard_type\n");
             }
-#line 1456 "y.tab.c" /* yacc.c:1646  */
+#line 1457 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 93 "parsea.y" /* yacc.c:1646  */
+#line 94 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "standard_type → INTEGER\n");
+           		(yyval) = (yyvsp[0]);
             }
-#line 1464 "y.tab.c" /* yacc.c:1646  */
+#line 1466 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 98 "parsea.y" /* yacc.c:1646  */
+#line 100 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "standard_type → REAL\n");
+           		(yyval) = (yyvsp[0]);
             }
-#line 1472 "y.tab.c" /* yacc.c:1646  */
+#line 1475 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 103 "parsea.y" /* yacc.c:1646  */
+#line 106 "parsea.y" /* yacc.c:1646  */
     {
             	printf ("subprogram_declarations → ε");
             }
-#line 1480 "y.tab.c" /* yacc.c:1646  */
+#line 1483 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 108 "parsea.y" /* yacc.c:1646  */
+#line 111 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "subprogram_declarations → subprogram_declarations subprogram_declaration SEMICOLON\n");
             }
-#line 1488 "y.tab.c" /* yacc.c:1646  */
+#line 1491 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 113 "parsea.y" /* yacc.c:1646  */
+#line 116 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "subprogram_declaration → subprogram_head declarations compound_statement\n");
             }
-#line 1496 "y.tab.c" /* yacc.c:1646  */
+#line 1499 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 118 "parsea.y" /* yacc.c:1646  */
+#line 121 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "subprogram_head → FUNCTION ID arguments COLON standard_type SEMICOLON\n");
             }
-#line 1504 "y.tab.c" /* yacc.c:1646  */
+#line 1507 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 123 "parsea.y" /* yacc.c:1646  */
+#line 126 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "subprogram_head → PROCEDURE ID arguments SEMICOLON\n");
             }
-#line 1512 "y.tab.c" /* yacc.c:1646  */
+#line 1515 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 128 "parsea.y" /* yacc.c:1646  */
+#line 131 "parsea.y" /* yacc.c:1646  */
     {
             	printf ("arguments → ε\n");
             }
-#line 1520 "y.tab.c" /* yacc.c:1646  */
+#line 1523 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 133 "parsea.y" /* yacc.c:1646  */
+#line 136 "parsea.y" /* yacc.c:1646  */
     {
             	printf ("arguments → '(' parameter_list ')'\n");
             }
-#line 1528 "y.tab.c" /* yacc.c:1646  */
+#line 1531 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 138 "parsea.y" /* yacc.c:1646  */
+#line 141 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "parameter_list → identifier_list COLON type\n");
             }
-#line 1536 "y.tab.c" /* yacc.c:1646  */
+#line 1539 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 143 "parsea.y" /* yacc.c:1646  */
+#line 146 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "parameter_list → parameter_list SEMICOLON identifier_list COLON type\n");
             }
-#line 1544 "y.tab.c" /* yacc.c:1646  */
+#line 1547 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 148 "parsea.y" /* yacc.c:1646  */
+#line 151 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "compound_statement → BEGIN optional_statements END\n");
             }
-#line 1552 "y.tab.c" /* yacc.c:1646  */
+#line 1555 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 153 "parsea.y" /* yacc.c:1646  */
+#line 156 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "optional_statements → ε\n");
             }
-#line 1560 "y.tab.c" /* yacc.c:1646  */
+#line 1563 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 158 "parsea.y" /* yacc.c:1646  */
+#line 161 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "optional_statements → statement_list\n" );
+           		(yyval) = (yyvsp[0]);
             }
-#line 1568 "y.tab.c" /* yacc.c:1646  */
+#line 1572 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 163 "parsea.y" /* yacc.c:1646  */
+#line 167 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement_list → statement\n");
+           		(yyval) = (yyvsp[0]);
             }
-#line 1576 "y.tab.c" /* yacc.c:1646  */
+#line 1581 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 168 "parsea.y" /* yacc.c:1646  */
+#line 173 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement_list → statement_list SEMICOLON statement\n");
             }
-#line 1584 "y.tab.c" /* yacc.c:1646  */
+#line 1589 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 173 "parsea.y" /* yacc.c:1646  */
+#line 178 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement → variable ASSIGNOP expression\n");
             }
-#line 1592 "y.tab.c" /* yacc.c:1646  */
+#line 1597 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 178 "parsea.y" /* yacc.c:1646  */
+#line 183 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement → procedure_statement\n");
             }
-#line 1600 "y.tab.c" /* yacc.c:1646  */
+#line 1605 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 183 "parsea.y" /* yacc.c:1646  */
+#line 188 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement → compound_statement\n");
             }
-#line 1608 "y.tab.c" /* yacc.c:1646  */
+#line 1613 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 188 "parsea.y" /* yacc.c:1646  */
+#line 193 "parsea.y" /* yacc.c:1646  */
     {
 	            fprintf ( parseLog, "statement → IF expression THEN statement\n");
             }
-#line 1616 "y.tab.c" /* yacc.c:1646  */
+#line 1621 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 193 "parsea.y" /* yacc.c:1646  */
+#line 198 "parsea.y" /* yacc.c:1646  */
     {
 	            fprintf ( parseLog, "statement → IF expression THEN statement ELSE statement\n");
             }
-#line 1624 "y.tab.c" /* yacc.c:1646  */
+#line 1629 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 198 "parsea.y" /* yacc.c:1646  */
+#line 203 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement → WHILE expression DO statement\n");
             }
-#line 1632 "y.tab.c" /* yacc.c:1646  */
+#line 1637 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 203 "parsea.y" /* yacc.c:1646  */
+#line 208 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "statement → write '(' ID ')'\n");
             }
-#line 1640 "y.tab.c" /* yacc.c:1646  */
+#line 1645 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 208 "parsea.y" /* yacc.c:1646  */
+#line 213 "parsea.y" /* yacc.c:1646  */
     {
 	            fprintf ( parseLog, "variable → ID\n");
+           		(yyval) = (yyvsp[0]);
             }
-#line 1648 "y.tab.c" /* yacc.c:1646  */
+#line 1654 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 213 "parsea.y" /* yacc.c:1646  */
+#line 219 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "variable → ID '[' expression ']'\n");
             }
-#line 1656 "y.tab.c" /* yacc.c:1646  */
+#line 1662 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 218 "parsea.y" /* yacc.c:1646  */
+#line 224 "parsea.y" /* yacc.c:1646  */
     {
            		fprintf ( parseLog, "procedure_statement → ID\n" );
+           		(yyval) = (yyvsp[0]);
             }
-#line 1664 "y.tab.c" /* yacc.c:1646  */
+#line 1671 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 223 "parsea.y" /* yacc.c:1646  */
+#line 230 "parsea.y" /* yacc.c:1646  */
     {
            		fprintf ( parseLog, "procedure_statement → ID '(' expression_list ')'\n" );            	
             }
-#line 1672 "y.tab.c" /* yacc.c:1646  */
+#line 1679 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 228 "parsea.y" /* yacc.c:1646  */
+#line 235 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "expression_list → expression\n");
-            }
-#line 1680 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 37:
-#line 233 "parsea.y" /* yacc.c:1646  */
-    {
-            	fprintf ( parseLog, "expression_list → expression_list COMMA expression\n");
+            	(yyval) = (yyvsp[0]);
             }
 #line 1688 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 38:
-#line 238 "parsea.y" /* yacc.c:1646  */
+  case 37:
+#line 241 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "expression → simple_expression\n");
+            	fprintf ( parseLog, "expression_list → expression_list COMMA expression\n");
             }
 #line 1696 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 39:
-#line 243 "parsea.y" /* yacc.c:1646  */
+  case 38:
+#line 246 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "expression → simple_expression RELOP simple_expression\n");
+            	fprintf ( parseLog, "expression → simple_expression\n");
+            	(yyval) = (yyvsp[0]);
             }
-#line 1704 "y.tab.c" /* yacc.c:1646  */
+#line 1705 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 40:
-#line 248 "parsea.y" /* yacc.c:1646  */
+  case 39:
+#line 252 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "simple_expression → term\n");
-            	cout << (yyvsp[0])->symbol<<endl;
+            	fprintf ( parseLog, "expression → simple_expression RELOP simple_expression\n");
             }
 #line 1713 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 40:
+#line 257 "parsea.y" /* yacc.c:1646  */
+    {
+            	fprintf ( parseLog, "simple_expression → term\n");
+            	(yyval) = (yyvsp[0]);
+            }
+#line 1722 "y.tab.c" /* yacc.c:1646  */
+    break;
+
   case 41:
-#line 254 "parsea.y" /* yacc.c:1646  */
+#line 263 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "simple_expression → simple_expression ADDOP term\n");
             }
-#line 1721 "y.tab.c" /* yacc.c:1646  */
+#line 1730 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 259 "parsea.y" /* yacc.c:1646  */
+#line 268 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "simple_expression → sign term\n");
             }
-#line 1729 "y.tab.c" /* yacc.c:1646  */
+#line 1738 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 264 "parsea.y" /* yacc.c:1646  */
+#line 273 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "term → factor\n");
+            	(yyval) = (yyvsp[0]);
             }
-#line 1737 "y.tab.c" /* yacc.c:1646  */
+#line 1747 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 269 "parsea.y" /* yacc.c:1646  */
+#line 279 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "term → term MULOP factor\n");
             }
-#line 1745 "y.tab.c" /* yacc.c:1646  */
+#line 1755 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 274 "parsea.y" /* yacc.c:1646  */
+#line 284 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "factor → ID\n");
+            	(yyval) = (yyvsp[0]);
             }
-#line 1753 "y.tab.c" /* yacc.c:1646  */
+#line 1764 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 279 "parsea.y" /* yacc.c:1646  */
+#line 290 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "factor → ID '(' expression_list ')'\n");
             }
-#line 1761 "y.tab.c" /* yacc.c:1646  */
+#line 1772 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 284 "parsea.y" /* yacc.c:1646  */
+#line 295 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "factor → NUM\n");
+            	(yyval) = (yyvsp[0]);
             }
-#line 1769 "y.tab.c" /* yacc.c:1646  */
+#line 1781 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 289 "parsea.y" /* yacc.c:1646  */
+#line 301 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "factor → '(' expression ')'\n");
             }
-#line 1777 "y.tab.c" /* yacc.c:1646  */
+#line 1789 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 294 "parsea.y" /* yacc.c:1646  */
+#line 306 "parsea.y" /* yacc.c:1646  */
     {
             	fprintf ( parseLog, "factor → NOT factor\n");
             }
-#line 1785 "y.tab.c" /* yacc.c:1646  */
+#line 1797 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1789 "y.tab.c" /* yacc.c:1646  */
+#line 1801 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2013,7 +2025,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 301 "parsea.y" /* yacc.c:1906  */
+#line 313 "parsea.y" /* yacc.c:1906  */
 
 int main(int argc,char *argv[])
 {

@@ -989,7 +989,7 @@ case 8:
 YY_RULE_SETUP
 #line 107 "lexa.l"
 {
-			cout << "var found at line: " << lineCount << endl;
+//			cout << "var found at line: " << lineCount << endl;
 			return VAR;
 		}
 	YY_BREAK
@@ -1200,7 +1200,7 @@ case 34:
 YY_RULE_SETUP
 #line 239 "lexa.l"
 {
-                cout<<"IDENTIFIER "<< yytext << endl;
+//                cout<<"IDENTIFIER "<< yytext << endl;
 				st.insert("ID",yytext);
 				yylval=(YYSTYPE)st.uplook(yytext);
 				return ID;

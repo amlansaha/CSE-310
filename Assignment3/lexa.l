@@ -105,7 +105,7 @@ UNRECO [@~]+
 		}
 
 {VAR}	{
-			cout << "var found at line: " << lineCount << endl;
+//			cout << "var found at line: " << lineCount << endl;
 			return VAR;
 		}
 
@@ -237,7 +237,7 @@ UNRECO [@~]+
 			return DOT;
 		}
 {ID}        {
-                cout<<"IDENTIFIER "<< yytext << endl;
+//                cout<<"IDENTIFIER "<< yytext << endl;
 				st.insert("ID",yytext);
 				yylval=(YYSTYPE)st.uplook(yytext);
 				return ID;
