@@ -15,13 +15,13 @@ using namespace std;
 
 class SymbolInfo
 {
+public:
 	string symbol, type;
 	double value;
 	string code;
     string labelTrue;
     string labelFalse;
     
-public:
 	SymbolInfo(string s="", string t="", double v=0)	{
 		symbol = s;
 		type = t;

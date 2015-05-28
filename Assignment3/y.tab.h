@@ -57,7 +57,7 @@ extern int yydebug;
     END = 267,
     FUNCTION = 268,
     ARRAY = 269,
-    BEGIN = 270,
+    BEGINNING = 270,
     PROCEDURE = 271,
     WRITE = 272,
     ELSE = 273,
@@ -79,15 +79,19 @@ extern int yydebug;
     ADDOP = 289,
     MULOP = 290,
     ASSIGNOP = 291,
-    BRACKET = 292,
-    PAREN = 293,
-    DOTDOT = 294,
-    COMMA = 295,
-    SEMICOLON = 296,
-    COLON = 297,
-    DOT = 298,
-    UNRECO = 299,
-    IFX = 300
+    BRACKET1 = 292,
+    BRACKET2 = 293,
+    PAREN1 = 294,
+    PAREN2 = 295,
+    DOTDOT = 296,
+    COMMA = 297,
+    SEMICOLON = 298,
+    COLON = 299,
+    DOT = 300,
+    UNRECO = 301,
+    AND = 302,
+    OR = 303,
+    IFX = 304
   };
 #endif
 /* Tokens.  */
@@ -103,7 +107,7 @@ extern int yydebug;
 #define END 267
 #define FUNCTION 268
 #define ARRAY 269
-#define BEGIN 270
+#define BEGINNING 270
 #define PROCEDURE 271
 #define WRITE 272
 #define ELSE 273
@@ -125,15 +129,19 @@ extern int yydebug;
 #define ADDOP 289
 #define MULOP 290
 #define ASSIGNOP 291
-#define BRACKET 292
-#define PAREN 293
-#define DOTDOT 294
-#define COMMA 295
-#define SEMICOLON 296
-#define COLON 297
-#define DOT 298
-#define UNRECO 299
-#define IFX 300
+#define BRACKET1 292
+#define BRACKET2 293
+#define PAREN1 294
+#define PAREN2 295
+#define DOTDOT 296
+#define COMMA 297
+#define SEMICOLON 298
+#define COLON 299
+#define DOT 300
+#define UNRECO 301
+#define AND 302
+#define OR 303
+#define IFX 304
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

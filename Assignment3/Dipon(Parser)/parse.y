@@ -57,6 +57,7 @@
 
 program:    PROGRAM ID PAREN1 identifier_list PAREN2 SEMICOLON declarations subprogram_declarations compound_statement
             {
+            	cout << "habijabi program\n";
             }
             ;
 identifier_list:    ID

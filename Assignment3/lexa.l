@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void yyerror(char*);
+//void yyerror(char*);
 extern YYSTYPE yylval;
 
 int lineCount = 1;
@@ -15,23 +15,25 @@ FILE *fin, *logp, *tokf;
 
 NEWLINE \r?\n
 WS [ \t\v\f\r]+
-PROGRAM "PROGRAM"
-THEN "THEN"
-REAL "REAL"
-IF "IF"
-DO "DO"
-VAR "VAR"
-NOT "NOT"
-WHILE "WHILE"
-OF "OF"
-END "END"
-FUNCTION "FUNCTION"
-ARRAY "ARRAY"
-BEGIN "BEGIN"
-PROCEDURE "PROCEDURE"
-WRITE "WRITE"
-ELSE "ELSE"
-INTEGER "INTEGER"
+
+PROGRAM "program"
+THEN "then"
+REAL "real"
+IF "if"
+DO "do"
+VAR "var"
+NOT "not"
+WHILE "while"
+OF "of"
+END "end"
+FUNCTION "function"
+ARRAY "array"
+BEGINNING "begin"
+PROCEDURE "procedure"
+WRITE "write"
+ELSE "else"
+INTEGER "integer"
+
 LETTER [a-zA-Z]
 DIGIT [0-9]
 UNDERSCORE _
@@ -103,6 +105,7 @@ UNRECO [@~]+
 		}
 
 {VAR}	{
+			cout << "var found at line: " << lineCount << endl;
 			return VAR;
 		}
 
@@ -130,8 +133,8 @@ UNRECO [@~]+
 			return ARRAY;
 		}
 
-{BEGIN}	{
-			return BEGIN;
+{BEGINNING}	{
+			return BEGINNING;
 		}
 
 {PROCEDURE}	{
@@ -148,24 +151,6 @@ UNRECO [@~]+
 
 {INTEGER}	{
 			return INTEGER;
-		}
-
-{LETTER}	{
-			st.insert("LETTER",yytext);
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return LETTER;
-		}
-
-{DIGIT}	{
-			st.insert("DIGIT",yytext);
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return DIGIT;
-		}
-
-{UNDERSCORE}	{
-			st.insert("UNDERSCORE",yytext);
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return UNDERSCORE;
 		}
 
 {NUM}	{
@@ -252,7 +237,7 @@ UNRECO [@~]+
 			return DOT;
 		}
 {ID}        {
-//                cout<<"IDENTIFIER"<<endl;
+                cout<<"IDENTIFIER "<< yytext << endl;
 				st.insert("ID",yytext);
 				yylval=(YYSTYPE)st.uplook(yytext);
 				return ID;
@@ -263,6 +248,7 @@ UNRECO [@~]+
 //                st.dump(logp);
 //                fprintf(logp, "\n");
 //                fprintf(tokf, "< ID, %s >", yytext);
+//				return ID;
             }
 {VALID_STRING}	{
 				int nl = 0, i = 0;
@@ -318,64 +304,77 @@ UNRECO [@~]+
 				str[i-1] = '\0';	//hence last double quotation mark(") of yytext will be ignored
 				fprintf ( logp, "Line %d: String \"%s\" is found.\n", lineCount, str);
 				lineCount+= nl;
+				return VALID_STRING;
 			}
 {ILL_STRING}	{
-				fprintf(logp, "Line %d: ERROR... Ill-formed string is found.\n", lineCount);
+				fprintf(stderr, "Line %d: ERROR... Ill-formed string is found.\n", lineCount);
 				while ( *yytext!='\0')	{
 					if(yytext[0]=='\n')	lineCount++;
 					yytext++;
 				}
+				return ILL_STRING;
 			}			
 {INCOMPLETE_STRING}	{
-				fprintf(logp, "Line %d: ERROR... Incomplete string is found.\n", lineCount);
+				fprintf(stderr, "Line %d: ERROR... Incomplete string is found.\n", lineCount);
 				int l = strlen(yytext);
 				if(yytext[l-1]=='\n')	lineCount++;
+				return INCOMPLETE_STRING;
 			}	
 {VALID_COMMENT}	{
-				fprintf ( logp, "Line %d: Comment %s is found.\n", lineCount, yytext);
+//				fprintf ( logp, "Line %d: Comment %s is found.\n", lineCount, yytext);
 				while(*yytext != '\0')	{
 					if(*yytext == '\n')	lineCount++;
 					yytext++;
 				}
+				return VALID_COMMENT;
 			}
 {ILL_COMMENT}	{
-				fprintf(logp, "Line %d: ERROR... Ill-formed comment is found.\n", lineCount);
+				fprintf(stderr, "Line %d: ERROR... Ill-formed comment is found.\n", lineCount);
 				int l = strlen(yytext);while(*yytext != '\0')	{
 					if(*yytext == '\n')	lineCount++;
 					yytext++;
 				}
+				return ILL_COMMENT;
 			}
 {INCOMPLETE_COMMENT}	{
-				fprintf(logp, "Line %d: ERROR... Incomplete comment is found.\n", lineCount);
+				fprintf(stderr, "Line %d: ERROR... Incomplete comment is found.\n", lineCount);
 				int l = strlen(yytext);
 				if(yytext[l-1]=='\n')	lineCount++;
-
+				return INCOMPLETE_COMMENT;
 			}
 {ILL_ID}			{
-				fprintf(logp, "Line %d: ERROR... Ill-formed identifier \"%s\" is found.\n", lineCount, yytext);
+				fprintf(stderr, "Line %d: ERROR... Ill-formed identifier \"%s\" is found.\n", lineCount, yytext);
+				return ILL_ID;
 			}
 {ILL_NUM}			{
-				fprintf(logp, "Line %d: ERROR... Ill-formed number \"%s\" is found.\n", lineCount, yytext);
+				fprintf(stderr, "Line %d: ERROR... Ill-formed number \"%s\" is found.\n", lineCount, yytext);
+				return ILL_NUM;
 			}
 {UNRECO}	{
-				fprintf(logp, "Line %d: ERROR... Unrecognised charcters %s are found.\n", lineCount, yytext);
+				fprintf(stderr, "Line %d: ERROR... Unrecognised charcters %s are found.\n", lineCount, yytext);
+				return UNRECO;
 			}
 [^ \t\v\f\r\n]	{
-				fprintf(logp, "Line %d: ERROR... Unknown lexical error is found.\n", lineCount);
+				fprintf(stderr, "Line %d: ERROR... Unknown lexical error is found.\n", lineCount);
 			}
 %%
 
-int main(int argc, char **argv)
-{
-	fin = fopen(argv[1], "r");
-	tokf = fopen(argv[2], "w");
-	logp = fopen(argv[3], "w");
-	yyin = fin;
-    yylex();
-    fprintf(logp, "Total line: %d\n", --lineCount );
-//    cout << lineCount<<endl;
-    fclose(fin);
-    fclose(tokf);
-    fclose(logp);
-    return 0;
-}
+//int main(int argc, char **argv)
+//{
+//	fin = fopen(argv[1], "r");
+//	tokf = fopen(argv[2], "w");
+//	logp = fopen(argv[3], "w");
+//	yyin = fin;
+//    yylex();
+//    fprintf(logp, "Total line: %d\n", --lineCount );
+////    cout << lineCount<<endl;
+//    fclose(fin);
+//    fclose(tokf);
+//    fclose(logp);
+//    return 0;
+//}
+
+//int yywrap()
+//{
+//	return 1;
+//}

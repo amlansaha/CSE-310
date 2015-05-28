@@ -523,11 +523,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58,    62,    66,    74,    77,    81,    85,    89,
-      93,    98,   101,   105,   109,   113,   118,   121,   125,   129,
-     133,   138,   141,   145,   149,   153,   158,   162,   166,   170,
-     174,   179,   183,   187,   191,   195,   199,   203,   207,   211,
-     215,   219,   223,   228,   232,   235,   240,   244,   249,   253
+       0,    58,    58,    63,    67,    75,    78,    82,    86,    90,
+      94,    99,   102,   106,   110,   114,   119,   122,   126,   130,
+     134,   139,   142,   146,   150,   154,   159,   163,   167,   171,
+     175,   180,   184,   188,   192,   196,   200,   204,   208,   212,
+     216,   220,   224,   229,   233,   236,   241,   245,   250,   254
 };
 #endif
 
@@ -1374,345 +1374,346 @@ yyreduce:
         case 2:
 #line 59 "parse.y" /* yacc.c:1646  */
     {
+            	cout << "habijabi program\n";
             }
-#line 1379 "y.tab.c" /* yacc.c:1646  */
+#line 1380 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 63 "parse.y" /* yacc.c:1646  */
+#line 64 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1386 "y.tab.c" /* yacc.c:1646  */
+#line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 67 "parse.y" /* yacc.c:1646  */
+#line 68 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1393 "y.tab.c" /* yacc.c:1646  */
+#line 1394 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 74 "parse.y" /* yacc.c:1646  */
+#line 75 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1400 "y.tab.c" /* yacc.c:1646  */
+#line 1401 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 78 "parse.y" /* yacc.c:1646  */
+#line 79 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+#line 1408 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 82 "parse.y" /* yacc.c:1646  */
+#line 83 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1414 "y.tab.c" /* yacc.c:1646  */
+#line 1415 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 86 "parse.y" /* yacc.c:1646  */
+#line 87 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1421 "y.tab.c" /* yacc.c:1646  */
+#line 1422 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 90 "parse.y" /* yacc.c:1646  */
+#line 91 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1428 "y.tab.c" /* yacc.c:1646  */
+#line 1429 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 94 "parse.y" /* yacc.c:1646  */
+#line 95 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1435 "y.tab.c" /* yacc.c:1646  */
+#line 1436 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 98 "parse.y" /* yacc.c:1646  */
+#line 99 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1442 "y.tab.c" /* yacc.c:1646  */
+#line 1443 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 102 "parse.y" /* yacc.c:1646  */
+#line 103 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1449 "y.tab.c" /* yacc.c:1646  */
+#line 1450 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 106 "parse.y" /* yacc.c:1646  */
+#line 107 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1456 "y.tab.c" /* yacc.c:1646  */
+#line 1457 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 110 "parse.y" /* yacc.c:1646  */
+#line 111 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1463 "y.tab.c" /* yacc.c:1646  */
+#line 1464 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 114 "parse.y" /* yacc.c:1646  */
+#line 115 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1470 "y.tab.c" /* yacc.c:1646  */
+#line 1471 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 118 "parse.y" /* yacc.c:1646  */
+#line 119 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1477 "y.tab.c" /* yacc.c:1646  */
+#line 1478 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 122 "parse.y" /* yacc.c:1646  */
+#line 123 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1484 "y.tab.c" /* yacc.c:1646  */
+#line 1485 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 126 "parse.y" /* yacc.c:1646  */
+#line 127 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1491 "y.tab.c" /* yacc.c:1646  */
+#line 1492 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 130 "parse.y" /* yacc.c:1646  */
+#line 131 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1498 "y.tab.c" /* yacc.c:1646  */
+#line 1499 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 134 "parse.y" /* yacc.c:1646  */
+#line 135 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1505 "y.tab.c" /* yacc.c:1646  */
+#line 1506 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 138 "parse.y" /* yacc.c:1646  */
+#line 139 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1512 "y.tab.c" /* yacc.c:1646  */
+#line 1513 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 142 "parse.y" /* yacc.c:1646  */
+#line 143 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1519 "y.tab.c" /* yacc.c:1646  */
+#line 1520 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 146 "parse.y" /* yacc.c:1646  */
+#line 147 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1526 "y.tab.c" /* yacc.c:1646  */
+#line 1527 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 150 "parse.y" /* yacc.c:1646  */
+#line 151 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1533 "y.tab.c" /* yacc.c:1646  */
+#line 1534 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 154 "parse.y" /* yacc.c:1646  */
+#line 155 "parse.y" /* yacc.c:1646  */
     {
             	
             }
-#line 1541 "y.tab.c" /* yacc.c:1646  */
+#line 1542 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 159 "parse.y" /* yacc.c:1646  */
+#line 160 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1548 "y.tab.c" /* yacc.c:1646  */
+#line 1549 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 163 "parse.y" /* yacc.c:1646  */
+#line 164 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1555 "y.tab.c" /* yacc.c:1646  */
+#line 1556 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 167 "parse.y" /* yacc.c:1646  */
+#line 168 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1562 "y.tab.c" /* yacc.c:1646  */
+#line 1563 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 171 "parse.y" /* yacc.c:1646  */
+#line 172 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1569 "y.tab.c" /* yacc.c:1646  */
+#line 1570 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 175 "parse.y" /* yacc.c:1646  */
+#line 176 "parse.y" /* yacc.c:1646  */
     {
             	
             }
-#line 1577 "y.tab.c" /* yacc.c:1646  */
+#line 1578 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 180 "parse.y" /* yacc.c:1646  */
+#line 181 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1584 "y.tab.c" /* yacc.c:1646  */
+#line 1585 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 184 "parse.y" /* yacc.c:1646  */
+#line 185 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1591 "y.tab.c" /* yacc.c:1646  */
+#line 1592 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 188 "parse.y" /* yacc.c:1646  */
+#line 189 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1598 "y.tab.c" /* yacc.c:1646  */
+#line 1599 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 192 "parse.y" /* yacc.c:1646  */
+#line 193 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1605 "y.tab.c" /* yacc.c:1646  */
+#line 1606 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 196 "parse.y" /* yacc.c:1646  */
+#line 197 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1612 "y.tab.c" /* yacc.c:1646  */
+#line 1613 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 200 "parse.y" /* yacc.c:1646  */
+#line 201 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1619 "y.tab.c" /* yacc.c:1646  */
+#line 1620 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 204 "parse.y" /* yacc.c:1646  */
+#line 205 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1626 "y.tab.c" /* yacc.c:1646  */
+#line 1627 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 208 "parse.y" /* yacc.c:1646  */
+#line 209 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1633 "y.tab.c" /* yacc.c:1646  */
+#line 1634 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 212 "parse.y" /* yacc.c:1646  */
+#line 213 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1640 "y.tab.c" /* yacc.c:1646  */
+#line 1641 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 216 "parse.y" /* yacc.c:1646  */
+#line 217 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1647 "y.tab.c" /* yacc.c:1646  */
+#line 1648 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 220 "parse.y" /* yacc.c:1646  */
+#line 221 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1654 "y.tab.c" /* yacc.c:1646  */
+#line 1655 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 224 "parse.y" /* yacc.c:1646  */
+#line 225 "parse.y" /* yacc.c:1646  */
     {
             	
             }
-#line 1662 "y.tab.c" /* yacc.c:1646  */
+#line 1663 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 229 "parse.y" /* yacc.c:1646  */
+#line 230 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1669 "y.tab.c" /* yacc.c:1646  */
+#line 1670 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 233 "parse.y" /* yacc.c:1646  */
+#line 234 "parse.y" /* yacc.c:1646  */
     {}
-#line 1675 "y.tab.c" /* yacc.c:1646  */
+#line 1676 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 236 "parse.y" /* yacc.c:1646  */
+#line 237 "parse.y" /* yacc.c:1646  */
     {
             	
             }
-#line 1683 "y.tab.c" /* yacc.c:1646  */
+#line 1684 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 241 "parse.y" /* yacc.c:1646  */
+#line 242 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1690 "y.tab.c" /* yacc.c:1646  */
+#line 1691 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 245 "parse.y" /* yacc.c:1646  */
+#line 246 "parse.y" /* yacc.c:1646  */
     {
             	
             }
-#line 1698 "y.tab.c" /* yacc.c:1646  */
+#line 1699 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 250 "parse.y" /* yacc.c:1646  */
+#line 251 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1705 "y.tab.c" /* yacc.c:1646  */
+#line 1706 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 254 "parse.y" /* yacc.c:1646  */
+#line 255 "parse.y" /* yacc.c:1646  */
     {
             }
-#line 1712 "y.tab.c" /* yacc.c:1646  */
+#line 1713 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1716 "y.tab.c" /* yacc.c:1646  */
+#line 1717 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1940,7 +1941,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 260 "parse.y" /* yacc.c:1906  */
+#line 261 "parse.y" /* yacc.c:1906  */
 
 int main(int argc,char *argv[])
 {
