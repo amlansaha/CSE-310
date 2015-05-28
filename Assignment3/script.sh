@@ -8,4 +8,4 @@ g++ -fpermissive -w -c -o test.o lex.yy.c
 echo 4
 g++ -o demoCompiler test.o parsea.o -lfl -ly
 echo 5
-./demoCompiler f.txt
+./demoCompiler f.txt > parseLog

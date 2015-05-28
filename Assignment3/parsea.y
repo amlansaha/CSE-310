@@ -19,11 +19,11 @@ public:
 	int v;
 };
 
-FILE *fp;
+FILE *fp, *parseLog;
 
 void yyerror(char *s)
 {
-	fprintf(stdout,"At Line %d, ERROR-> %s\n",lineCount+1,s);
+	fprintf(stderr,"At Line %d, ERROR-> %s\n",lineCount+1,s);
 	return;
 }
 %}
@@ -45,23 +45,23 @@ void yyerror(char *s)
 program:    PROGRAM ID PAREN1 identifier_list PAREN2 SEMICOLON declarations subprogram_declarations compound_statement
             {
             	
-            	printf ( "qwepoiert");
+            	fprintf ( parseLog, "program → PROGRAM ID '(' identifier_list ')' SEMICOLON declarations subprogram_declarations compound_statement\n");
             }
-            |
-            statement
-            {
-            	cout << "statement program\n";
-            }
+//            |
+//            statement
+//            {
+//            	cout << "statement program\n";
+//            }
             ;
 identifier_list:    ID
             {
-            	printf ( "id list: \n");
+            	fprintf ( parseLog, "identifier_list → ID\n");
             	cout << $1->symbol << "\n";
             }
             |
             identifier_list COMMA ID
             {
-	            printf ( "id list, id:\n");
+	            fprintf ( parseLog, "identifier_list → identifier_list COMMA ID\n");
 	            cout << $1->symbol << " " << $3->symbol << "\n";
             }
             ;
@@ -70,195 +70,229 @@ SEMICOLON | ε
 */
 declarations: 	       
             {
-            	printf ( "declaration → ε\n");
+            	fprintf ( parseLog, "declaration → ε\n");
             }
             |
             declarations VAR identifier_list COLON type SEMICOLON
             {
-            	printf( "declarations...");
+            	fprintf ( parseLog, "declarations → declarations VAR identifier_list COLON type SEMICOLON\n");
             	cout << $2->symbol << endl;
             }
             ;
 type:       standard_type
             {
+            	fprintf ( parseLog, "type → standard_type\n");
             }
             |
             ARRAY BRACKET1 NUM DOTDOT NUM BRACKET2 OF standard_type
             {
+            	fprintf ( parseLog, "type → ARRAY '[' NUM DOTDOT NUM ']' OF standard_type\n");
             }
             ;
 standard_type:  INTEGER
             {
+            	fprintf ( parseLog, "standard_type → INTEGER\n");
             }
             |
             REAL
             {
+            	fprintf ( parseLog, "standard_type → REAL\n");
             }
             ;
 subprogram_declarations:	           
             {
-            	printf ("subprog dec→ ε");
+            	printf ("subprogram_declarations → ε");
             }
             |
             subprogram_declarations subprogram_declaration SEMICOLON
             {
-            	printf ( "subprog_dec subprog_dec semic\n");
+            	fprintf ( parseLog, "subprogram_declarations → subprogram_declarations subprogram_declaration SEMICOLON\n");
             }
             ;
 subprogram_declaration:	subprogram_head declarations compound_statement
             {
-            	printf ( "subprog_head dec comp_stmnt\n");
+            	fprintf ( parseLog, "subprogram_declaration → subprogram_head declarations compound_statement\n");
             }
             ;
 subprogram_head:    FUNCTION ID arguments COLON standard_type SEMICOLON
             {
+            	fprintf ( parseLog, "subprogram_head → FUNCTION ID arguments COLON standard_type SEMICOLON\n");
             }
             |
             PROCEDURE ID arguments SEMICOLON
             {
+            	fprintf ( parseLog, "subprogram_head → PROCEDURE ID arguments SEMICOLON\n");
             }
             ;
 arguments:	        
             {
+            	printf ("arguments → ε\n");
             }
             |
             PAREN1 parameter_list PAREN2
             {
+            	printf ("arguments → '(' parameter_list ')'\n");
             }
             ;
 parameter_list:	identifier_list COLON type
             {
+            	fprintf ( parseLog, "parameter_list → identifier_list COLON type\n");
             }
             |
             parameter_list SEMICOLON identifier_list COLON type
             {
+            	fprintf ( parseLog, "parameter_list → parameter_list SEMICOLON identifier_list COLON type\n");
             }
             ;
 compound_statement:	BEGINNING optional_statements END
             {
+            	fprintf ( parseLog, "compound_statement → BEGIN optional_statements END\n");
             }
             ;
 optional_statements:	      
             {
+            	fprintf ( parseLog, "optional_statements → ε\n");
             }
             |
             statement_list
             {
+            	fprintf ( parseLog, "optional_statements → statement_list\n" );
             }
             ;
 statement_list: statement
             {
+            	fprintf ( parseLog, "statement_list → statement\n");
             }
             |
             statement_list SEMICOLON statement
             {
+            	fprintf ( parseLog, "statement_list → statement_list SEMICOLON statement\n");
             }
             ;
 statement:  variable ASSIGNOP expression
             {
-            	cout << "var assn expr"<<endl;
+            	fprintf ( parseLog, "statement → variable ASSIGNOP expression\n");
             }
             |
             procedure_statement
             {
-            	cout << "proc stat"<<endl;
+            	fprintf ( parseLog, "statement → procedure_statement\n");
             }
             |
             compound_statement
             {
+            	fprintf ( parseLog, "statement → compound_statement\n");
             }
             |
             IF expression THEN statement %prec IFX
             {
+	            fprintf ( parseLog, "statement → IF expression THEN statement\n");
             }
             |
             IF expression THEN statement ELSE statement
             {
+	            fprintf ( parseLog, "statement → IF expression THEN statement ELSE statement\n");
             }
             |
             WHILE expression DO statement
             {
-            	
+            	fprintf ( parseLog, "statement → WHILE expression DO statement\n");
             }
             |
             WRITE PAREN1 ID PAREN2
             {
+            	fprintf ( parseLog, "statement → write '(' ID ')'\n");
             }
             ;
 variable:   ID
             {
+	            fprintf ( parseLog, "variable → ID\n");
             }
             |
             ID BRACKET1 expression BRACKET2
             {
+            	fprintf ( parseLog, "variable → ID '[' expression ']'\n");
             }
             ;
 procedure_statement:    ID
             {
+           		fprintf ( parseLog, "procedure_statement → ID\n" );
             }
             |
             ID PAREN1 expression_list PAREN2
             {
+           		fprintf ( parseLog, "procedure_statement → ID '(' expression_list ')'\n" );            	
             }
             ;
 expression_list:	expression
             {
+            	fprintf ( parseLog, "expression_list → expression\n");
             }
             |
             expression_list COMMA expression
             {
+            	fprintf ( parseLog, "expression_list → expression_list COMMA expression\n");
             }
             ;
 expression: simple_expression
             {
+            	fprintf ( parseLog, "expression → simple_expression\n");
             }
             |
             simple_expression RELOP simple_expression
             {
+            	fprintf ( parseLog, "expression → simple_expression RELOP simple_expression\n");
             }
             ;
 simple_expression:  term
             {
+            	fprintf ( parseLog, "simple_expression → term\n");
             	cout << $1->symbol<<endl;
-            	cout << "habijabi henten\n";
-            }
-            |
-            ADDOP term
-            {
             }
             |
             simple_expression ADDOP term
             {
-            	
+            	fprintf ( parseLog, "simple_expression → simple_expression ADDOP term\n");
+            }
+            |
+            ADDOP term
+            {
+            	fprintf ( parseLog, "simple_expression → sign term\n");
             }
             ;
 term:       factor
             {
+            	fprintf ( parseLog, "term → factor\n");
             }
             |
             term MULOP factor
-            {}
+            {
+            	fprintf ( parseLog, "term → term MULOP factor\n");
+            }
             ;
 factor:     ID
             {
-            	
+            	fprintf ( parseLog, "factor → ID\n");
             }
             |
             ID PAREN1 expression_list PAREN2
             {
+            	fprintf ( parseLog, "factor → ID '(' expression_list ')'\n");
             }
             |
             NUM
             {
-            	
+            	fprintf ( parseLog, "factor → NUM\n");
             }
             |
             PAREN1 expression PAREN2
             {
+            	fprintf ( parseLog, "factor → '(' expression ')'\n");
             }
             |
             NOT factor
             {
+            	fprintf ( parseLog, "factor → NOT factor\n");
             }
             ;
 
@@ -274,7 +308,7 @@ int main(int argc,char *argv[])
 		printf("Try Again\n");
 		exit(1);
 	}
-
+	parseLog = fopen("parseLog", "w");
 	if((fp=fopen(argv[1],"r"))==NULL)
 	{
 		printf("Cannot Open Input File.\n");
@@ -283,6 +317,8 @@ int main(int argc,char *argv[])
 	
 	yyin=fp;
 	yyparse();
+	fclose(fp);
+	fclose(parseLog);
 	return 0;
 }
 

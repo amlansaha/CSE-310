@@ -1,0 +1,141 @@
+identifier_list → ID
+identifier_list → identifier_list COMMA ID
+declaration → ε
+identifier_list → ID
+identifier_list → identifier_list COMMA ID
+standard_type → INTEGER
+type → standard_type
+declarations → declarations VAR identifier_list COLON type SEMICOLON
+identifier_list → ID
+standard_type → REAL
+type → standard_type
+declarations → declarations VAR identifier_list COLON type SEMICOLON
+identifier_list → ID
+standard_type → INTEGER
+type → ARRAY '[' NUM DOTDOT NUM ']' OF standard_type
+declarations → declarations VAR identifier_list COLON type SEMICOLON
+variable → ID
+factor → NUM
+term → factor
+simple_expression → term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement_list → statement
+variable → ID
+factor → NUM
+term → factor
+simple_expression → term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement_list → statement_list SEMICOLON statement
+variable → ID
+factor → NUM
+term → factor
+simple_expression → term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+factor → NUM
+term → factor
+factor → NUM
+term → term MULOP factor
+simple_expression → simple_expression ADDOP term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement_list → statement_list SEMICOLON statement
+variable → ID
+factor → NUM
+term → factor
+factor → NUM
+term → term MULOP factor
+simple_expression → term
+expression → simple_expression
+factor → '(' expression ')'
+term → factor
+factor → NUM
+term → term MULOP factor
+simple_expression → term
+factor → NUM
+term → factor
+factor → NUM
+term → term MULOP factor
+simple_expression → simple_expression ADDOP term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement_list → statement_list SEMICOLON statement
+factor → ID
+term → factor
+simple_expression → term
+factor → NUM
+term → factor
+simple_expression → term
+expression → simple_expression RELOP simple_expression
+factor → '(' expression ')'
+term → factor
+simple_expression → term
+expression → simple_expression
+variable → ID
+factor → ID
+term → factor
+simple_expression → term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+variable → ID
+factor → ID
+term → factor
+simple_expression → term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement → IF expression THEN statement ELSE statement
+statement_list → statement_list SEMICOLON statement
+factor → ID
+term → factor
+simple_expression → term
+factor → ID
+term → factor
+simple_expression → term
+expression → simple_expression RELOP simple_expression
+factor → '(' expression ')'
+term → factor
+simple_expression → term
+expression → simple_expression
+variable → ID
+factor → ID
+term → factor
+simple_expression → term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement_list → statement
+variable → ID
+factor → ID
+term → factor
+simple_expression → term
+factor → NUM
+term → factor
+simple_expression → simple_expression ADDOP term
+expression → simple_expression
+statement → variable ASSIGNOP expression
+statement_list → statement_list SEMICOLON statement
+optional_statements → statement_list
+compound_statement → BEGIN optional_statements END
+statement → compound_statement
+statement → WHILE expression DO statement
+statement_list → statement_list SEMICOLON statement
+optional_statements → statement_list
+compound_statement → BEGIN optional_statements END
+program → PROGRAM ID '(' identifier_list ')' SEMICOLON declarations subprogram_declarations compound_statement
