@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.c"
+#line 3 "<stdout>"
 
 #define  YY_INT_ALIGNED short int
 
@@ -368,8 +368,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 45
-#define YY_END_OF_BUFFER 46
+#define YY_NUM_RULES 22
+#define YY_END_OF_BUFFER 23
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -377,50 +377,31 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[213] =
+static yyconst flex_int16_t yy_accept[49] =
     {   0,
-       21,   21,   46,   44,    1,    2,    1,   44,   27,   28,
-       23,   22,   30,   33,   20,   32,   31,   21,   21,   21,
-       43,   34,   25,   26,   34,   34,   34,   34,   34,   34,
-       34,   34,   34,   34,   34,   34,   34,   34,   44,    1,
-        2,    0,   37,   35,    0,   29,   42,    0,    0,   20,
-       41,   41,   24,   21,   43,   34,   34,   34,   34,   34,
-       34,    7,   34,   34,   34,    6,   34,   34,   34,   11,
-       22,   34,   34,   34,   34,   34,   34,    0,   40,    0,
-       38,    0,   36,    0,   35,    0,   42,    0,   42,   20,
-       41,   41,    0,   20,   23,   34,   34,   34,   12,   34,
-
-       34,    9,   34,   34,   34,    8,   34,   34,    0,    0,
-        0,   40,   39,   36,   37,    0,   42,   42,   42,   20,
-        0,   20,    0,   34,   34,   18,   34,   34,   34,   34,
-        5,    4,   34,   34,    0,    0,    0,    0,   42,   42,
-       42,    0,    0,   20,   20,   14,   15,   34,   34,   34,
-       34,   10,   17,   35,    0,   42,   42,    0,   42,    0,
-       20,   42,   20,   20,    0,   34,   34,   34,   34,    0,
-       42,    0,   42,    0,   42,   42,   20,   20,   42,    0,
-       42,   34,   19,   34,    3,    0,   42,    0,   42,   42,
-       42,   20,   42,   20,   42,   42,   13,   34,   42,   42,
-
-       42,   42,   20,   42,   42,   16,   42,   42,   42,   42,
-       42,    0
+        0,    0,   23,   22,    1,    2,   22,   22,   17,   19,
+       12,   10,   11,   13,    8,   21,    9,   14,    9,    7,
+       15,   18,    7,    7,   16,   22,   20,    1,    9,    4,
+        0,    8,    0,    9,    9,    7,    7,    7,    5,    3,
+        8,    0,    8,    7,    0,    6,    8,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        2,    2,    4,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    5,    1,    1,    1,    1,    1,    6,
-        7,    8,    9,   10,   11,   12,   13,   14,   14,   14,
-       14,   14,   14,   14,   14,   14,   14,   15,   16,   17,
-       18,   19,    1,   20,   21,   21,   21,   21,   22,   21,
-       21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
-       21,   21,   21,   21,   21,   21,   21,   21,   21,   21,
-       23,   24,   25,    1,   26,    1,   27,   28,   29,   30,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    2,    4,    1,    1,    1,    1,    5,    1,    6,
+        7,    8,    9,    1,   10,   11,   12,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,    1,   14,   15,
+       16,   17,    1,    1,   18,   18,   18,   18,   19,   18,
+       18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18,   18,   18,   18,   18,   18,   18,   18,   18,
+       20,    1,   21,    1,   22,    1,   18,   18,   18,   18,
 
-       31,   32,   33,   34,   35,   21,   21,   36,   37,   38,
-       39,   40,   21,   41,   42,   43,   44,   45,   46,   21,
-       47,   21,   48,    1,   49,   20,    1,    1,    1,    1,
+       23,   24,   18,   18,   25,   18,   18,   26,   18,   18,
+       18,   18,   18,   18,   27,   18,   18,   18,   18,   18,
+       18,   18,   28,   29,   30,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -437,195 +418,61 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[50] =
+static yyconst flex_int32_t yy_meta[31] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    3,    1,    1,    1,    1,    1,    1,
-        3,    3,    1,    1,    1,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    1,    1
+        1,    1,    2,    1,    1,    1,    1,    2,    2,    1,
+        1,    2,    2,    2,    2,    2,    2,    1,    1,    1
     } ;
 
-static yyconst flex_int16_t yy_base[225] =
+static yyconst flex_int16_t yy_base[51] =
     {   0,
-        0,    0,  472,  473,   48,  473,   51,   53,  473,  473,
-      473,  473,  473,   45,   48,  453,  473,   45,  473,  452,
-      449,  454,  473,  473,   37,   51,   52,   47,   54,   57,
-       55,   58,   60,   59,   62,   65,   76,   70,   77,   84,
-      473,  103,   91,  473,  104,  455,   88,  103,  452,  107,
-      451,  109,  473,  473,  444,    0,  449,  102,   99,   91,
-      108,  448,  116,  117,  119,  447,  120,  121,  122,  446,
-      445,  123,  125,  124,  127,  129,  131,  139,  100,  141,
-      473,  145,  473,  149,  156,  167,  162,  444,  443,  163,
-        0,  442,  441,  167,  440,  168,  132,  169,  439,  164,
-
-      172,  438,  175,  178,  180,  437,  183,  182,  150,  401,
-      153,  400,  473,  196,  202,  206,  201,  434,  210,  215,
-      222,  220,  409,  192,  202,  408,  198,  214,  207,  203,
-      405,  404,  221,  228,  368,  240,  243,  246,  241,  244,
-      248,  254,  401,  257,  260,  393,  389,  240,  247,  243,
-      262,  388,  377,  274,  276,  271,  272,  281,  282,  376,
-      285,  289,  293,  294,  300,  273,  277,  288,  296,  315,
-      309,  313,  314,  372,  317,  323,  326,  329,  330,  357,
-      333,  311,  356,  316,  341,  329,  338,  332,  342,  347,
-      350,  351,  354,  355,  362,  366,  303,  344,  367,  370,
-
-      371,  375,  382,  383,  386,  299,  387,  394,  398,  399,
-      402,  473,  424,  426,  285,  429,  432,  247,  157,  435,
-      438,   78,  441,  444
+        0,    0,   71,   72,   68,   72,   53,   63,   72,   72,
+       72,   72,   72,   72,   20,   72,   18,   51,   50,   52,
+       72,   72,   19,   23,   72,   35,   72,   60,   72,   72,
+       48,   27,   39,   72,   72,    0,   47,   24,   46,   72,
+       31,   45,   30,   40,   44,   43,   42,   72,   52,   40
     } ;
 
-static yyconst flex_int16_t yy_def[225] =
+static yyconst flex_int16_t yy_def[51] =
     {   0,
-      212,    1,  212,  212,  212,  212,  212,  213,  212,  212,
-      212,  212,  212,  212,  214,  212,  212,  212,  212,  212,
-      212,  215,  212,  212,  215,  215,  215,  215,  215,  215,
-      215,  215,  215,  215,  215,  215,  215,  215,  216,  212,
-      212,  213,  217,  212,  213,  212,  212,  212,  212,  214,
-      218,  218,  212,  212,  212,  219,  215,  215,  215,  215,
-      215,  215,  215,  215,  215,  215,  215,  215,  215,  215,
-      215,  215,  215,  215,  215,  215,  215,  216,  220,  221,
-      212,  217,  212,  217,  213,  213,  212,  212,  212,  212,
-      222,  218,  212,  222,  215,  215,  215,  215,  215,  215,
-
-      215,  215,  215,  215,  215,  215,  215,  215,  220,  223,
-      221,  223,  212,  217,  224,  213,  212,  212,  212,  212,
-      212,  212,  212,  215,  215,  215,  215,  215,  215,  215,
-      215,  215,  215,  215,  223,  224,  224,  213,  212,  212,
-      212,  212,  212,  212,  212,  215,  215,  215,  215,  215,
-      215,  215,  215,  224,  224,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  215,  215,  215,  215,  224,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  215,  215,  215,  215,  224,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  215,  215,  212,  212,
-
-      212,  212,  212,  212,  212,  215,  212,  212,  212,  212,
-      212,    0,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212
+       48,    1,   48,   48,   48,   48,   48,   48,   48,   48,
+       48,   48,   48,   48,   48,   48,   48,   48,   48,   49,
+       48,   48,   49,   49,   48,   48,   48,   48,   48,   48,
+       48,   48,   48,   48,   48,   50,   49,   49,   49,   48,
+       48,   48,   48,   49,   48,   49,   48,    0,   48,   48
     } ;
 
-static yyconst flex_int16_t yy_nxt[523] =
+static yyconst flex_int16_t yy_nxt[103] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-       12,   14,   11,   15,   16,   17,   18,   19,   20,   21,
-       22,   22,   23,    4,   24,   22,   25,   26,   22,   27,
-       28,   29,   22,   22,   30,   22,   31,   32,   33,   34,
-       35,   22,   36,   22,   37,   38,   22,   39,    4,   40,
-       56,   40,   40,   41,   40,   43,   46,   44,   47,   49,
-       56,   50,   54,   54,   56,   56,   48,   56,   56,   52,
-       56,   56,   56,   56,   58,   56,   45,   59,   56,   79,
-       91,   60,   63,   56,   64,   40,   61,   40,   66,   56,
-       62,   70,   73,   68,   67,   83,   69,   65,   74,   72,
+        4,   14,   15,   16,   17,   18,   19,   20,   20,   21,
+       22,   20,   23,   20,   24,   20,   20,   25,   26,   27,
+       31,   36,   32,   34,   34,   36,   36,   31,   33,   32,
+       45,   36,   43,   41,   38,   33,   39,   42,   42,   33,
+       44,   43,   36,   37,   47,   36,   47,   43,   36,   36,
+       41,   28,   46,   40,   36,   35,   29,   30,   29,   28,
+       48,    3,   48,   48,   48,   48,   48,   48,   48,   48,
+       48,   48,   48,   48,   48,   48,   48,   48,   48,   48,
+       48,   48,   48,   48,   48,   48,   48,   48,   48,   48,
 
-       71,   47,   75,   76,   56,   43,   43,   44,   85,   48,
-       77,   88,   56,   88,   84,   56,   89,   93,   49,   93,
-       50,   56,   94,   97,   80,   81,   45,   86,   52,   56,
-       56,   95,   56,   56,   56,   56,   56,   56,   56,   96,
-       56,   79,   56,  112,   56,   56,   99,  110,   81,   83,
-       95,  104,   95,  114,  105,  112,  100,   98,   43,   56,
-       44,  103,  101,  107,  102,  108,  125,  106,   84,  115,
-      116,   85,   84,  117,  119,   47,  120,   56,  123,   45,
-       94,   56,   56,   48,  121,   56,   80,   81,   56,  113,
-       86,   56,  127,   56,  124,   56,   56,  110,   81,  126,
-
-       83,  113,  128,  129,   82,   56,   44,  130,  115,  138,
-       44,   56,  117,  131,   47,   56,   56,  132,  133,   84,
-       56,  139,   48,  140,  134,  137,  141,   56,  120,   45,
-      143,  123,  143,  122,   56,  144,  142,  150,  146,  147,
-      148,   56,   82,  151,   44,   82,  149,  154,  115,   92,
-       44,  152,  139,   56,  156,  157,   56,  140,  153,  139,
-       56,  159,  160,  137,  160,  158,  155,  161,  162,   45,
-      163,  119,  168,  164,  166,   56,   82,  167,   44,  170,
-      154,  165,  171,  139,  156,  173,   56,   57,  169,  174,
-       56,  174,  172,  157,  175,  159,  176,  137,  177,  155,
-
-      139,   56,  178,  158,  179,  141,  163,  164,  180,   56,
-      180,  182,   56,  181,  172,  158,   56,  183,  186,   44,
-      139,  188,  187,  188,   56,  171,  189,  173,  190,   56,
-      191,  184,  185,   44,  139,  158,  192,  193,  137,  177,
-      141,  139,  178,  194,  195,  189,  196,  172,  197,  171,
-      158,  187,  137,  199,   56,  200,  198,   56,  139,  172,
-      201,  202,  141,  191,  192,  139,  141,  203,  194,   56,
-      181,  172,  158,  139,  206,  204,  158,  205,  139,  196,
-      207,  208,  171,  200,  201,  175,  139,  172,  209,  161,
-       56,  172,  172,  141,  171,  203,  204,  139,  171,  210,
-
-      207,   56,   56,  158,  172,  139,   56,  211,  172,  171,
-      171,  209,  210,  171,  144,  211,  113,   56,   56,  172,
-      172,   56,  145,  172,   42,   42,   42,   51,   51,   78,
-       78,   78,   82,   82,   82,  109,  109,  109,  111,  111,
-      111,  135,  135,  135,  136,  136,  136,  118,  113,  113,
-       56,   56,   56,   56,  122,   91,  118,   89,   56,   56,
-       56,   56,   56,   55,   91,   90,   87,   56,   55,   54,
-       53,  212,    3,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212
+       48,   48
     } ;
 
-static yyconst flex_int16_t yy_chk[523] =
+static yyconst flex_int16_t yy_chk[103] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    5,
-       25,    5,    7,    7,    7,    8,   14,    8,   14,   15,
-       28,   15,   18,   18,   26,   27,   14,   29,   31,   15,
-       30,   32,   34,   33,   25,   35,    8,   25,   36,   39,
-      222,   26,   28,   38,   28,   40,   27,   40,   30,   37,
-       27,   33,   35,   31,   30,   43,   32,   29,   36,   34,
+       15,   23,   15,   17,   17,   24,   38,   32,   15,   32,
+       43,   50,   43,   41,   23,   32,   24,   33,   33,   41,
+       38,   33,   44,   49,   47,   46,   45,   42,   39,   37,
+       31,   28,   44,   26,   20,   19,   18,    8,    7,    5,
+        3,   48,   48,   48,   48,   48,   48,   48,   48,   48,
+       48,   48,   48,   48,   48,   48,   48,   48,   48,   48,
+       48,   48,   48,   48,   48,   48,   48,   48,   48,   48,
 
-       33,   47,   37,   38,   60,   42,   45,   42,   45,   47,
-       38,   48,   59,   48,   43,   58,   48,   52,   50,   52,
-       50,   61,   52,   60,   39,   39,   42,   45,   50,   63,
-       64,   58,   65,   67,   68,   69,   72,   74,   73,   59,
-       75,   78,   76,   80,   77,   97,   64,   79,   79,   82,
-       68,   73,   61,   84,   74,  111,   65,   63,   85,  219,
-       85,   72,   67,   76,   69,   77,   97,   75,   82,   86,
-       86,   86,   84,   87,   90,   87,   90,  100,   94,   85,
-       94,   96,   98,   87,   90,  101,   78,   78,  103,   80,
-       86,  104,  100,  105,   96,  108,  107,  109,  109,   98,
-
-      114,  111,  101,  103,  115,  124,  115,  103,  116,  116,
-      116,  127,  117,  104,  117,  125,  130,  105,  107,  114,
-      129,  119,  117,  119,  108,  115,  120,  128,  120,  116,
-      121,  122,  121,  122,  133,  121,  120,  129,  124,  125,
-      127,  134,  136,  130,  136,  137,  128,  137,  138,  218,
-      138,  133,  139,  148,  139,  140,  150,  140,  134,  141,
-      149,  141,  142,  136,  142,  140,  137,  142,  144,  138,
-      144,  145,  150,  145,  148,  151,  154,  149,  154,  155,
-      155,  145,  156,  157,  156,  157,  166,  215,  151,  158,
-      167,  158,  156,  159,  158,  159,  161,  154,  161,  155,
-
-      162,  168,  162,  159,  163,  164,  163,  164,  165,  169,
-      165,  166,  206,  165,  163,  164,  197,  167,  170,  170,
-      171,  172,  171,  172,  182,  173,  172,  173,  175,  184,
-      175,  168,  169,  186,  176,  173,  176,  177,  170,  177,
-      178,  179,  178,  179,  181,  188,  181,  177,  182,  187,
-      178,  187,  186,  189,  185,  189,  184,  198,  190,  187,
-      190,  191,  192,  191,  192,  193,  194,  193,  194,  183,
-      180,  191,  192,  195,  198,  195,  194,  196,  199,  196,
-      199,  200,  201,  200,  201,  174,  202,  196,  202,  160,
-      153,  200,  201,  203,  204,  203,  204,  205,  207,  205,
-
-      207,  152,  147,  203,  204,  208,  146,  208,  207,  209,
-      210,  209,  210,  211,  143,  211,  135,  132,  131,  209,
-      210,  126,  123,  211,  213,  213,  213,  214,  214,  216,
-      216,  216,  217,  217,  217,  220,  220,  220,  221,  221,
-      221,  223,  223,  223,  224,  224,  224,  118,  112,  110,
-      106,  102,   99,   95,   93,   92,   89,   88,   71,   70,
-       66,   62,   57,   55,   51,   49,   46,   22,   21,   20,
-       16,    3,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212,  212,  212,  212,  212,  212,  212,  212,  212,
-      212,  212
+       48,   48
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -642,23 +489,19 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexa.l"
-#line 2 "lexa.l"
-#include "SymbolTable.h"
+#line 1 "startup.l"
+#line 2 "startup.l"
+#include "myheader.h"
 #include "y.tab.h"
+extern YYSTYPE yylval;
 
 using namespace std;
 
-//void yyerror(char*);
-extern YYSTYPE yylval;
-
-int lineCount = 1;
 extern SymbolTable st;
 
-extern FILE *fp, *parseLog;
+int count=0;
 
-extern bool inserted;
-#line 662 "lex.yy.c"
+#line 505 "<stdout>"
 
 #define INITIAL 0
 
@@ -845,11 +688,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 74 "lexa.l"
+#line 40 "startup.l"
 
 
-
-#line 853 "lex.yy.c"
+#line 695 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -902,13 +744,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 213 )
+				if ( yy_current_state >= 49 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 473 );
+		while ( yy_base[yy_current_state] != 72 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -934,506 +776,194 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 77 "lexa.l"
-{
-                //Do Nothing
-            }
+#line 42 "startup.l"
+{}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 80 "lexa.l"
+#line 43 "startup.l"
 {
-                lineCount += 1;
-//                cout << "OLSDJFOLSJIDF\n";
-//{KEYWORD}	{
-//				fprintf ( parseLog, "Line %d: Keyword \"%s\" is found.\n", lineCount, yytext);
-//				fprintf ( tokf, "< %s >", yytext);
-//			}
-            }
+	count++;
+}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 89 "lexa.l"
+#line 46 "startup.l"
 {
-			return PROGRAM;
-		}
+	//st.insert(yytext,"OR");
+	//yylval=(YYSTYPE)st.uplook(yytext);
+	return OR;
+	//cout<<"OR"<<endl;
+}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 93 "lexa.l"
+#line 52 "startup.l"
 {
-			return THEN;
-		}
+	//st.insert(yytext,"AND");
+	//yylval=(YYSTYPE)st.uplook(yytext);
+	return AND;
+	//cout<<"AND"<<endl;
+}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 97 "lexa.l"
+#line 58 "startup.l"
 {
-			return REAL;
-		}
+	return IF;
+}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 101 "lexa.l"
+#line 61 "startup.l"
 {
-			return IF;
-		}
+	//fprintf(ofp1,"< %s >",yytext);
+	//fprintf(ofp2,"\nLine < %d >: Keyword < %s > is found.\n",count+1,yytext);
+	return ELSE;
+}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 105 "lexa.l"
+#line 66 "startup.l"
 {
-			return DO;
-		}
+	st.insert(yytext,"ID");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return ID;
+}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 109 "lexa.l"
+#line 71 "startup.l"
 {
-//			cout << "var found at line: " << lineCount << endl;
-			return VAR;
-		}
+	st.insert(yytext,"NUM");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return NUM;
+}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 114 "lexa.l"
+#line 76 "startup.l"
 {
-			return NOT;
-		}
+	st.insert(yytext,"RELOP");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return RELOP;
+}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 118 "lexa.l"
+#line 81 "startup.l"
 {
-			return WHILE;
-		}
+	st.insert(yytext,"ADDOP");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return ADDOP1;
+}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 122 "lexa.l"
+#line 86 "startup.l"
 {
-			return OF;
-		}
+	st.insert(yytext,"ADDOP");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return ADDOP2;
+}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 126 "lexa.l"
+#line 91 "startup.l"
 {
-			return END;
-		}
+	st.insert(yytext,"MULOP");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return MULOP1;
+}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 130 "lexa.l"
+#line 96 "startup.l"
 {
-			return FUNCTION;
-		}
+	st.insert(yytext,"MULOP");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return MULOP2;
+}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 134 "lexa.l"
+#line 101 "startup.l"
 {
-			return ARRAY;
-		}
+	st.insert(yytext,"ASSIGNOP");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return ASSIGNOP;
+}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 138 "lexa.l"
+#line 106 "startup.l"
 {
-			return BEGINNING;
-		}
+	st.insert(yytext,"BRACKET");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return BRACKET1;
+}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 142 "lexa.l"
+#line 111 "startup.l"
 {
-			return PROCEDURE;
-		}
+	st.insert(yytext,"CURLEY");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return CURLEY1;
+}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 146 "lexa.l"
+#line 116 "startup.l"
 {
-			return WRITE;
-		}
+	st.insert(yytext,"PAREN");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return PAREN1;
+}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 150 "lexa.l"
+#line 121 "startup.l"
 {
-			return ELSE;
-		}
+	st.insert(yytext,"BRACKET");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return BRACKET2;
+}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 154 "lexa.l"
+#line 126 "startup.l"
 {
-			return INTEGER;
-		}
+	st.insert(yytext,"PAREN");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return PAREN2;
+}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 158 "lexa.l"
+#line 131 "startup.l"
 {
-			if (st.insert("NUM",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"NUM\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return NUM;
-		}
+	st.insert(yytext,"CURLEY");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return CURLEY2;
+}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 168 "lexa.l"
+#line 136 "startup.l"
 {
-			if (st.insert("RELOP",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"RELOP\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return RELOP;
-		}
+	st.insert(yytext,"SEMICOLON");
+	yylval=(YYSTYPE)st.uplook(yytext);
+	return SEMICOLON;
+}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 178 "lexa.l"
-{
-			if (st.insert("ADDOP",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"ADDOP\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return ADDOP;
-		}
-	YY_BREAK
-case 23:
-YY_RULE_SETUP
-#line 188 "lexa.l"
-{
-			if (st.insert("MULOP",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"MULOP\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return MULOP;
-		}
-	YY_BREAK
-case 24:
-YY_RULE_SETUP
-#line 198 "lexa.l"
-{
-			if (st.insert("ASSIGNOP",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"ASSIGNOP\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return ASSIGNOP;
-		}
-	YY_BREAK
-case 25:
-YY_RULE_SETUP
-#line 208 "lexa.l"
-{
-			if (st.insert("BRACKET1",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"BRACKET1\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return BRACKET1;
-		}
-	YY_BREAK
-case 26:
-YY_RULE_SETUP
-#line 218 "lexa.l"
-{
-			if (st.insert("BRACKET2",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"BRACKET2\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return BRACKET2;
-		}
-	YY_BREAK
-case 27:
-YY_RULE_SETUP
-#line 228 "lexa.l"
-{
-			if (st.insert("PAREN1",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"PAREN1\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return PAREN1;
-		}
-	YY_BREAK
-case 28:
-YY_RULE_SETUP
-#line 238 "lexa.l"
-{
-			if (st.insert("PAREN2",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"PAREN2\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return PAREN2;
-		}
-	YY_BREAK
-case 29:
-YY_RULE_SETUP
-#line 248 "lexa.l"
-{
-			if (st.insert("DOTDOT",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"DOTDOT\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return DOTDOT;
-		}
-	YY_BREAK
-case 30:
-YY_RULE_SETUP
-#line 258 "lexa.l"
-{
-			if (st.insert("COMMA",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"COMMA\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return COMMA;
-		}
-	YY_BREAK
-case 31:
-YY_RULE_SETUP
-#line 268 "lexa.l"
-{
-			if (st.insert("SEMICOLON",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"SEMICOLON\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return SEMICOLON;
-		}
-	YY_BREAK
-case 32:
-YY_RULE_SETUP
-#line 278 "lexa.l"
-{
-			if (st.insert("COLON",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"COLON\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return COLON;
-		}
-	YY_BREAK
-case 33:
-YY_RULE_SETUP
-#line 288 "lexa.l"
-{
-			if (st.insert("DOT",yytext) == true )	{
-				fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"DOT\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-			}
-			else	inserted = false;
-			yylval=(YYSTYPE)st.uplook(yytext);
-			return DOT;
-		}
-	YY_BREAK
-case 34:
-YY_RULE_SETUP
-#line 297 "lexa.l"
-{
-//                cout<<"IDENTIFIER "<< yytext << endl;
-				if (st.insert("ID",yytext) == true )	{
-					fprintf ( parseLog, "At line: %d, lexeme: \"%s\" of type \"ID\" has been inserted in symbol table.\n", lineCount, yytext );
-				inserted = true;
-				}
-				else	inserted = false;
-				yylval=(YYSTYPE)st.uplook(yytext);
-				return ID;
-//				fprintf(parseLog, "Line %d: \"%s\" is found.\n", lineCount, yytext);
-//                bool flag = if (st.insert("ID", yytext);
-//                if (!flag)	fprintf(parseLog, "\"%s\" already exists.\n", yytext);
-//                fprintf (parseLog, "\nSymbol Table: \n-------------\n");
-//                st.dump(parseLog);
-//                fprintf(parseLog, "\n");
-//                fprintf(tokf, "< ID, %s >", yytext);
-//				return ID;
-            }
-	YY_BREAK
-case 35:
-/* rule 35 can match eol */
-YY_RULE_SETUP
-#line 315 "lexa.l"
-{
-				int nl = 0, i = 0;
-				char *str = new char [strlen(yytext)+1];
-				yytext++;
-				while(*yytext != '\0')	{
-					if ( yytext[0] == '\\' )	{
-						if ( yytext[1] == '\\' )	{
-							yytext++;
-							if(yytext[1] == '\r' && yytext[2] == '\n' )	{
-								yytext+= 2;
-								nl++;
-							}
-							else if (yytext[1] == '\n')	{
-								yytext++;
-								nl++;
-							}
-						}
-						else if (yytext[1] == 'n')	{
-							yytext++;
-							*yytext = '\n';
-						}
-						else if (yytext[1] == 't')	{
-							yytext++;
-							*yytext = '\t';
-						}
-						else if (yytext[1] == 'v')	{
-							yytext++;
-							*yytext = '\v';
-						}
-						else if (yytext[1] == 'f')	{
-							yytext++;
-							*yytext = '\f';
-						}
-						else if (yytext[1] == 'r')	{
-							yytext++;
-							*yytext = '\r';
-						}
-						else if (yytext[1] == '\"')	{
-							yytext++;
-							*yytext = '\"';
-						}
-						else if (yytext[1] == '\'')	{
-							yytext++;
-							*yytext = '\'';
-						}
-					}
-					str[i] = *yytext;
-					yytext++;
-					i++;
-//					cout << "PPP: " << i << endl;
-				}
-				str[i-1] = '\0';	//hence last double quotation mark(") of yytext will be ignored
-				fprintf ( parseLog, "Line %d: String \"%s\" is found.\n", lineCount, str);
-				lineCount+= nl;
-				return VALID_STRING;
-			}
-	YY_BREAK
-case 36:
-/* rule 36 can match eol */
-YY_RULE_SETUP
-#line 371 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Ill-formed string is found.\n", lineCount);
-				while ( *yytext!='\0')	{
-					if(yytext[0]=='\n')	lineCount++;
-					yytext++;
-				}
-//				return ILL_STRING;
-			}			
-	YY_BREAK
-case 37:
-/* rule 37 can match eol */
-YY_RULE_SETUP
-#line 379 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Incomplete string is found.\n", lineCount);
-				int l = strlen(yytext);
-				if(yytext[l-1]=='\n')	lineCount++;
-//				return INCOMPLETE_STRING;
-			}	
-	YY_BREAK
-case 38:
-/* rule 38 can match eol */
-YY_RULE_SETUP
-#line 385 "lexa.l"
-{
-				fprintf ( parseLog, "Line %d: Comment %s is found.\n", lineCount, yytext);
-				while(*yytext != '\0')	{
-					if(*yytext == '\n')	lineCount++;
-					yytext++;
-				}
-			}
-	YY_BREAK
-case 39:
-/* rule 39 can match eol */
-YY_RULE_SETUP
-#line 392 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Ill-formed comment is found.\n", lineCount);
-				int l = strlen(yytext);while(*yytext != '\0')	{
-					if(*yytext == '\n')	lineCount++;
-					yytext++;
-				}
-//				return ILL_COMMENT;
-			}
-	YY_BREAK
-case 40:
-/* rule 40 can match eol */
-YY_RULE_SETUP
-#line 400 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Incomplete comment is found.\n", lineCount);
-				int l = strlen(yytext);
-				if(yytext[l-1]=='\n')	lineCount++;
-//				return INCOMPLETE_COMMENT;
-			}
-	YY_BREAK
-case 41:
-YY_RULE_SETUP
-#line 406 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Ill-formed identifier \"%s\" is found.\n", lineCount, yytext);
-//				return ILL_ID;
-			}
-	YY_BREAK
-case 42:
-YY_RULE_SETUP
-#line 410 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Ill-formed number \"%s\" is found.\n", lineCount, yytext);
-//				return ILL_NUM;
-			}
-	YY_BREAK
-case 43:
-YY_RULE_SETUP
-#line 414 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Unrecognised charcters %s are found.\n", lineCount, yytext);
-//				return UNRECO;
-			}
-	YY_BREAK
-case 44:
-YY_RULE_SETUP
-#line 418 "lexa.l"
-{
-				fprintf(stderr, "Line %d: ERROR... Unknown lexical error is found.\n", lineCount);
-			}
-	YY_BREAK
-case 45:
-YY_RULE_SETUP
-#line 421 "lexa.l"
+#line 142 "startup.l"
 ECHO;
 	YY_BREAK
-#line 1437 "lex.yy.c"
+#line 967 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1725,7 +1255,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 213 )
+			if ( yy_current_state >= 49 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1753,11 +1283,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 213 )
+		if ( yy_current_state >= 49 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 212);
+	yy_is_jam = (yy_current_state == 48);
 
 	return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2431,27 +1961,45 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 421 "lexa.l"
+#line 142 "startup.l"
 
 
 
-//int main(int argc, char **argv)
-//{
-//	fp = fopen(argv[1], "r");
-//	tokf = fopen(argv[2], "w");
-//	parseLog = fopen(argv[3], "w");
-//	yyin = fp;
-//    yylex();
-//    fprintf(parseLog, "Total line: %d\n", --lineCount );
-////    cout << lineCount<<endl;
-//    fclose(fp);
-//    fclose(tokf);
-//    fclose(parseLog);
-//    return 0;
+/*int main(int argc,char *argv[])
+{
+	/*if(argc!=4)
+	{
+		printf("Usage: ./<programname> <input_file> <output_file1> <output_file2(assembly)>\n");
+		printf("Try Again\n");
+		exit(1);
+	}
+
+	if((ifp=fopen(argv[1],"r"))==NULL)
+	{
+		printf("Cannot Open Input File.\n");
+		exit(1);
+	}
+	
+	yyin=ifp;
+
+	if((ofp1=fopen(argv[2],"w"))==NULL)
+	{
+		printf("Cannot Open Output File1.\n");
+		exit(1);
+	}
+
+	if((ofp2=fopen(argv[3],"w"))==NULL)
+	{
+		printf("Cannot Open Output File2.\n");
+		exit(1);
+	}*/
+	//freopen("in.txt","r",stdin);
+
+	//yylex();
+	//fprintf(ofp2,"\nInput file contains %d lines in total",count+1);
+	//st.dump();
+	//return 0;
 //}
 
-//int yywrap()
-//{
-//	return 1;
-//}
+
 

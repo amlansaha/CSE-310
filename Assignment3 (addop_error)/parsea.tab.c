@@ -64,58 +64,56 @@
 /* Copy the first part of user declarations.  */
 #line 1 "parsea.y" /* yacc.c:339  */
 
+#include<bits/stdc++.h>
 #include "SymbolTable.h"
 #define YYSTYPE SymbolInfo*
-#include <bits/stdc++.h>
 
 using namespace std;
-	
-SymbolTable st;
-stringstream ss;
+
 int yyparse(void);
 int yylex(void);
 extern FILE *yyin;
 extern int lineCount;
-int tempCount = 0, labelCount = 0;
+//int tempcount=0;
+//int levelcount=0;
 //set<string> datalist;
 //set<string>::iterator dlist;
+
 //class mypair{
 //public:
 //	string s;
 //	int v;
 //};
+//bool operator<(mypair mp1,mypair mp2)
+//{
+// 	return mp1.s<mp2.s;
+//}
 
-FILE *fp, *parseLog;
+//set<mypair> myarraylist;
+//set<mypair>::iterator alist;
+
+FILE *fp;
 
 void yyerror(char *s)
 {
-	fprintf(stderr,"At Line %d, ERROR-> %s\n",lineCount,s);
+	fprintf(stdout,"%s\n",lineCount+1,s);
 	return;
 }
 
-bool declareZone = true;
-bool inserted = false;
-string varDec = "", codes = "";
-
-ofstream icfile;
-
-string getTemp(string type = "w")	//put type = "b" for byte
+void getTemp(char *cp)
 {
-	stringstream ss;
-	ss << "temp" << tempCount++;
-	varDec+= ss.str()+" d"+type[0]+" 0\n";
-	return ss.str();
 }
 
-string getLabel()	//put type = "b" for byte
+void getLabel(char *cp)
 {
-	stringstream ss;
-	ss << "label" << labelCount++;
-	return ss.str();
 }
 
+SymbolTable st(200);
+/*
 
-#line 119 "y.tab.c" /* yacc.c:339  */
+*/
+
+#line 117 "parsea.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -133,10 +131,7 @@ string getLabel()	//put type = "b" for byte
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "y.tab.h".  */
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -162,7 +157,7 @@ extern int yydebug;
     END = 267,
     FUNCTION = 268,
     ARRAY = 269,
-    BEGINNING = 270,
+    BEGIN = 270,
     PROCEDURE = 271,
     WRITE = 272,
     ELSE = 273,
@@ -194,59 +189,9 @@ extern int yydebug;
     COLON = 299,
     DOT = 300,
     UNRECO = 301,
-    AND = 302,
-    OR = 303,
-    IFX = 304
+    IFX = 302
   };
 #endif
-/* Tokens.  */
-#define PROGRAM 258
-#define THEN 259
-#define REAL 260
-#define IF 261
-#define DO 262
-#define VAR 263
-#define NOT 264
-#define WHILE 265
-#define OF 266
-#define END 267
-#define FUNCTION 268
-#define ARRAY 269
-#define BEGINNING 270
-#define PROCEDURE 271
-#define WRITE 272
-#define ELSE 273
-#define INTEGER 274
-#define LETTER 275
-#define DIGIT 276
-#define UNDERSCORE 277
-#define NUM 278
-#define ILL_NUM 279
-#define ID 280
-#define ILL_ID 281
-#define VALID_STRING 282
-#define ILL_STRING 283
-#define INCOMPLETE_STRING 284
-#define VALID_COMMENT 285
-#define ILL_COMMENT 286
-#define INCOMPLETE_COMMENT 287
-#define RELOP 288
-#define ADDOP 289
-#define MULOP 290
-#define ASSIGNOP 291
-#define BRACKET1 292
-#define BRACKET2 293
-#define PAREN1 294
-#define PAREN2 295
-#define DOTDOT 296
-#define COMMA 297
-#define SEMICOLON 298
-#define COLON 299
-#define DOT 300
-#define UNRECO 301
-#define AND 302
-#define OR 303
-#define IFX 304
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -260,11 +205,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */
+
 
 /* Copy the second part of user declarations.  */
 
-#line 268 "y.tab.c" /* yacc.c:358  */
+#line 213 "parsea.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -509,7 +454,7 @@ union yyalloc
 #define YYLAST   116
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  50
+#define YYNTOKENS  48
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  22
 /* YYNRULES -- Number of rules.  */
@@ -520,7 +465,7 @@ union yyalloc
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   304
+#define YYMAXUTOK   302
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -559,18 +504,18 @@ static const yytype_uint8 yytranslate[] =
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
-      45,    46,    47,    48,    49
+      45,    46,    47
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    68,    68,    88,    96,   109,   116,   123,   129,   134,
-     140,   147,   153,   158,   163,   168,   174,   178,   183,   188,
-     193,   202,   206,   213,   220,   228,   244,   250,   256,   261,
-     266,   271,   276,   282,   287,   293,   298,   304,   310,   317,
-     322,   328,   364,   381,   387,   437,   443,   448,   454,   460
+       0,    66,    66,    70,    74,    82,    85,    89,    93,    97,
+     101,   106,   109,   113,   117,   121,   126,   129,   133,   137,
+     141,   146,   149,   153,   157,   161,   165,   169,   173,   177,
+     181,   185,   189,   193,   197,   201,   205,   209,   213,   217,
+     221,   225,   229,   233,   237,   240,   244,   248,   252,   256
 };
 #endif
 
@@ -580,19 +525,18 @@ static const yytype_uint16 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "PROGRAM", "THEN", "REAL", "IF", "DO",
-  "VAR", "NOT", "WHILE", "OF", "END", "FUNCTION", "ARRAY", "BEGINNING",
+  "VAR", "NOT", "WHILE", "OF", "END", "FUNCTION", "ARRAY", "BEGIN",
   "PROCEDURE", "WRITE", "ELSE", "INTEGER", "LETTER", "DIGIT", "UNDERSCORE",
   "NUM", "ILL_NUM", "ID", "ILL_ID", "VALID_STRING", "ILL_STRING",
   "INCOMPLETE_STRING", "VALID_COMMENT", "ILL_COMMENT",
   "INCOMPLETE_COMMENT", "RELOP", "ADDOP", "MULOP", "ASSIGNOP", "BRACKET1",
   "BRACKET2", "PAREN1", "PAREN2", "DOTDOT", "COMMA", "SEMICOLON", "COLON",
-  "DOT", "UNRECO", "AND", "OR", "IFX", "$accept", "program",
-  "identifier_list", "declarations", "type", "standard_type",
-  "subprogram_declarations", "subprogram_declaration", "subprogram_head",
-  "arguments", "parameter_list", "compound_statement",
-  "optional_statements", "statement_list", "statement", "variable",
-  "procedure_statement", "expression_list", "expression",
-  "simple_expression", "term", "factor", YY_NULLPTR
+  "DOT", "UNRECO", "IFX", "$accept", "program", "identifier_list",
+  "declarations", "type", "standard_type", "subprogram_declarations",
+  "subprogram_declaration", "subprogram_head", "arguments",
+  "parameter_list", "compound_statement", "optional_statements",
+  "statement_list", "statement", "variable", "procedure_statement",
+  "expression_list", "expression", "simple_expression", "term", "factor", YY_NULLPTR
 };
 #endif
 
@@ -605,7 +549,7 @@ static const yytype_uint16 yytoknum[] =
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297,   298,   299,   300,   301,   302,   303,   304
+     295,   296,   297,   298,   299,   300,   301,   302
 };
 # endif
 
@@ -648,10 +592,10 @@ static const yytype_uint8 yydefact[] =
       22,    23,     0,    26,    16,    12,     0,    10,     0,     9,
        0,     7,     0,     0,     0,    47,    45,     0,     0,     0,
       38,    40,    43,     0,     0,     0,     0,    20,     0,     0,
-       0,    13,     0,     6,     0,     0,     0,    49,     0,    42,
+       0,    13,     0,     6,     0,     0,     0,    49,     0,    41,
        0,     0,     0,     0,     0,     0,     0,     0,     0,    36,
       24,    25,    15,     0,     0,    17,     0,     0,     0,    48,
-      28,    39,    41,    44,    30,    31,    33,    35,     0,     0,
+      28,    39,    42,    44,    30,    31,    33,    35,     0,     0,
       18,     0,    14,    46,     0,    37,     0,     0,    29,     0,
       19,     0,     8
 };
@@ -711,28 +655,28 @@ static const yytype_int8 yycheck[] =
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,    51,    25,     0,    39,    25,    52,    40,    42,
-      43,    25,    53,     8,    56,    52,    13,    15,    16,    57,
-      58,    61,    44,    25,     6,    10,    17,    25,    61,    62,
-      63,    64,    65,    66,    25,    43,    53,     5,    14,    19,
-      54,    55,    39,    59,     9,    23,    25,    34,    39,    68,
-      69,    70,    71,    68,    39,    37,    39,    12,    43,    36,
-      59,    61,    37,    43,    52,    60,    44,    71,    39,    70,
-      68,     4,    33,    34,    35,     7,    25,    68,    67,    68,
-      64,    68,    43,    23,    44,    40,    43,    55,    67,    40,
-      64,    69,    70,    71,    64,    40,    38,    40,    42,    41,
-      54,    52,    43,    40,    18,    68,    23,    44,    64,    38,
-      54,    11,    55
+       0,     3,    49,    25,     0,    39,    25,    50,    40,    42,
+      43,    25,    51,     8,    54,    50,    13,    15,    16,    55,
+      56,    59,    44,    25,     6,    10,    17,    25,    59,    60,
+      61,    62,    63,    64,    25,    43,    51,     5,    14,    19,
+      52,    53,    39,    57,     9,    23,    25,    34,    39,    66,
+      67,    68,    69,    66,    39,    37,    39,    12,    43,    36,
+      57,    59,    37,    43,    50,    58,    44,    69,    39,    68,
+      66,     4,    33,    34,    35,     7,    25,    66,    65,    66,
+      62,    66,    43,    23,    44,    40,    43,    53,    65,    40,
+      62,    67,    68,    69,    62,    40,    38,    40,    42,    41,
+      52,    50,    43,    40,    18,    66,    23,    44,    62,    38,
+      52,    11,    53
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    50,    51,    52,    52,    53,    53,    54,    54,    55,
-      55,    56,    56,    57,    58,    58,    59,    59,    60,    60,
-      61,    62,    62,    63,    63,    64,    64,    64,    64,    64,
-      64,    64,    65,    65,    66,    66,    67,    67,    68,    68,
-      69,    69,    69,    70,    70,    71,    71,    71,    71,    71
+       0,    48,    49,    50,    50,    51,    51,    52,    52,    53,
+      53,    54,    54,    55,    56,    56,    57,    57,    58,    58,
+      59,    60,    60,    61,    61,    62,    62,    62,    62,    62,
+      62,    62,    63,    63,    64,    64,    65,    65,    66,    66,
+      67,    67,    67,    68,    68,    69,    69,    69,    69,    69
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -742,7 +686,7 @@ static const yytype_uint8 yyr2[] =
        1,     0,     3,     3,     6,     4,     0,     3,     3,     5,
        3,     0,     1,     1,     3,     3,     1,     1,     4,     6,
        4,     4,     1,     4,     1,     4,     1,     3,     1,     3,
-       1,     3,     2,     1,     3,     1,     4,     1,     3,     2
+       1,     2,     3,     1,     3,     1,     4,     1,     3,     2
 };
 
 
@@ -1419,540 +1363,342 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 69 "parsea.y" /* yacc.c:1646  */
+#line 67 "parsea.y" /* yacc.c:1646  */
     {
-            	
-            	fprintf ( parseLog, "program → PROGRAM ID '(' identifier_list ')' SEMICOLON declarations subprogram_declarations compound_statement\n");
-            	codes = ".MODEL SMALL\n\n.STACK 100H\n";
-            	getTemp();
-            	getTemp();
-            	icfile << codes<< "\n";
-            	icfile << varDec;
-            	icfile << "\n.CODE\n\nMAIN PROC\nMOV AX,@DATA\nMOV DS,AX\n";
-            	
-            	icfile << (yyvsp[0])->code << "\n";
-            	icfile << "\nEND MAIN\n";
             }
-#line 1437 "y.tab.c" /* yacc.c:1646  */
+#line 1370 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 89 "parsea.y" /* yacc.c:1646  */
+#line 71 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "identifier_list → ID\n");
-//            	SymbolInfo *id("temp", "ASM", 0);
-           		if ( declareZone )
-           			varDec+= (yyvsp[0])->symbol+" dw 0\n";
             }
-#line 1448 "y.tab.c" /* yacc.c:1646  */
+#line 1377 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 97 "parsea.y" /* yacc.c:1646  */
+#line 75 "parsea.y" /* yacc.c:1646  */
     {
-	            fprintf ( parseLog, "identifier_list → identifier_list COMMA ID\n");
-	            if ( declareZone)	{
-	            	varDec+= (yyvsp[0])->symbol+" dw 0\n";
-	            }
-//	            cout << $1->symbol << " " << $3->symbol << "\n";
             }
-#line 1460 "y.tab.c" /* yacc.c:1646  */
+#line 1384 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 109 "parsea.y" /* yacc.c:1646  */
+#line 82 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "declaration → ε\n");
-            	declareZone = true;
-            	varDec.clear();
-            	varDec = ".data\n";
             }
-#line 1471 "y.tab.c" /* yacc.c:1646  */
+#line 1391 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 117 "parsea.y" /* yacc.c:1646  */
+#line 86 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "declarations → declarations VAR identifier_list COLON type SEMICOLON\n");
-//            	string pp = $1->code + ", "+$3->code;
-//            	cout << $2->symbol << endl;
             }
-#line 1481 "y.tab.c" /* yacc.c:1646  */
+#line 1398 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 124 "parsea.y" /* yacc.c:1646  */
+#line 90 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "type → standard_type\n");
-           		(yyval) = (yyvsp[0]);
             }
-#line 1490 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 130 "parsea.y" /* yacc.c:1646  */
+#line 94 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "type → ARRAY '[' NUM DOTDOT NUM ']' OF standard_type\n");
             }
-#line 1498 "y.tab.c" /* yacc.c:1646  */
+#line 1412 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 135 "parsea.y" /* yacc.c:1646  */
+#line 98 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "standard_type → INTEGER\n");
-           		(yyval) = (yyvsp[0]);
             }
-#line 1507 "y.tab.c" /* yacc.c:1646  */
+#line 1419 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 141 "parsea.y" /* yacc.c:1646  */
+#line 102 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "standard_type → REAL\n");
-           		(yyval) = (yyvsp[0]);
             }
-#line 1516 "y.tab.c" /* yacc.c:1646  */
+#line 1426 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 147 "parsea.y" /* yacc.c:1646  */
+#line 106 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "subprogram_declarations → ε");
-            	declareZone = false;
-//            	cout << varDec << endl;
             }
-#line 1526 "y.tab.c" /* yacc.c:1646  */
+#line 1433 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 154 "parsea.y" /* yacc.c:1646  */
+#line 110 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "subprogram_declarations → subprogram_declarations subprogram_declaration SEMICOLON\n");
             }
-#line 1534 "y.tab.c" /* yacc.c:1646  */
+#line 1440 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 159 "parsea.y" /* yacc.c:1646  */
+#line 114 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "subprogram_declaration → subprogram_head declarations compound_statement\n");
             }
-#line 1542 "y.tab.c" /* yacc.c:1646  */
+#line 1447 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 164 "parsea.y" /* yacc.c:1646  */
+#line 118 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "subprogram_head → FUNCTION ID arguments COLON standard_type SEMICOLON\n");
             }
-#line 1550 "y.tab.c" /* yacc.c:1646  */
+#line 1454 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 169 "parsea.y" /* yacc.c:1646  */
+#line 122 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "subprogram_head → PROCEDURE ID arguments SEMICOLON\n");
             }
-#line 1558 "y.tab.c" /* yacc.c:1646  */
+#line 1461 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 174 "parsea.y" /* yacc.c:1646  */
+#line 126 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "arguments → ε\n");
             }
-#line 1566 "y.tab.c" /* yacc.c:1646  */
+#line 1468 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 179 "parsea.y" /* yacc.c:1646  */
+#line 130 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "arguments → '(' parameter_list ')'\n");
             }
-#line 1574 "y.tab.c" /* yacc.c:1646  */
+#line 1475 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 184 "parsea.y" /* yacc.c:1646  */
+#line 134 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "parameter_list → identifier_list COLON type\n");
             }
-#line 1582 "y.tab.c" /* yacc.c:1646  */
+#line 1482 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 189 "parsea.y" /* yacc.c:1646  */
+#line 138 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "parameter_list → parameter_list SEMICOLON identifier_list COLON type\n");
             }
-#line 1590 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 194 "parsea.y" /* yacc.c:1646  */
+#line 142 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "compound_statement → BEGIN optional_statements END\n");
-            	(yyval) = (yyvsp[-1]);
-//            	$$->code = "\n"+$2->code;
-//            	fprintf ( parseLog, "-----qwpoiiouioert\n%s\n\n------nlkmnvklsjfh\n", $$->code.c_str());
             }
-#line 1601 "y.tab.c" /* yacc.c:1646  */
+#line 1496 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 202 "parsea.y" /* yacc.c:1646  */
+#line 146 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "optional_statements → ε\n");
             }
-#line 1609 "y.tab.c" /* yacc.c:1646  */
+#line 1503 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 207 "parsea.y" /* yacc.c:1646  */
+#line 150 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "optional_statements → statement_list\n" );
-           		(yyval) = (yyvsp[0]);	//dekhte hobe
-//           		cout << "statement_list:==>\n"<< $1->code << "\n ENDED"<<endl;
             }
-#line 1619 "y.tab.c" /* yacc.c:1646  */
+#line 1510 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 214 "parsea.y" /* yacc.c:1646  */
+#line 154 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement_list → statement\n");
-            	(yyval) = (yyvsp[0]);
-//           		$$->code = $1->code;
             }
-#line 1629 "y.tab.c" /* yacc.c:1646  */
+#line 1517 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 221 "parsea.y" /* yacc.c:1646  */
+#line 158 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement_list → statement_list SEMICOLON statement\n");
-            	(yyval)->code+= "\n"+(yyvsp[0])->code;
-//            	$$->code+= $1->code+"\n"+$3->code+"\n";
-//            	$$->code = $3->code;
             }
-#line 1640 "y.tab.c" /* yacc.c:1646  */
+#line 1524 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 229 "parsea.y" /* yacc.c:1646  */
+#line 162 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement → variable ASSIGNOP expression\n");
-            	if ((yyvsp[0])->type=="NUM")	(yyvsp[-2])->value = (yyvsp[0])->value;
-            	fprintf ( parseLog, "Assign on line: %d\n", lineCount);
-            	
-            	SymbolInfo *siTemp = new SymbolInfo("Instr", "ASM");
-            	siTemp->code = (yyvsp[0])->code;
-            	siTemp->code+= "MOV ax, "+(yyvsp[0])->symbol+"\nmov " + (yyvsp[-2])->symbol + ", ax\n";
-//            	ss.clear();
-//            	ss << "MOV ax, " << $3->symbol << "\nmov " << $1->symbol << ", ax" << "\n";
-//            	siTemp->code = ss.str();
-            	(yyval) = siTemp;
-            	st.dump(parseLog);
             }
-#line 1659 "y.tab.c" /* yacc.c:1646  */
+#line 1531 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 245 "parsea.y" /* yacc.c:1646  */
+#line 166 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement → procedure_statement\n");
-           		(yyval) = (yyvsp[0]);
             }
-#line 1668 "y.tab.c" /* yacc.c:1646  */
+#line 1538 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 251 "parsea.y" /* yacc.c:1646  */
+#line 170 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement → compound_statement\n");
-           		(yyval) = (yyvsp[0]);
             }
-#line 1677 "y.tab.c" /* yacc.c:1646  */
+#line 1545 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 257 "parsea.y" /* yacc.c:1646  */
+#line 174 "parsea.y" /* yacc.c:1646  */
     {
-	            fprintf ( parseLog, "statement → IF expression THEN statement\n");
             }
-#line 1685 "y.tab.c" /* yacc.c:1646  */
+#line 1552 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 262 "parsea.y" /* yacc.c:1646  */
+#line 178 "parsea.y" /* yacc.c:1646  */
     {
-	            fprintf ( parseLog, "statement → IF expression THEN statement ELSE statement\n");
             }
-#line 1693 "y.tab.c" /* yacc.c:1646  */
+#line 1559 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 267 "parsea.y" /* yacc.c:1646  */
+#line 182 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement → WHILE expression DO statement\n");
             }
-#line 1701 "y.tab.c" /* yacc.c:1646  */
+#line 1566 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 272 "parsea.y" /* yacc.c:1646  */
+#line 186 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "statement → write '(' ID ')'\n");
             }
-#line 1709 "y.tab.c" /* yacc.c:1646  */
+#line 1573 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 277 "parsea.y" /* yacc.c:1646  */
+#line 190 "parsea.y" /* yacc.c:1646  */
     {
-	            fprintf ( parseLog, "variable → ID\n");
-           		(yyval) = (yyvsp[0]);
             }
-#line 1718 "y.tab.c" /* yacc.c:1646  */
+#line 1580 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 283 "parsea.y" /* yacc.c:1646  */
+#line 194 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "variable → ID '[' expression ']'\n");
             }
-#line 1726 "y.tab.c" /* yacc.c:1646  */
+#line 1587 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 288 "parsea.y" /* yacc.c:1646  */
+#line 198 "parsea.y" /* yacc.c:1646  */
     {
-           		fprintf ( parseLog, "procedure_statement → ID\n" );
-           		(yyval) = (yyvsp[0]);
             }
-#line 1735 "y.tab.c" /* yacc.c:1646  */
+#line 1594 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 294 "parsea.y" /* yacc.c:1646  */
+#line 202 "parsea.y" /* yacc.c:1646  */
     {
-           		fprintf ( parseLog, "procedure_statement → ID '(' expression_list ')'\n" );            	
             }
-#line 1743 "y.tab.c" /* yacc.c:1646  */
+#line 1601 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 299 "parsea.y" /* yacc.c:1646  */
+#line 206 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "expression_list → expression\n");
-            	(yyval) = (yyvsp[0]);
             }
-#line 1752 "y.tab.c" /* yacc.c:1646  */
+#line 1608 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 305 "parsea.y" /* yacc.c:1646  */
+#line 210 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "expression_list → expression_list COMMA expression\n");
-            	(yyval)->code+= (yyvsp[-2])->code;
             }
-#line 1761 "y.tab.c" /* yacc.c:1646  */
+#line 1615 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 311 "parsea.y" /* yacc.c:1646  */
+#line 214 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "expression → simple_expression\n");
-            	(yyval) = (yyvsp[0]);
-//            	cout << "POIQRET:\n" << $1->code << "\nopioriweutert\n";
             }
-#line 1771 "y.tab.c" /* yacc.c:1646  */
+#line 1622 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 318 "parsea.y" /* yacc.c:1646  */
+#line 218 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "expression → simple_expression RELOP simple_expression\n");
             }
-#line 1779 "y.tab.c" /* yacc.c:1646  */
+#line 1629 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 323 "parsea.y" /* yacc.c:1646  */
+#line 222 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "simple_expression → term\n");
-            	(yyval) = (yyvsp[0]);
             }
-#line 1788 "y.tab.c" /* yacc.c:1646  */
+#line 1636 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 329 "parsea.y" /* yacc.c:1646  */
+#line 226 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "simple_expression → simple_expression ADDOP term\n");
-            	string tempVal = getTemp();
-            	SymbolInfo *tmpsi = new SymbolInfo(tempVal, "ASM");
-            	tmpsi->code = (yyvsp[-2])->code+"\n"+(yyvsp[0])->code;
-            	string &tempCode = tmpsi->code;
-            	
-            	
-            	if ( (yyvsp[-1])->symbol == "+" )	{
-            		tempCode+= "\n;Adding\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = (yyvsp[-2])->value+(yyvsp[0])->value;
-            		tempCode+= "ADD ax, bx\n";
-            	}
-            	else if ( (yyvsp[-1])->symbol == "-")	{
-            		tempCode+= "\n;SUBTRACTING\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = (yyvsp[-2])->value-(yyvsp[0])->value;
-            		tempCode+= "SUB ax, bx\n";
-            	}
-            	else	{
-            		tempCode+= "\n;BITWISE OR\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = ((int)(yyvsp[-2])->value)|((int)(yyvsp[0])->value);
-            		tempCode+= "OR ax, bx\n";
-            	}
-            	tempCode+= "MOV "+ tempVal+", ax\n\n";
-            	(yyval) = tmpsi;
-//            	cout << "----ADDDDDDDDING\n" << $$->code << "\n___ADDING ENDED" << endl;
-//            	$$->print();
             }
-#line 1827 "y.tab.c" /* yacc.c:1646  */
+#line 1643 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 365 "parsea.y" /* yacc.c:1646  */
+#line 230 "parsea.y" /* yacc.c:1646  */
     {
-            	if ( (yyvsp[-1])->symbol != "+" && (yyvsp[-1])->symbol != "-" )	yyerror(" only '+' or '-' sign can be used here.");
-            	fprintf ( parseLog, "simple_expression → sign term\n");
-            	
-            	if ( (yyvsp[-1])->symbol == "OR")	{
-            		yyerror(" only + or - sign can be used here.");
-            	}
-            	else if ( (yyvsp[-1])->symbol == "-")	{
-            		(yyvsp[0])->code+= "\nmov ax, "+(yyvsp[0])->symbol + "\nneg ax\n";
-            		(yyvsp[0])->code+= "MOV "+(yyvsp[0])->symbol+", ax\n\n";
-            		(yyvsp[0])->value*= -1;
-            	}
-//            	cout << "mmoiwer\n" << $2->code << "\noiuwroi\n";
-            	(yyval) = (yyvsp[0]);
             }
-#line 1847 "y.tab.c" /* yacc.c:1646  */
+#line 1650 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 382 "parsea.y" /* yacc.c:1646  */
+#line 234 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "term → factor\n");
-            	(yyval) = (yyvsp[0]);
             }
-#line 1856 "y.tab.c" /* yacc.c:1646  */
+#line 1657 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 388 "parsea.y" /* yacc.c:1646  */
-    {
-            	fprintf ( parseLog, "term → term MULOP factor\n");
-            	string tempVal = getTemp();
-            	SymbolInfo *tmpsi = new SymbolInfo(tempVal, "ASM");
-            	tmpsi->code = (yyvsp[-2])->code+"\n"+(yyvsp[0])->code;
-            	string &tempCode = tmpsi->code;
-            	
-            	
-            	if ( (yyvsp[-1])->symbol == "*" )	{
-            		if ( (yyvsp[-2])->symbol == "(")	{
-            			cout << "oiwueroiuweriot::==>\t\t";
-            			 (yyvsp[-2])->print();
-            			 cout << endl;
-            		}
-            		tempCode+= "\n;MULTIPLYING\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = (yyvsp[-2])->value*(yyvsp[0])->value;
-            		tempCode+= "MUL bx\n";
-            		tempCode+= "MOV "+tempVal+", ax\n";
-            	}
-            	else if ( (yyvsp[-1])->symbol == "/")	{
-            		tempCode+= "\n;DIVIDING\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = (yyvsp[-2])->value-(yyvsp[0])->value;
-            		tempCode+= "MOV dx, 0\nDIV bx\n";
-            		tempCode+= "MOV "+tempVal+", ax\n";
-            	}
-            	else if ( (yyvsp[-1])->symbol == "mod")	{
-            		tempCode+= "\n;REMINDER\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = (yyvsp[-2])->value-(yyvsp[0])->value;
-            		tempCode+= "MOV dx, 0\nDIV bx\n";
-            		tempCode+= "MOV "+tempVal+", dx\n";
-            	}
-            	else	{
-            		tempCode+= "\n;BITWISE AND\n";
-		        	tempCode+= "MOV ax, "+(yyvsp[-2])->symbol+"\n";
-	            	tempCode+= "MOV bx, "+(yyvsp[0])->symbol+"\n";
-            		tmpsi->value = ((int)(yyvsp[-2])->value)&((int)(yyvsp[0])->value);
-            		tempCode+= "AND ax, bx\n";
-		        	tempCode+= "MOV "+ tempVal+", ax\n";
-            	}
-            	tempCode+= "\n";
-            	(yyval) = tmpsi;
-            }
-#line 1909 "y.tab.c" /* yacc.c:1646  */
+#line 238 "parsea.y" /* yacc.c:1646  */
+    {}
+#line 1663 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 438 "parsea.y" /* yacc.c:1646  */
+#line 241 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "factor → ID\n");
-            	(yyval) = (yyvsp[0]);
             }
-#line 1918 "y.tab.c" /* yacc.c:1646  */
+#line 1670 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 444 "parsea.y" /* yacc.c:1646  */
+#line 245 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "factor → ID '(' expression_list ')'\n");
             }
-#line 1926 "y.tab.c" /* yacc.c:1646  */
+#line 1677 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 449 "parsea.y" /* yacc.c:1646  */
+#line 249 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "factor → NUM\n");
-            	(yyval) = (yyvsp[0]);
             }
-#line 1935 "y.tab.c" /* yacc.c:1646  */
+#line 1684 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 455 "parsea.y" /* yacc.c:1646  */
+#line 253 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "factor → '(' expression ')'\n");
-            	(yyval) = (yyvsp[-1]);
             }
-#line 1944 "y.tab.c" /* yacc.c:1646  */
+#line 1691 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 461 "parsea.y" /* yacc.c:1646  */
+#line 257 "parsea.y" /* yacc.c:1646  */
     {
-            	fprintf ( parseLog, "factor → NOT factor\n");
             }
-#line 1952 "y.tab.c" /* yacc.c:1646  */
+#line 1698 "parsea.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1956 "y.tab.c" /* yacc.c:1646  */
+#line 1702 "parsea.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2180,18 +1926,17 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 468 "parsea.y" /* yacc.c:1906  */
+#line 381 "parsea.y" /* yacc.c:1906  */
 
 int main(int argc,char *argv[])
 {
-
 	if(argc!=2)
 	{
 		printf("Usage: ./<programname> <input_file>\n");
 		printf("Try Again\n");
 		exit(1);
 	}
-	parseLog = fopen("parseLog", "w");
+
 	if((fp=fopen(argv[1],"r"))==NULL)
 	{
 		printf("Cannot Open Input File.\n");
@@ -2199,10 +1944,7 @@ int main(int argc,char *argv[])
 	}
 	
 	yyin=fp;
-	icfile.open("icfile.asm");
 	yyparse();
-	fclose(fp);
-	fclose(parseLog);
 	return 0;
 }
 
