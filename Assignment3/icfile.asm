@@ -23,6 +23,7 @@ temp12 dw 0
 temp13 dw 0
 temp14 dw 0
 temp15 dw 0
+temp16 dw 0
 
 .CODE
 
@@ -44,11 +45,12 @@ MOV ax, temp0
 mov x, ax
 
 
+
 mov ax, x
 neg ax
 MOV x, ax
 
-MOV ax, x
+MOV ax, temp1
 mov x, ax
 
 MOV ax, 7
@@ -60,31 +62,31 @@ mov y, ax
 MOV ax, 3
 MOV bx, 2
 ADD ax, bx
-MOV temp1, ax
-
-
-
-;Adding
-MOV ax, temp1
-MOV bx, 5
-ADD ax, bx
 MOV temp2, ax
 
 
 
 ;Adding
 MOV ax, temp2
-MOV bx, 6
+MOV bx, 5
 ADD ax, bx
 MOV temp3, ax
 
 
 
-;SUBTRACTING
+;Adding
 MOV ax, temp3
+MOV bx, 6
+ADD ax, bx
+MOV temp4, ax
+
+
+
+;SUBTRACTING
+MOV ax, temp4
 MOV bx, 2
 SUB ax, bx
-MOV temp4, ax
+MOV temp5, ax
 
 
 
@@ -93,16 +95,16 @@ MOV temp4, ax
 MOV ax, 1
 MOV bx, 5
 MUL bx
-MOV temp5, ax
+MOV temp6, ax
 
 
 ;SUBTRACTING
-MOV ax, temp4
-MOV bx, temp5
+MOV ax, temp5
+MOV bx, temp6
 SUB ax, bx
-MOV temp6, ax
+MOV temp7, ax
 
-MOV ax, temp6
+MOV ax, temp7
 mov x, ax
 
 
@@ -111,15 +113,15 @@ mov x, ax
 MOV ax, 0
 MOV bx, 4
 AND ax, bx
-MOV temp7, ax
+MOV temp8, ax
 
 
 
 ;MULTIPLYING
-MOV ax, temp7
+MOV ax, temp8
 MOV bx, 4
 MUL bx
-MOV temp8, ax
+MOV temp9, ax
 
 
 
@@ -129,19 +131,110 @@ MOV ax, 1
 MOV bx, 5
 MOV dx, 0
 DIV bx
-MOV temp9, dx
+MOV temp10, dx
 
 
 ;Adding
-MOV ax, temp8
-MOV bx, temp9
+MOV ax, temp9
+MOV bx, temp10
 ADD ax, bx
-MOV temp10, ax
+MOV temp11, ax
 
-MOV ax, temp10
+MOV ax, temp11
 mov y, ax
 
 
 
+;Less than relation operator
+MOV ax, x
+MOV bx, 3
+CMP ax, bx
+jg label1
+label2:
 
-END MAIN
+
+;Adding
+MOV ax, x
+MOV bx, 4
+ADD ax, bx
+MOV temp13, ax
+
+MOV ax, temp13
+mov x, ax
+jmp label3
+label1:
+
+
+;Adding
+MOV ax, x
+MOV bx, 5
+ADD ax, bx
+MOV temp12, ax
+
+MOV ax, temp12
+mov x, ax
+label3:
+
+
+;PRINTING
+PUSH x
+CALL PRINT
+
+label8: 
+
+
+;Less than relation operator
+MOV ax, x
+MOV bx, y
+CMP ax, bx
+jl label6
+label7:
+
+jmp label9:
+label6:
+MOV ax, x
+mov c, ax
+
+
+
+;Adding
+MOV ax, x
+MOV bx, 1
+ADD ax, bx
+MOV temp14, ax
+
+MOV ax, temp14
+mov x, ax
+
+jmp label8
+label9:
+
+	
+main endp
+
+
+;PRINT FUNC
+print proc  
+	mov bp, sp
+	mov ax, [bp+2]
+	cmp ax, 0
+	je return_print
+	
+	mov dx, 0
+	mov bx, 10
+	div bx
+	
+	;recalling
+	push dx
+	push ax
+	call print
+	
+	;printing
+	pop dx
+	add dl, '0'
+	mov ah, 2h
+	int 21h
+	
+	return_print:
+		ret 2	
+print endp

@@ -16,6 +16,7 @@ begin
 	else
 		x:=x+4;
 	
+	write(x);
 	while (x<y) do
 		begin
 			c := x;

@@ -375,7 +375,9 @@ Assign on line: 17
 [245]--> < MULOP, and, 0.000000 > , < NUM, 432, 432.000000 >
 statement → IF expression THEN statement ELSE statement
 statement_list → statement_list SEMICOLON statement
-At line: 19, lexeme: "<" of type "RELOP" has been inserted in symbol table.
+statement → write '(' ID ')'
+statement_list → statement_list SEMICOLON statement
+At line: 20, lexeme: "<" of type "RELOP" has been inserted in symbol table.
 factor → ID
 term → factor
 simple_expression → term
@@ -393,7 +395,7 @@ term → factor
 simple_expression → term
 expression → simple_expression
 statement → variable ASSIGNOP expression
-Assign on line: 21
+Assign on line: 22
 [10]--> < MULOP, mod, 0.000000 >
 [29]--> < ID, output, 0.000000 >
 [40]--> < PAREN1, (, 0.000000 >
@@ -437,7 +439,7 @@ term → factor
 simple_expression → simple_expression ADDOP term
 expression → simple_expression
 statement → variable ASSIGNOP expression
-Assign on line: 23
+Assign on line: 24
 [10]--> < MULOP, mod, 0.000000 >
 [29]--> < ID, output, 0.000000 >
 [40]--> < PAREN1, (, 0.000000 >

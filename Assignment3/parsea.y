@@ -77,7 +77,10 @@ program:    PROGRAM ID PAREN1 identifier_list PAREN2 SEMICOLON declarations subp
             	icfile << "\n.CODE\n\nMAIN PROC\nMOV AX,@DATA\nMOV DS,AX\n";
             	
             	icfile << $9->code << "\n";
-            	icfile << "\nEND MAIN\n";
+            	icfile << "\t\nmain endp\n";
+            	icfile << "\n\n;PRINT FUNC\n";
+            	icfile << "print proc  \n\tmov bp, sp\n\tmov ax, [bp+2]\n\tcmp ax, 0\n\tje return_print\n\t\n\tmov dx, 0\n\tmov bx, 10\n\tdiv bx\n\t\n\t;recalling\n\tpush dx\n\tpush ax\n\tcall print\n\t\n\t;printing\n\tpop dx\n\tadd dl, '0'\n\tmov ah, 2h\n\tint 21h\n\t\n\treturn_print:\n\t\tret 2\t\nprint endp\n";
+//            	icfile << "\nEND MAIN\n";
             }
 //            |
 //            statement
@@ -256,21 +259,63 @@ statement:  variable ASSIGNOP expression
             IF expression THEN statement %prec IFX
             {
 	            fprintf ( parseLog, "statement → IF expression THEN statement\n");
+	            string tempLabel = getLabel();
+            	SymbolInfo *tmpsi = new SymbolInfo(tempLabel, "ASM_Label");
+            	string &tempCode = tmpsi->code;
+//            	tempCode = "\n;IF exp THEN stat\n";
+            	tempCode+= $2->code;//+"\n"+$3->code;
+            	tempCode+= "jmp "+tempLabel+"\n";
+            	tempCode+= $2->labelTrue+":\n";
+            	tempCode+= $4->code;
+            	tempCode+= tempLabel+":\n";
+            	$$ = tmpsi;
             }
             |
             IF expression THEN statement ELSE statement
             {
 	            fprintf ( parseLog, "statement → IF expression THEN statement ELSE statement\n");
+	            string tempLabel = getLabel();
+            	SymbolInfo *tmpsi = new SymbolInfo(tempLabel, "ASM_Label");
+            	string &tempCode = tmpsi->code;
+//            	tempCode = "\n;IF exp THEN stat\n";
+            	tempCode+= $2->code;//+"\n"+$3->code;
+            	tempCode+= $6->code;
+            	tempCode+= "jmp "+tempLabel+"\n";
+            	tempCode+= $2->labelTrue+":\n";
+            	tempCode+= $4->code;
+//            	cout << "oiwuoiuwert\n" << $4->code << "\noiuweoruiwe\n";
+            	tempCode+= tempLabel+":\n";
+            	$$ = tmpsi;
             }
             |
             WHILE expression DO statement
             {
             	fprintf ( parseLog, "statement → WHILE expression DO statement\n");
+            	string loopLabel = getLabel();
+            	string endLoop = getLabel();
+            	SymbolInfo *tmpsi = new SymbolInfo(loopLabel, "ASM_Label");
+            	string &tempCode = tmpsi->code;
+            	
+            	tempCode = loopLabel+": \n";
+            	tempCode+= $2->code+"\n";
+            	tempCode+= "jmp "+endLoop+":\n";
+            	tempCode+= $2->labelTrue+":\n";
+            	tempCode+= $4->code+"\n";
+            	tempCode+= "jmp "+loopLabel+"\n";
+            	tempCode+= endLoop+":\n";
+            	$$ = tmpsi;
             }
             |
             WRITE PAREN1 ID PAREN2
             {
             	fprintf ( parseLog, "statement → write '(' ID ')'\n");
+            	string tempLabel = getLabel();
+            	SymbolInfo *tmpsi = new SymbolInfo(tempLabel, "ASM_Label");
+            	string &tempCode = tmpsi->code;
+            	
+            	tempCode = "\n;PRINTING\nPUSH "+ $3->symbol +"\n";
+            	tempCode+= "CALL PRINT\n";
+            	$$ = tmpsi;
             }
             ;
 variable:   ID
@@ -322,31 +367,50 @@ expression: simple_expression
             	tmpsi->code = $1->code+"\n"+$3->code;
             	string &tempCode = tmpsi->code;
             	
+            	tmpsi->labelTrue = getLabel();
+            	tmpsi->labelFalse = getLabel();
             	
             	if ( $2->symbol == "<" )	{
             		tempCode+= "\n;Less than relation operator\n";
 		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
 	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
 	            	tempCode+= "CMP ax, bx\n";
-	            	tempCode+= "jl ";
-//            		tmpsi->value = $1->value+$3->value;
-//            		tempCode+= "ADD ax, bx\n";
+	            	tempCode+= "jl "+tmpsi->labelTrue+"\n";
+	            	tempCode+= tmpsi->labelFalse+":\n";
             	}
-            	else if ( $2->symbol == "-")	{
-            		tempCode+= "\n;SUBTRACTING\n";
+            	else if ( $2->symbol == ">" )	{
+            		tempCode+= "\n;Less than relation operator\n";
 		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
 	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
-            		tmpsi->value = $1->value-$3->value;
-            		tempCode+= "SUB ax, bx\n";
+	            	tempCode+= "CMP ax, bx\n";
+	            	tempCode+= "jg "+tmpsi->labelTrue+"\n";
+	            	tempCode+= tmpsi->labelFalse+":\n";
+            	}
+            	else if ( $2->symbol == ">=" )	{
+            		tempCode+= "\n;Less than relation operator\n";
+		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
+	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
+	            	tempCode+= "CMP ax, bx\n";
+	            	tempCode+= "jge "+tmpsi->labelTrue+"\n";
+	            	tempCode+= tmpsi->labelFalse+":\n";
+            	}
+            	else if ( $2->symbol == "<=" )	{
+            		tempCode+= "\n;Less than relation operator\n";
+		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
+	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
+	            	tempCode+= "CMP ax, bx\n";
+	            	tempCode+= "jle "+tmpsi->labelTrue+"\n";
+	            	tempCode+= tmpsi->labelFalse+":\n";
             	}
             	else	{
-            		tempCode+= "\n;BITWISE OR\n";
+            		tempCode+= "\n;Less than relation operator\n";
 		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
 	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
-            		tmpsi->value = ((int)$1->value)|((int)$3->value);
-            		tempCode+= "OR ax, bx\n";
+	            	tempCode+= "CMP ax, bx\n";
+	            	tempCode+= "jne "+tmpsi->labelTrue+"\n";
+	            	tempCode+= tmpsi->labelFalse+":\n";
             	}
-            	tempCode+= "MOV "+ tempVal+", ax\n\n";
+//            	tempCode+= "MOV "+ tempVal+", ax\n\n";
             	$$ = tmpsi;
             }
             ;
@@ -354,6 +418,24 @@ simple_expression:  term
             {
             	fprintf ( parseLog, "simple_expression → term\n");
             	$$ = $1;
+            }
+            |
+            ADDOP term
+            {
+            	fprintf ( parseLog, "simple_expression → sign term\n");
+            	if ( $1->symbol != "+" && $1->symbol != "-" )	yyerror(" only '+' or '-' sign can be used here.");
+            	string tempVal = getTemp();
+            	SymbolInfo *tmpsi = new SymbolInfo(tempVal, "ASM");
+            	tmpsi->code = "\n"+ $2->code;
+            	string &tempCode = tmpsi->code;
+            	
+            	if ( $1->symbol == "-")	{
+            		tempCode+= "\nmov ax, "+$2->symbol + "\nneg ax\n";
+            		tempCode+= "MOV "+$2->symbol+", ax\n\n";
+            		$2->value*= -1;
+            	}
+//            	cout << "mmoiwer\n" << $2->code << "\noiuwroi\n";
+            	$$ = tmpsi;
             }
             |
             simple_expression ADDOP term
@@ -391,23 +473,6 @@ simple_expression:  term
 //            	cout << "----ADDDDDDDDING\n" << $$->code << "\n___ADDING ENDED" << endl;
 //            	$$->print();
             }
-            |
-            ADDOP term
-            {
-            	if ( $1->symbol != "+" && $1->symbol != "-" )	yyerror(" only '+' or '-' sign can be used here.");
-            	fprintf ( parseLog, "simple_expression → sign term\n");
-            	
-            	if ( $1->symbol == "OR")	{
-            		yyerror(" only + or - sign can be used here.");
-            	}
-            	else if ( $1->symbol == "-")	{
-            		$2->code+= "\nmov ax, "+$2->symbol + "\nneg ax\n";
-            		$2->code+= "MOV "+$2->symbol+", ax\n\n";
-            		$2->value*= -1;
-            	}
-//            	cout << "mmoiwer\n" << $2->code << "\noiuwroi\n";
-            	$$ = $2;
-            }
             ;
 term:       factor
             {
@@ -425,15 +490,15 @@ term:       factor
             	
             	
             	if ( $2->symbol == "*" )	{
-            		if ( $1->symbol == "(")	{
-            			cout << "oiwueroiuweriot::==>\t\t";
-            			 $1->print();
-            			 cout << endl;
-            		}
+//            		if ( $1->symbol == "(")	{
+//            			cout << "oiwueroiuweriot::==>\t\t";
+//            			 $1->print();
+//            			 cout << endl;
+//            		}
             		tempCode+= "\n;MULTIPLYING\n";
 		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
 	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
-            		tmpsi->value = $1->value*$3->value;
+            		tmpsi->value = $1->value * $3->value;
             		tempCode+= "MUL bx\n";
             		tempCode+= "MOV "+tempVal+", ax\n";
             	}
@@ -441,7 +506,7 @@ term:       factor
             		tempCode+= "\n;DIVIDING\n";
 		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
 	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
-            		tmpsi->value = $1->value-$3->value;
+            		tmpsi->value = $1->value / $3->value;
             		tempCode+= "MOV dx, 0\nDIV bx\n";
             		tempCode+= "MOV "+tempVal+", ax\n";
             	}
@@ -449,7 +514,7 @@ term:       factor
             		tempCode+= "\n;REMINDER\n";
 		        	tempCode+= "MOV ax, "+$1->symbol+"\n";
 	            	tempCode+= "MOV bx, "+$3->symbol+"\n";
-            		tmpsi->value = $1->value-$3->value;
+            		tmpsi->value = (int)$1->value % (int)$3->value;
             		tempCode+= "MOV dx, 0\nDIV bx\n";
             		tempCode+= "MOV "+tempVal+", dx\n";
             	}

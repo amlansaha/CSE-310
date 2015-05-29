@@ -1,12 +1,0 @@
-b -> ( id RELOP num )
-s -> id = num;
-s -> if (b) s
-p -> s
-
-if x!=100 goto level0
-goto level1
-level0:
-x = 100
-
-level1:
-END.
